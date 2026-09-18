@@ -1,0 +1,164 @@
+---
+import Logo from './Logo.astro';
+import { site, footerLinks } from '../data/site.js';
+
+const { bare = false } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="shell">
+    {
+      !bare && (
+        <div class="site-footer__top">
+          <div class="site-footer__brand">
+            <Logo />
+            <p class="site-footer__line">
+              Engenharia, obra e responsabilidade técnica direta. Curitiba e região metropolitana.
+            </p>
+          </div>
+
+          {footerLinks.map((group) => (
+            <nav class="site-footer__group" aria-label={group.title}>
+              <h2 class="site-footer__title">{group.title}</h2>
+              <ul>
+                {group.links.map((link) => (
+                  <li>
+                    <a href={link.href}>{link.label}</a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ))}
+
+          <div class="site-footer__group">
+            <h2 class="site-footer__title">Contato</h2>
+            <ul>
+              <li>
+                <a href={`mailto:${site.email}`}>{site.email}</a>
+              </li>
+              <li>
+                <a href="/contato">Solicitar orçamento</a>
+              </li>
+              <li class="site-footer__address">
+                {site.address.street}
+                <br />
+                {site.address.district}, {site.address.city} - {site.address.state}
+              </li>
+            </ul>
+          </div>
+        </div>
+      )
+    }
+
+    <div class="site-footer__bottom">
+      <p>
+        © {year} {site.legalName} · CNPJ {site.cnpj}
+      </p>
+      <p>
+        {site.responsible.title}: {site.responsible.name} · {site.responsible.crea}
+      </p>
+      <p>
+        <a href="/politica-de-privacidade">Política de privacidade</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--navy);
+    color: var(--paper);
+    padding-block: var(--space-2xl) var(--space-l);
+    margin-top: auto;
+  }
+
+  .site-footer__top {
+    display: grid;
+    grid-template-columns: 1.6fr repeat(3, 1fr);
+    gap: var(--space-xl) var(--space-l);
+    padding-bottom: var(--space-xl);
+    border-bottom: 1px solid rgba(245, 245, 243, 0.16);
+  }
+
+  .site-footer__line {
+    margin-top: var(--space-s);
+    max-width: 30ch;
+    font-weight: 300;
+    font-size: var(--step-0);
+    color: rgba(245, 245, 243, 0.68);
+  }
+
+  .site-footer__title {
+    font-size: var(--step--1);
+    font-weight: 500;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: rgba(245, 245, 243, 0.5);
+    margin-bottom: var(--space-s);
+  }
+
+  .site-footer__group ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .site-footer__group li + li {
+    margin-top: 0.55rem;
+  }
+
+  .site-footer__group a {
+    font-weight: 300;
+    text-decoration: none;
+    color: rgba(245, 245, 243, 0.85);
+    transition: color 0.2s var(--ease);
+  }
+
+  .site-footer__group a:hover {
+    color: var(--paper);
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+  }
+
+  .site-footer__address {
+    font-weight: 300;
+    color: rgba(245, 245, 243, 0.6);
+    line-height: 1.5;
+  }
+
+  .site-footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs) var(--space-l);
+    padding-top: var(--space-l);
+    font-size: var(--step--1);
+    font-weight: 300;
+    color: rgba(245, 245, 243, 0.55);
+  }
+
+  .site-footer__bottom p:last-child {
+    margin-left: auto;
+  }
+
+  .site-footer__bottom a {
+    color: inherit;
+  }
+
+  @media (max-width: 900px) {
+    .site-footer__top {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .site-footer__top {
+      grid-template-columns: 1fr;
+      gap: var(--space-l);
+    }
+
+    .site-footer__bottom p:last-child {
+      margin-left: 0;
+    }
+  }
+</style>

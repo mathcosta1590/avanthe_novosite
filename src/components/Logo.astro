@@ -1,0 +1,33 @@
+---
+const { label = 'Avanthe Engenharia' } = Astro.props;
+---
+
+<span class="logo" aria-label={label}>
+  <span class="logo__word">Avanthe</span>
+  <span class="logo__mark" aria-hidden="true"></span>
+</span>
+
+<style>
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 1.28rem;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: currentColor;
+  }
+
+  .logo__word {
+    display: inline-block;
+  }
+
+  /* Marca: barra vertical, eco do rigor/prumo. */
+  .logo__mark {
+    width: 2px;
+    height: 0.95em;
+    background: currentColor;
+    opacity: 0.35;
+  }
+</style>

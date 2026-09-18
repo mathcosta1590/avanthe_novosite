@@ -1,0 +1,240 @@
+---
+import Base from '../layouts/Base.astro';
+import Stats from '../components/Stats.astro';
+import Steps from '../components/Steps.astro';
+import MediaPlaceholder from '../components/MediaPlaceholder.astro';
+import QuoteForm from '../components/form/QuoteForm.astro';
+import FormRuntime from '../components/form/FormRuntime.astro';
+
+/**
+ * Landing de campanha — Reforma e Retrofit Comercial.
+ *
+ * Regra de página: nenhum link de navegação para outras páginas do site.
+ * Sem menu, sem links de serviço ou portfólio, sem rodapé de navegação. O único
+ * destino é o formulário de orçamento, no topo e no fim. Única exceção: o link
+ * da política de privacidade no rodapé legal, exigido para veicular anúncios
+ * que coletam dados.
+ */
+
+const proof = [
+  { value: '8', label: 'obras entregues' },
+  { value: '100%', label: 'no prazo' },
+  { value: '~1.000', label: 'm² executados' },
+];
+
+const steps = [
+  {
+    title: 'Diagnóstico técnico presencial.',
+    text: 'Verificamos o estado real da estrutura antes de qualquer proposta, não à distância.',
+  },
+  {
+    title: 'Contrato, RT e seguro de obra.',
+    text: 'Tudo formalizado antes do início da execução, sem letra miúda.',
+  },
+  {
+    title: 'Acompanhamento até a entrega.',
+    text: 'Relatório semanal de andamento, para você saber exatamente onde a obra está.',
+  },
+];
+---
+
+<Base
+  title="Reforma e retrofit comercial em Curitiba"
+  description="Reforma e retrofit comercial em Curitiba, sem imprevisto virar atraso. Diagnóstico técnico antes da obra, contrato com RT e seguro, 100% de entregas no prazo."
+  bare={true}
+>
+  <!-- Hero: repete a intenção do anúncio na headline -->
+  <section class="lp-hero">
+    <div class="shell lp-hero__inner">
+      <div class="lp-hero__text">
+        <h1 class="headline">
+          Reforma e retrofit comercial em Curitiba, <strong>sem imprevisto virar atraso</strong>.
+        </h1>
+        <p class="lede lp-hero__lede">
+          Diagnóstico técnico antes de qualquer obra, contrato com RT e seguro emitidos desde o
+          início, e um histórico de <strong>100% de obras entregues no prazo combinado</strong>.
+        </p>
+        <a class="btn lp-hero__cta" href="#orcamento">Solicitar orçamento</a>
+      </div>
+
+      <div class="lp-hero__form" id="orcamento-topo">
+        <h2 class="lp-form__title">Solicitar orçamento</h2>
+        <p class="lp-form__note">Um engenheiro responde em até um dia útil.</p>
+        <QuoteForm
+          id="form-orcamento-topo"
+          successId="sucesso-lp-topo"
+          idPrefix="lp-topo"
+          allowExitLinks={false}
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Prova rápida -->
+  <section class="section section--tight lp-proof">
+    <div class="shell">
+      <Stats items={proof} compact={true} />
+    </div>
+  </section>
+
+  <!-- Case único, em profundidade -->
+  <section class="section section--tall">
+    <div class="shell lp-case">
+      <div class="lp-case__media">
+        <MediaPlaceholder caption="Reforma Comercial Ruffino" ratio="4 / 3" />
+      </div>
+      <div class="lp-case__body">
+        <span class="eyebrow">Case</span>
+        <h2 class="title">Reforma Comercial Ruffino</h2>
+        <div class="prose lp-case__text">
+          <p>
+            Um galpão dos anos 70, décadas sem uso, virou o centro administrativo da Ruffino em{' '}
+            <strong>sete semanas</strong>. Mais de 300 m² completamente refeitos: elétrica nova do
+            zero, hidráulica revisada, infraestrutura de TI com cabeamento CAT6, forro acústico e
+            acabamento completo. Um espaço pronto para mais de 20 colaboradores trabalharem todos os
+            dias, num prazo que não deixava margem para erro.
+          </p>
+          <p>
+            Sua obra comercial pode ter o mesmo resultado: pronta na data combinada, sem surpresa no
+            meio do caminho.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Como funciona -->
+  <section class="section section--tall section--ink">
+    <div class="shell">
+      <span class="eyebrow">Como funciona</span>
+      <h2 class="headline lp-steps__title">Três passos, nenhuma surpresa.</h2>
+      <div class="lp-steps">
+        <Steps items={steps} title="Como funciona" />
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA final: o formulário de novo -->
+  <section class="section section--tall" id="orcamento">
+    <div class="shell lp-final">
+      <div class="lp-final__text">
+        <h2 class="headline">Sua obra comercial, pronta na data combinada.</h2>
+        <p class="lede lp-final__lede">
+          Preencha o formulário e receba um diagnóstico técnico para o seu projeto de reforma ou
+          retrofit.
+        </p>
+      </div>
+      <div class="lp-final__form">
+        <QuoteForm
+          id="form-orcamento-final"
+          successId="sucesso-lp-final"
+          idPrefix="lp-final"
+          allowExitLinks={false}
+        />
+      </div>
+    </div>
+  </section>
+
+  <FormRuntime />
+</Base>
+
+<style>
+  .lp-hero {
+    padding-block: clamp(2.5rem, 7vw, 5rem) clamp(3rem, 8vw, 5.5rem);
+  }
+
+  .lp-hero__inner {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  .lp-hero__text h1 {
+    max-width: 15ch;
+  }
+
+  .lp-hero__lede {
+    margin-top: var(--space-l);
+  }
+
+  .lp-hero__cta {
+    margin-top: var(--space-l);
+  }
+
+  .lp-hero__form {
+    padding: var(--space-l);
+    background: var(--paper-pure);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+  }
+
+  .lp-form__title {
+    font-size: var(--step-2);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+  }
+
+  .lp-form__note {
+    margin-top: var(--space-2xs);
+    margin-bottom: var(--space-l);
+    font-size: var(--step--1);
+    font-weight: 300;
+    color: var(--navy-60);
+  }
+
+  .lp-proof {
+    border-block: 1px solid var(--rule);
+  }
+
+  .lp-case {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: var(--space-2xl);
+    align-items: center;
+  }
+
+  .lp-case__text {
+    margin-top: var(--space-m);
+  }
+
+  .lp-steps__title {
+    max-width: 14ch;
+    margin-bottom: var(--space-xl);
+  }
+
+  .lp-final {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  .lp-final__text h2 {
+    max-width: 14ch;
+  }
+
+  .lp-final__lede {
+    margin-top: var(--space-l);
+  }
+
+  /* Na landing, o CTA do topo some quando o hero traz o formulário ao lado. */
+  @media (min-width: 981px) {
+    .lp-hero__cta {
+      display: none;
+    }
+  }
+
+  @media (max-width: 980px) {
+    .lp-hero__inner,
+    .lp-case,
+    .lp-final {
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+    }
+
+    .lp-hero__form {
+      display: none;
+    }
+  }
+</style>

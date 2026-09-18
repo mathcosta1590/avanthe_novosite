@@ -1,0 +1,28 @@
+---
+import { site } from '../data/site.js';
+
+/**
+ * Google Ads / gtag.
+ *
+ * O script só é emitido quando o ID de conversão está de fato preenchido em
+ * src/data/site.js — evita carregar tag quebrada em ambiente sem conta ligada.
+ * O evento de conversão NÃO é disparado aqui: quem dispara é o envio
+ * bem-sucedido do formulário de orçamento, em src/scripts/forms.js.
+ */
+const id = site.ads.conversionId;
+const enabled = Boolean(id) && !id.includes('XXX');
+---
+
+{
+  enabled && (
+    <>
+      <script async src={`https://www.googletagmanager.com/gtag/js?id=${id}`} />
+      <script is:inline set:html={`
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${id}');
+`} />
+    </>
+  )
+}

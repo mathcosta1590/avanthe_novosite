@@ -1,0 +1,72 @@
+---
+import Field from './Field.astro';
+import Honeypot from './Honeypot.astro';
+import SuccessOverlay from './SuccessOverlay.astro';
+
+/** Isolado do funil de Ads: não dispara evento de conversão. */
+---
+
+<form
+  class="form"
+  id="form-fornecedores"
+  name="fornecedores"
+  method="POST"
+  action="/fornecedores"
+  data-avanthe-form
+  data-netlify="true"
+  netlify-honeypot="bot-field"
+  data-success="sucesso-fornecedores"
+>
+  <input type="hidden" name="form-name" value="fornecedores" />
+  <Honeypot />
+
+  <Field name="empresa" label="Nome da empresa" required autocomplete="organization" />
+
+  <div class="form__row">
+    <Field name="nome" label="Contato responsável" required autocomplete="name" />
+    <Field
+      name="contato"
+      label="Telefone ou e-mail"
+      required
+      validate="contact"
+      placeholder="(41) 90000-0000 ou contato@empresa.com.br"
+    />
+  </div>
+
+  <Field
+    name="categoria"
+    label="Categoria de fornecimento"
+    type="select"
+    required
+    options={[
+      'Material elétrico',
+      'Material hidráulico',
+      'Material de acabamento',
+      'Estrutura e alvenaria',
+      'Impermeabilização',
+      'Esquadrias e vidros',
+      'Mão de obra terceirizada',
+      'Locação de equipamentos',
+      'Serviços técnicos e projetos',
+      'Outra',
+    ]}
+  />
+
+  <Field name="cnpj" label="CNPJ" placeholder="00.000.000/0000-00" />
+
+  <Field
+    name="mensagem"
+    label="O que sua empresa fornece"
+    type="textarea"
+    placeholder="Linha de produtos ou serviços, região de atendimento, prazo médio de entrega."
+  />
+
+  <button type="submit" class="btn form__submit">Enviar cadastro</button>
+  <p class="form__status" role="status" aria-live="polite" data-form-status></p>
+</form>
+
+<SuccessOverlay
+  id="sucesso-fornecedores"
+  title="Cadastro recebido."
+  text="Sua empresa entra na nossa base de cotação. Toda compra relevante passa por no mínimo três orçamentos, e você será chamado quando a categoria for cotada."
+/>

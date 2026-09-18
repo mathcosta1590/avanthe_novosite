@@ -1,0 +1,85 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import RecruitmentForm from '../components/form/RecruitmentForm.astro';
+import FormRuntime from '../components/form/FormRuntime.astro';
+---
+
+<Base
+  title="Trabalhe conosco"
+  description="Envie seu currículo para a Avanthe Engenharia. Vagas de obra, engenharia e administrativo em Curitiba."
+>
+  <PageHero
+    eyebrow="Trabalhe conosco"
+    title="Obra boa se faz com gente boa."
+    lede="Por trás de cada obra está trabalho humano, do primeiro tijolo ao acabamento final. Deixe seu contato: quando abrir uma vaga compatível, a Avanthe procura você."
+  />
+
+  <section class="section section--tall">
+    <div class="shell trabalhe">
+      <div>
+        <RecruitmentForm />
+      </div>
+
+      <aside class="trabalhe__aside">
+        <h2 class="trabalhe__title">O que esperamos</h2>
+        <ul class="trabalhe__list">
+          <li>Cumprir prazo é inegociável, para todo mundo.</li>
+          <li>Trabalho registrado e formalizado, sem improviso.</li>
+          <li>Rigor de execução acima de velocidade improvisada.</li>
+        </ul>
+        <p class="trabalhe__note">
+          Procura orçamento de obra? <a href="/contato">Solicite por aqui</a>.
+        </p>
+      </aside>
+    </div>
+  </section>
+
+  <FormRuntime />
+</Base>
+
+<style>
+  .trabalhe {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  .trabalhe__title {
+    padding-bottom: var(--space-2xs);
+    font-size: var(--step--1);
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--navy-60);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .trabalhe__list {
+    margin: var(--space-m) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .trabalhe__list li {
+    padding: var(--space-xs) 0;
+    font-weight: 300;
+    color: var(--navy-80);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .trabalhe__note {
+    margin-top: var(--space-l);
+    font-size: var(--step--1);
+    font-weight: 300;
+    color: var(--navy-60);
+  }
+
+  @media (max-width: 920px) {
+    .trabalhe {
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+    }
+  }
+</style>

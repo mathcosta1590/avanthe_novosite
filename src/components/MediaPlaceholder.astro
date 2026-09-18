@@ -1,0 +1,60 @@
+---
+/**
+ * Bloco de cor sólida no lugar de foto. Enquanto a produção fotográfica nova
+ * não fica pronta, isto substitui banco de imagens genérico: a legenda diz
+ * exatamente qual foto vai entrar ali.
+ *
+ * Quando houver foto, passe `src` e `alt` — o tratamento em preto e branco é
+ * aplicado por CSS, para unificar material de celular e material profissional.
+ */
+const { caption, src, alt = '', ratio = '4 / 3', tone = 'navy' } = Astro.props;
+---
+
+<figure class="media" data-tone={tone} style={`--ratio: ${ratio}`}>
+  {
+    src ? (
+      <img class="media__img" src={src} alt={alt} loading="lazy" decoding="async" />
+    ) : (
+      <div class="media__block" aria-hidden="true" />
+    )
+  }
+  {!src && <figcaption class="media__caption">[ foto — {caption} ]</figcaption>}
+</figure>
+
+<style>
+  .media {
+    position: relative;
+    margin: 0;
+  }
+
+  .media__block,
+  .media__img {
+    width: 100%;
+    aspect-ratio: var(--ratio);
+    object-fit: cover;
+  }
+
+  .media[data-tone='navy'] .media__block {
+    background: var(--navy);
+  }
+
+  .media[data-tone='ink'] .media__block {
+    background: var(--ink);
+  }
+
+  /* Preto e branco até a nova leva de fotos padronizar o material. */
+  .media__img {
+    filter: grayscale(100%) contrast(1.04);
+    transition: filter 0.5s var(--ease);
+  }
+
+  .media__caption {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: var(--space-m);
+    font-size: var(--step--1);
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    color: rgba(245, 245, 243, 0.55);
+  }
+</style>

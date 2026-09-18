@@ -1,0 +1,139 @@
+---
+import Base from './Base.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaSection from '../components/CtaSection.astro';
+import Stats from '../components/Stats.astro';
+import { serviceContent } from '../data/services-content.js';
+import { services } from '../data/site.js';
+
+const { slug } = Astro.props;
+const content = serviceContent[slug];
+const meta = services.find((s) => s.slug === slug);
+const others = services.filter((s) => s.slug !== slug);
+---
+
+<Base title={content.title} description={meta.metaDescription}>
+  <PageHero eyebrow="Serviço" title={content.title} lede={content.lede} />
+
+  <section class="section section--tall">
+    <div class="shell service">
+      <div class="prose service__body">
+        {content.body.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+
+      <aside class="service__aside">
+        <h2 class="service__aside-title">{content.aside.title}</h2>
+        <ul class="service__list">
+          {content.aside.items.map((item) => <li>{item}</li>)}
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="shell">
+      <Stats compact={true} />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="shell">
+      <h2 class="eyebrow">Outras frentes</h2>
+      <ul class="others">
+        {
+          others.map((other) => (
+            <li>
+              <a class="others__link" href={`/${other.slug}`}>
+                <span class="others__name">{other.title}</span>
+                <span class="others__arrow" aria-hidden="true">
+                  →
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <CtaSection
+    title="Vamos olhar a sua obra de perto."
+    text="Preencha o formulário e receba um diagnóstico técnico para o seu projeto. Respondemos em até um dia útil."
+  />
+</Base>
+
+<style>
+  .service {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  .service__aside {
+    padding-top: var(--space-s);
+    border-top: 2px solid var(--navy);
+  }
+
+  .service__aside-title {
+    font-size: var(--step-0);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .service__list {
+    margin: var(--space-m) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .service__list li {
+    padding: var(--space-xs) 0;
+    font-size: var(--step-0);
+    font-weight: 300;
+    color: var(--navy-80);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .others {
+    list-style: none;
+    margin: var(--space-m) 0 0;
+    padding: 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .others li {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .others__link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-m);
+    padding: var(--space-m) 0;
+    text-decoration: none;
+    transition: padding-left 0.25s var(--ease);
+  }
+
+  .others__link:hover {
+    padding-left: var(--space-s);
+  }
+
+  .others__name {
+    font-size: var(--step-2);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+
+  .others__arrow {
+    color: var(--navy-60);
+  }
+
+  @media (max-width: 860px) {
+    .service {
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+    }
+  }
+</style>

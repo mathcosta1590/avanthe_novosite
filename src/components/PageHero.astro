@@ -1,0 +1,36 @@
+---
+const { eyebrow, title, lede, align = 'start' } = Astro.props;
+---
+
+<section class="page-hero" data-align={align}>
+  <div class="shell">
+    {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+    <h1 class="headline page-hero__title" set:html={title} />
+    {lede && <p class="lede page-hero__lede" set:html={lede} />}
+    <slot />
+  </div>
+</section>
+
+<style>
+  .page-hero {
+    padding-block: clamp(3.5rem, 9vw, 7rem) var(--space-2xl);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .page-hero__title {
+    max-width: 18ch;
+  }
+
+  .page-hero__lede {
+    margin-top: var(--space-l);
+  }
+
+  .page-hero[data-align='center'] .shell {
+    text-align: center;
+  }
+
+  .page-hero[data-align='center'] .page-hero__title,
+  .page-hero[data-align='center'] .page-hero__lede {
+    margin-inline: auto;
+  }
+</style>

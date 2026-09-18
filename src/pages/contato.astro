@@ -1,0 +1,123 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import QuoteForm from '../components/form/QuoteForm.astro';
+import FormRuntime from '../components/form/FormRuntime.astro';
+import { site } from '../data/site.js';
+---
+
+<Base
+  title="Contato"
+  description="Solicite um orçamento para construção, reforma, retrofit, regularização técnica ou gestão de obra em Curitiba. Resposta em até um dia útil."
+>
+  <PageHero
+    eyebrow="Contato"
+    title="Comece pelo <strong>diagnóstico</strong>."
+    lede="Preencha o formulário e um engenheiro analisa o seu projeto. Se houver planta ou projeto, anexe: acelera a resposta."
+  />
+
+  <section class="section section--tall">
+    <div class="shell contato">
+      <div class="contato__form">
+        <QuoteForm gate={true} />
+      </div>
+
+      <aside class="contato__aside">
+        <div class="contato__block">
+          <h2 class="contato__title">Como funciona depois do envio</h2>
+          <ol class="contato__steps">
+            <li>Um engenheiro lê o que você enviou e retorna em até um dia útil.</li>
+            <li>Agendamos o diagnóstico técnico presencial, sempre em campo.</li>
+            <li>Você recebe proposta com valores, prazo e escopo definidos com clareza.</li>
+          </ol>
+        </div>
+
+        <div class="contato__block">
+          <h2 class="contato__title">Onde estamos</h2>
+          <p class="contato__text">
+            {site.address.street}<br />
+            {site.address.district}, {site.address.city} - {site.address.state}
+          </p>
+          <p class="contato__text">
+            <a href={`mailto:${site.email}`}>{site.email}</a>
+          </p>
+        </div>
+
+        <div class="contato__block">
+          <h2 class="contato__title">Outros assuntos</h2>
+          <ul class="contato__links">
+            <li><a href="/recrutamento">Trabalhe conosco</a></li>
+            <li><a href="/fornecedores">Fornecedor parceiro</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <FormRuntime />
+</Base>
+
+<style>
+  .contato {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  .contato__block + .contato__block {
+    margin-top: var(--space-xl);
+  }
+
+  .contato__title {
+    padding-bottom: var(--space-2xs);
+    font-size: var(--step--1);
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--navy-60);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .contato__steps {
+    margin: var(--space-m) 0 0;
+    padding-left: 1.1rem;
+  }
+
+  .contato__steps li {
+    font-weight: 300;
+    color: var(--navy-80);
+  }
+
+  .contato__steps li + li {
+    margin-top: var(--space-s);
+  }
+
+  .contato__text {
+    margin-top: var(--space-m);
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--navy-80);
+  }
+
+  .contato__links {
+    margin: var(--space-m) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .contato__links li + li {
+    margin-top: var(--space-2xs);
+  }
+
+  .contato__links a {
+    font-weight: 400;
+  }
+
+  @media (max-width: 920px) {
+    .contato {
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+    }
+  }
+</style>

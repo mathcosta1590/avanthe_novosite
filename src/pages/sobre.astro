@@ -1,0 +1,131 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Stats from '../components/Stats.astro';
+import MediaPlaceholder from '../components/MediaPlaceholder.astro';
+import CtaSection from '../components/CtaSection.astro';
+import { site } from '../data/site.js';
+---
+
+<Base
+  title="Sobre"
+  description="A Avanthe nasceu em janeiro de 2026, da recusa em fazer parte de um mercado onde tudo vira commodity. Método, responsabilidade técnica direta e obra que dura."
+>
+  <PageHero
+    eyebrow="Sobre"
+    title="Ou o trabalho é feito de verdade, <strong>ou a obra simplesmente não acontece</strong>."
+  />
+
+  <section class="section section--tall">
+    <div class="shell sobre">
+      <div class="prose sobre__body">
+        <p>
+          A Avanthe nasceu em janeiro de 2026, da recusa em fazer parte de um mercado onde tudo vira
+          commodity. A construção civil é diferente de praticamente qualquer outro negócio: não
+          existe atalho, não existe terceirizar responsabilidade técnica, não existe entregar menos
+          do que o combinado. Ou o trabalho é feito de verdade, ou a obra simplesmente não acontece.
+        </p>
+        <p>
+          É esse rigor que sustenta a empresa. Cada obra da Avanthe carrega uma responsabilidade que
+          vai além do contrato: ela existirá por décadas depois de concluída. Poucos negócios
+          permitem esse tipo de legado, erguer algo que atravessa gerações, com a marca de quem
+          construiu impressa nele. É esse peso que orienta cada decisão técnica, cada cronograma,
+          cada entrega.
+        </p>
+        <p>
+          Por trás de cada obra está trabalho humano, do primeiro tijolo ao acabamento final. Não
+          existe atalho tecnológico que substitua isso, e a Avanthe não pretende que exista. O que
+          existe é método, responsabilidade técnica direta, e o compromisso de tratar cada obra como
+          algo que vai durar muito além do dia da entrega.
+        </p>
+      </div>
+
+      <aside class="sobre__aside">
+        <MediaPlaceholder caption="responsável técnico" ratio="3 / 4" tone="navy" />
+        <div class="sobre__card">
+          <h2 class="sobre__card-title">{site.responsible.title}</h2>
+          <p class="sobre__name">{site.responsible.name}</p>
+          <p class="sobre__crea">{site.responsible.crea}</p>
+          <p class="sobre__crea">Engenheiro civil, UFPR</p>
+          <p class="sobre__spec">
+            Patologia construtiva, retrofit e impermeabilização.
+          </p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="shell">
+      <Stats />
+    </div>
+  </section>
+
+  <section class="section section--tall section--ink">
+    <div class="shell">
+      <p class="headline sobre__pull">
+        Cada obra existirá por <strong>décadas</strong> depois de concluída.
+      </p>
+    </div>
+  </section>
+
+  <CtaSection
+    title="Comece pelo diagnóstico."
+    text="Preencha o formulário e receba um diagnóstico técnico para o seu projeto."
+    tone="navy"
+  />
+</Base>
+
+<style>
+  .sobre {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  .sobre__card {
+    padding-top: var(--space-m);
+    margin-top: var(--space-m);
+    border-top: 2px solid var(--navy);
+  }
+
+  .sobre__card-title {
+    font-size: var(--step--1);
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--navy-60);
+  }
+
+  .sobre__name {
+    margin-top: var(--space-2xs);
+    font-size: var(--step-2);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+  }
+
+  .sobre__crea {
+    font-size: var(--step-0);
+    font-weight: 300;
+    color: var(--navy-80);
+  }
+
+  .sobre__spec {
+    margin-top: var(--space-s);
+    font-size: var(--step-0);
+    font-weight: 300;
+    color: var(--navy-60);
+  }
+
+  .sobre__pull {
+    max-width: 18ch;
+  }
+
+  @media (max-width: 860px) {
+    .sobre {
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+    }
+  }
+</style>

@@ -1,0 +1,91 @@
+---
+import { stats as defaultStats } from '../data/site.js';
+
+const { items = defaultStats, compact = false } = Astro.props;
+---
+
+<dl class="stats" data-compact={compact ? 'true' : 'false'}>
+  {
+    items.map((stat) => (
+      <div class="stats__item">
+        <dt class="stats__label">{stat.label}</dt>
+        <dd class="stats__value">{stat.value}</dd>
+      </div>
+    ))
+  }
+</dl>
+
+<style>
+  /* Números como elemento visual forte: peso 600, escala grande, régua fina. */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 0;
+    margin: 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .stats__item {
+    padding: var(--space-l) var(--space-m) var(--space-l) 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .stats__item + .stats__item {
+    padding-left: var(--space-m);
+    border-left: 1px solid var(--rule);
+  }
+
+  .stats__value {
+    margin: 0;
+    font-size: var(--step-4);
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stats__label {
+    order: -1;
+    display: block;
+    margin-bottom: var(--space-xs);
+    font-size: var(--step--1);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--navy-60);
+  }
+
+  .stats[data-compact='true'] .stats__value {
+    font-size: var(--step-3);
+  }
+
+  :global(.section--ink) .stats,
+  :global(.section--navy) .stats {
+    border-color: rgba(245, 245, 243, 0.2);
+  }
+
+  :global(.section--ink) .stats__item,
+  :global(.section--navy) .stats__item {
+    border-color: rgba(245, 245, 243, 0.2);
+  }
+
+  :global(.section--ink) .stats__label,
+  :global(.section--navy) .stats__label {
+    color: rgba(245, 245, 243, 0.55);
+  }
+
+  @media (max-width: 720px) {
+    .stats {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .stats__item + .stats__item {
+      padding-left: var(--space-s);
+    }
+
+    .stats__item:nth-child(odd) {
+      padding-left: 0;
+      border-left: 0;
+    }
+  }
+</style>

@@ -1,0 +1,229 @@
+---
+import Base from '../../layouts/Base.astro';
+import MediaPlaceholder from '../../components/MediaPlaceholder.astro';
+import CtaSection from '../../components/CtaSection.astro';
+import { projects } from '../../data/projects.js';
+
+export function getStaticPaths() {
+  // Só obras com texto validado viram página. As demais permanecem no índice
+  // do portfólio como registro em levantamento, sem página própria.
+  return projects
+    .filter((project) => project.status === 'complete')
+    .map((project) => ({ params: { slug: project.slug }, props: { project } }));
+}
+
+const { project } = Astro.props;
+const others = projects.filter((p) => p.slug !== project.slug && p.status === 'complete');
+---
+
+<Base
+  title={project.name}
+  description={project.positioning ?? `${project.name}, obra entregue pela Avanthe Engenharia.`}
+  ogType="article"
+>
+  <article>
+    <header class="obra-hero">
+      <div class="shell">
+        <span class="eyebrow">{project.type}</span>
+        <h1 class="headline obra-hero__title">{project.name}</h1>
+        {project.positioning && <p class="lede obra-hero__lede">{project.positioning}</p>}
+      </div>
+    </header>
+
+    {
+      project.facts.length > 0 && (
+        <section class="section section--tight">
+          <div class="shell">
+            <dl class="facts">
+              {project.facts.map((fact) => (
+                <div class="facts__item">
+                  <dt class="facts__label">{fact.label}</dt>
+                  <dd class="facts__value">{fact.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </section>
+      )
+    }
+
+    <section class="section">
+      <div class="shell">
+        <MediaPlaceholder caption={project.name} ratio="16 / 9" />
+      </div>
+    </section>
+
+    <section class="section section--tall">
+      <div class="shell obra">
+        <div class="obra__body">
+          {
+            project.challenge && (
+              <>
+                <h2 class="eyebrow">O desafio</h2>
+                <p class="subtitle obra__challenge">{project.challenge}</p>
+              </>
+            )
+          }
+          <div class="prose obra__text">
+            {project.body.map((paragraph) => <p>{paragraph}</p>)}
+          </div>
+        </div>
+
+        {
+          project.scope.length > 0 && (
+            <aside class="obra__aside">
+              <h2 class="obra__aside-title">Escopo executado</h2>
+              <ul class="obra__scope">
+                {project.scope.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </aside>
+          )
+        }
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell galeria">
+        {
+          project.gallery.length > 0
+            ? project.gallery.map((image) => (
+                <MediaPlaceholder src={image.src} alt={image.alt} ratio="4 / 3" />
+              ))
+            : [1, 2].map(() => <MediaPlaceholder caption={project.name} ratio="4 / 3" tone="ink" />)
+        }
+      </div>
+    </section>
+
+    {
+      others.length > 0 && (
+        <section class="section section--tight">
+          <div class="shell">
+            <a class="link" href="/portfolio">
+              Ver todas as obras
+              <span class="link__arrow" aria-hidden="true">
+                →
+              </span>
+            </a>
+          </div>
+        </section>
+      )
+    }
+  </article>
+
+  <CtaSection
+    title="Sua obra pode ter o mesmo resultado."
+    text="Pronta na data combinada, sem surpresa no meio do caminho. Preencha o formulário e receba um diagnóstico técnico."
+    tone="navy"
+  />
+</Base>
+
+<style>
+  .obra-hero {
+    padding-block: clamp(3.5rem, 9vw, 7rem) var(--space-xl);
+  }
+
+  .obra-hero__title {
+    max-width: 16ch;
+  }
+
+  .obra-hero__lede {
+    margin-top: var(--space-l);
+    max-width: 52ch;
+  }
+
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0;
+    margin: 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .facts__item {
+    padding: var(--space-m) var(--space-m) var(--space-m) 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .facts__item + .facts__item {
+    padding-left: var(--space-m);
+    border-left: 1px solid var(--rule);
+  }
+
+  .facts__label {
+    font-size: var(--step--1);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--navy-60);
+  }
+
+  .facts__value {
+    margin: var(--space-2xs) 0 0;
+    font-size: var(--step-2);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+  }
+
+  .obra {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  .obra__challenge {
+    margin-top: var(--space-m);
+    max-width: 34ch;
+  }
+
+  .obra__text {
+    margin-top: var(--space-l);
+  }
+
+  .obra__aside {
+    padding-top: var(--space-s);
+    border-top: 2px solid var(--navy);
+  }
+
+  .obra__aside-title {
+    font-size: var(--step-0);
+    font-weight: 600;
+  }
+
+  .obra__scope {
+    margin: var(--space-m) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .obra__scope li {
+    padding: var(--space-xs) 0;
+    font-weight: 300;
+    color: var(--navy-80);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .galeria {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-m);
+  }
+
+  @media (max-width: 860px) {
+    .obra {
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+    }
+
+    .facts {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .facts__item:nth-child(odd) {
+      padding-left: 0;
+      border-left: 0;
+    }
+  }
+</style>

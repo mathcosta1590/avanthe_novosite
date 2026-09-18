@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /politica-de-privacidade
+
+Sitemap: https://avanthe.com.br/sitemap.xml

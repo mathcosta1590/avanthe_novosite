@@ -1,0 +1,42 @@
+---
+import { site } from '../../data/site.js';
+
+const {
+  id,
+  title = 'Recebemos seu pedido.',
+  text = 'Um engenheiro da Avanthe vai analisar as informações e retornar em até um dia útil.',
+  whatsapp = false,
+} = Astro.props;
+---
+
+<div
+  class="success"
+  id={id}
+  hidden
+  data-success-overlay
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby={`${id}-titulo`}
+>
+  <div class="success__panel">
+    <button type="button" class="success__close" data-success-close aria-label="Fechar">×</button>
+    <h2 class="success__title" id={`${id}-titulo`}>{title}</h2>
+    <p class="success__text">{text}</p>
+    <div class="success__actions">
+      {
+        whatsapp && (
+          <a
+            class="btn"
+            data-whatsapp={site.whatsapp.number}
+            href={`https://wa.me/${site.whatsapp.number}`}
+            target="_blank"
+            rel="noopener"
+          >
+            Continuar no WhatsApp
+          </a>
+        )
+      }
+      <button type="button" class="btn btn--ghost" data-success-close>Fechar</button>
+    </div>
+  </div>
+</div>

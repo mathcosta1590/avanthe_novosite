@@ -1,0 +1,194 @@
+---
+import Base from '../layouts/Base.astro';
+import Stats from '../components/Stats.astro';
+import ServiceGrid from '../components/ServiceGrid.astro';
+import MediaPlaceholder from '../components/MediaPlaceholder.astro';
+import CtaSection from '../components/CtaSection.astro';
+import { featuredProject } from '../data/projects.js';
+---
+
+<Base
+  title={null}
+  description="Construção, reforma e retrofit em Curitiba. 8 obras entregues, 100% no prazo, responsabilidade técnica direta e relatório semanal de andamento."
+>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="shell">
+      <p class="hero__text display">
+        Na Avanthe, há <strong>metodologia</strong> e <strong>processo</strong>. Vemos beleza nisso,
+        e por isso respeitamos cada etapa. Nossa fundação é feita de tecnologia, compromisso e
+        pessoas, pra sua obra sair do papel <strong>exatamente como foi planejada</strong>.
+      </p>
+      <div class="hero__actions">
+        <a class="btn" href="/contato">Solicitar orçamento</a>
+        <a class="link" href="/portfolio">
+          Ver obras entregues
+          <span class="link__arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Números -->
+  <section class="section section--tight">
+    <div class="shell">
+      <Stats />
+    </div>
+  </section>
+
+  <!-- Manifesto: um dos dois momentos de quase-preto da página. -->
+  <section class="section section--tall section--ink">
+    <div class="shell manifesto">
+      <blockquote class="manifesto__quote">
+        <p class="headline">"Todo mundo diz que faz alto padrão."</p>
+        <p class="manifesto__turn subtitle">
+          Mas se você precisa dizer que é alto padrão, <strong>você não é</strong>.
+        </p>
+      </blockquote>
+
+      <div class="manifesto__body prose">
+        <p>
+          Alto padrão é ter um engenheiro acompanhando sua obra. É ter cronograma, fluxo financeiro
+          organizado, RT emitida, seguro de obra, contrato sério e nota fiscal de cada serviço.
+          Acabamento bonito é só uma parte disso, a parte que todo mundo mostra e ninguém sustenta.
+        </p>
+        <p>
+          Na Avanthe, você deixa a chave e volta na data combinada. A obra vai estar pronta.{' '}
+          <strong>Você não precisa se preocupar com nada.</strong>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Serviços -->
+  <section class="section section--tall">
+    <div class="shell">
+      <div class="section-head">
+        <span class="eyebrow">O que fazemos</span>
+        <h2 class="headline section-head__title">Quatro frentes, um mesmo rigor.</h2>
+      </div>
+      <ServiceGrid />
+    </div>
+  </section>
+
+  <!-- Obra em destaque -->
+  {
+    featuredProject && (
+      <section class="section section--tall featured">
+        <div class="shell">
+          <span class="eyebrow">Obra em destaque</span>
+          <div class="featured__grid">
+            <div class="featured__media">
+              <MediaPlaceholder caption={featuredProject.name} ratio="5 / 6" />
+            </div>
+            <div class="featured__body">
+              <h2 class="title featured__name">{featuredProject.name}</h2>
+              <div class="prose featured__text">
+                {featuredProject.body.map((paragraph) => (
+                  <p>{paragraph}</p>
+                ))}
+              </div>
+              <a class="link featured__link" href={`/portfolio/${featuredProject.slug}`}>
+                Ver a obra completa
+                <span class="link__arrow" aria-hidden="true">
+                  →
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <CtaSection
+    title="Você deixa a chave e volta na data combinada."
+    text="Preencha o formulário e receba um diagnóstico técnico para o seu projeto. Respondemos em até um dia útil."
+    tone="navy"
+  />
+</Base>
+
+<style>
+  .hero {
+    padding-block: clamp(4rem, 12vw, 9rem) clamp(3rem, 8vw, 6rem);
+  }
+
+  .hero__text {
+    max-width: 24ch;
+  }
+
+  @media (min-width: 900px) {
+    .hero__text {
+      max-width: 21ch;
+    }
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-m) var(--space-xl);
+    margin-top: clamp(2.5rem, 6vw, 4rem);
+  }
+
+  .section-head {
+    margin-bottom: var(--space-xl);
+  }
+
+  .section-head__title {
+    max-width: 16ch;
+  }
+
+  .manifesto {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: var(--space-xl) var(--space-2xl);
+    align-items: start;
+  }
+
+  .manifesto__quote {
+    margin: 0;
+  }
+
+  .manifesto__turn {
+    margin-top: var(--space-l);
+    color: rgba(245, 245, 243, 0.62);
+    max-width: 22ch;
+  }
+
+  .manifesto__turn strong {
+    color: var(--paper);
+    font-weight: 600;
+  }
+
+  .manifesto__body {
+    padding-top: var(--space-2xs);
+  }
+
+  .featured__grid {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: var(--space-xl);
+    align-items: center;
+    margin-top: var(--space-l);
+  }
+
+  .featured__name {
+    max-width: 14ch;
+  }
+
+  .featured__text {
+    margin-top: var(--space-m);
+  }
+
+  .featured__link {
+    margin-top: var(--space-l);
+  }
+
+  @media (max-width: 860px) {
+    .manifesto,
+    .featured__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

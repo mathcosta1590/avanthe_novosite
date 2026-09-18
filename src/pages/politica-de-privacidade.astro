@@ -1,0 +1,140 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { site } from '../data/site.js';
+
+const updated = '18 de setembro de 2026';
+---
+
+<Base
+  title="Política de privacidade"
+  description="Como a Avanthe Engenharia coleta, usa e protege os dados enviados pelos formulários do site."
+  noindex={true}
+>
+  <PageHero
+    eyebrow="Política de privacidade"
+    title="Como tratamos os seus dados."
+    lede={`Última atualização: ${updated}.`}
+  />
+
+  <section class="section section--tall">
+    <div class="shell shell--narrow legal">
+      <h2>Quem somos</h2>
+      <p>
+        {site.legalName}, CNPJ {site.cnpj}, com sede em {site.address.street}, {site.address.district},
+        {site.address.city} - {site.address.state}, é a controladora dos dados pessoais coletados
+        neste site, nos termos da Lei Geral de Proteção de Dados (Lei 13.709/2018).
+      </p>
+
+      <h2>Quais dados coletamos</h2>
+      <p>
+        Coletamos apenas os dados que você mesmo informa nos formulários do site, e dados técnicos
+        de navegação necessários para medir a eficácia das nossas campanhas.
+      </p>
+      <ul>
+        <li>
+          <strong>Formulário de orçamento:</strong> nome, telefone, e-mail, tipo de serviço, tipo de
+          imóvel, mensagem e, quando enviado por você, o arquivo de projeto ou planta anexado.
+        </li>
+        <li>
+          <strong>Formulário de trabalhe conosco:</strong> nome, telefone ou e-mail, área de
+          interesse, currículo ou link de perfil profissional.
+        </li>
+        <li>
+          <strong>Formulário de fornecedor parceiro:</strong> nome da empresa, contato responsável,
+          telefone ou e-mail, categoria de fornecimento e CNPJ, quando informado.
+        </li>
+        <li>
+          <strong>Dados de origem:</strong> parâmetros de campanha (UTM e identificadores de clique
+          do Google Ads) e a página do site de onde o formulário foi enviado.
+        </li>
+      </ul>
+
+      <h2>Para que usamos</h2>
+      <ul>
+        <li>Responder ao seu contato e elaborar propostas comerciais.</li>
+        <li>Avaliar candidaturas e cadastros de fornecedores.</li>
+        <li>
+          Medir o desempenho das nossas campanhas de anúncios, entendendo quais origens geram
+          contatos reais.
+        </li>
+        <li>Cumprir obrigações legais e regulatórias aplicáveis à atividade de engenharia.</li>
+      </ul>
+      <p>
+        Não vendemos, alugamos ou cedemos seus dados a terceiros para fins de marketing próprio
+        deles.
+      </p>
+
+      <h2>Com quem compartilhamos</h2>
+      <p>
+        Os dados trafegam por prestadores de serviço que sustentam o site e a comunicação:
+        hospedagem e processamento de formulários (Netlify), medição de campanhas (Google) e
+        provedor de e-mail. Cada um trata os dados apenas para a finalidade contratada.
+      </p>
+
+      <h2>Cookies e medição</h2>
+      <p>
+        Usamos cookies e identificadores do Google Ads e do Google Analytics para medir conversões e
+        entender a origem das visitas. Você pode bloquear cookies nas configurações do seu
+        navegador; o site continua funcionando, mas a medição deixa de ser precisa.
+      </p>
+
+      <h2>Por quanto tempo guardamos</h2>
+      <p>
+        Pedidos de orçamento ficam retidos pelo tempo necessário ao relacionamento comercial e, uma
+        vez fechado contrato, pelo prazo legal aplicável aos documentos da obra. Currículos e
+        cadastros de fornecedores ficam retidos por até dois anos, salvo pedido de exclusão.
+      </p>
+
+      <h2>Seus direitos</h2>
+      <p>
+        Você pode solicitar confirmação de tratamento, acesso, correção, anonimização, portabilidade
+        ou exclusão dos seus dados, além de revogar consentimento a qualquer momento. Basta escrever
+        para <a href={`mailto:${site.email}`}>{site.email}</a>. Respondemos em até 15 dias.
+      </p>
+
+      <h2>Segurança</h2>
+      <p>
+        O site trafega integralmente sob HTTPS e os dados dos formulários ficam restritos às pessoas
+        da Avanthe que precisam deles para atender o seu pedido.
+      </p>
+
+      <h2>Alterações</h2>
+      <p>
+        Esta política pode ser atualizada. Mudanças relevantes passam a valer a partir da publicação
+        nesta página, com a data de atualização revista no topo.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .legal h2 {
+    margin-top: var(--space-xl);
+    font-size: var(--step-1);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+  }
+
+  .legal h2:first-child {
+    margin-top: 0;
+  }
+
+  .legal p,
+  .legal li {
+    margin-top: var(--space-s);
+    font-weight: 300;
+    line-height: 1.68;
+    color: var(--navy-80);
+  }
+
+  .legal ul {
+    margin: var(--space-s) 0 0;
+    padding-left: 1.15rem;
+  }
+
+  .legal strong {
+    font-weight: 600;
+    color: var(--navy);
+  }
+</style>

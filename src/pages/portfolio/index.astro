@@ -1,0 +1,190 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import MediaPlaceholder from '../../components/MediaPlaceholder.astro';
+import CtaSection from '../../components/CtaSection.astro';
+import { projects } from '../../data/projects.js';
+
+const published = projects.filter((p) => p.status === 'complete');
+// A primeira obra publicada abre o portfólio como peça editorial, larga; as
+// demais seguem em grade. Com uma obra só, a abertura evita um bloco de cor
+// ocupando a largura inteira sem conteúdo ao lado.
+const [lead, ...rest] = published;
+const upcoming = projects.filter((p) => p.status !== 'complete');
+---
+
+<Base
+  title="Portfólio"
+  description="Obras entregues pela Avanthe Engenharia em Curitiba: reforma, retrofit e construção, com prazo cumprido e responsabilidade técnica direta."
+>
+  <PageHero
+    eyebrow="Portfólio"
+    title="Cada obra, um problema técnico específico resolvido."
+    lede="8 obras entregues, 100% no prazo combinado. Abaixo, o registro de cada uma."
+  />
+
+  {
+    lead && (
+      <section class="section section--tall">
+        <div class="shell lead">
+          <a class="lead__media" href={`/portfolio/${lead.slug}`} tabindex="-1" aria-hidden="true">
+            <MediaPlaceholder caption={lead.name} ratio="4 / 3" />
+          </a>
+          <div class="lead__body">
+            <span class="eyebrow">{lead.type}</span>
+            <h2 class="title lead__name">
+              <a href={`/portfolio/${lead.slug}`}>{lead.name}</a>
+            </h2>
+            <p class="lede lead__line">{lead.positioning}</p>
+            <dl class="lead__facts">
+              {lead.facts.slice(0, 3).map((fact) => (
+                <div>
+                  <dt>{fact.label}</dt>
+                  <dd>{fact.value}</dd>
+                </div>
+              ))}
+            </dl>
+            <a class="link lead__link" href={`/portfolio/${lead.slug}`}>
+              Ver a obra completa
+              <span class="link__arrow" aria-hidden="true">
+                →
+              </span>
+            </a>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    rest.length > 0 && (
+      <section class="section">
+        <div class="shell">
+          <ul class="grid">
+            {rest.map((project) => (
+              <li>
+                <ProjectCard project={project} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    upcoming.length > 0 && (
+      <section class="section section--tall upcoming">
+        <div class="shell">
+          <div class="upcoming__head">
+            <span class="eyebrow">Em registro</span>
+            <p class="lede upcoming__note">
+              Obras entregues cujo registro técnico e material fotográfico ainda estão em
+              levantamento. Entram aqui conforme ficam prontos.
+            </p>
+          </div>
+          <ul class="grid">
+            {upcoming.map((project) => (
+              <li>
+                <ProjectCard project={project} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <CtaSection
+    title="A próxima pode ser a sua."
+    text="Preencha o formulário e receba um diagnóstico técnico para o seu projeto."
+  />
+</Base>
+
+<style>
+  .lead {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: var(--space-2xl);
+    align-items: center;
+  }
+
+  .lead__media {
+    display: block;
+  }
+
+  .lead__name {
+    margin-top: var(--space-s);
+  }
+
+  .lead__name a {
+    text-decoration: none;
+  }
+
+  .lead__name a:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.16em;
+    text-decoration-thickness: 1px;
+  }
+
+  .lead__line {
+    margin-top: var(--space-m);
+  }
+
+  .lead__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-m) var(--space-l);
+    margin: var(--space-l) 0 0;
+    padding-top: var(--space-m);
+    border-top: 1px solid var(--rule);
+  }
+
+  .lead__facts dt {
+    font-size: var(--step--1);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--navy-60);
+  }
+
+  .lead__facts dd {
+    margin: var(--space-3xs) 0 0;
+    font-size: var(--step-1);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .lead__link {
+    margin-top: var(--space-l);
+  }
+
+  @media (max-width: 860px) {
+    .lead {
+      grid-template-columns: 1fr;
+      gap: var(--space-l);
+    }
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-xl) var(--space-l);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .upcoming {
+    border-top: 1px solid var(--rule);
+  }
+
+  .upcoming__head {
+    margin-bottom: var(--space-xl);
+  }
+
+  .upcoming__note {
+    max-width: 48ch;
+  }
+</style>

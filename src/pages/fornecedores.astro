@@ -1,0 +1,86 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import SupplierForm from '../components/form/SupplierForm.astro';
+import FormRuntime from '../components/form/FormRuntime.astro';
+---
+
+<Base
+  title="Fornecedor parceiro"
+  description="Cadastre sua empresa como fornecedor da Avanthe Engenharia. Toda compra relevante passa por no mínimo três orçamentos."
+>
+  <PageHero
+    eyebrow="Fornecedor parceiro"
+    title="Cotação séria, pagamento em dia."
+    lede="Toda compra relevante da Avanthe passa por no mínimo três orçamentos antes de ser aprovada. Cadastre sua empresa para entrar nessa base."
+  />
+
+  <section class="section section--tall">
+    <div class="shell fornecedores">
+      <div>
+        <SupplierForm />
+      </div>
+
+      <aside class="fornecedores__aside">
+        <h2 class="fornecedores__title">Como compramos</h2>
+        <ul class="fornecedores__list">
+          <li>No mínimo três orçamentos por compra relevante.</li>
+          <li>Material adquirido a prazo em nome do cliente.</li>
+          <li>Lançamentos compilados em um único pagamento mensal.</li>
+          <li>Nota fiscal de cada serviço, sempre.</li>
+        </ul>
+        <p class="fornecedores__note">
+          Procura orçamento de obra? <a href="/contato">Solicite por aqui</a>.
+        </p>
+      </aside>
+    </div>
+  </section>
+
+  <FormRuntime />
+</Base>
+
+<style>
+  .fornecedores {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  .fornecedores__title {
+    padding-bottom: var(--space-2xs);
+    font-size: var(--step--1);
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--navy-60);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .fornecedores__list {
+    margin: var(--space-m) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .fornecedores__list li {
+    padding: var(--space-xs) 0;
+    font-weight: 300;
+    color: var(--navy-80);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .fornecedores__note {
+    margin-top: var(--space-l);
+    font-size: var(--step--1);
+    font-weight: 300;
+    color: var(--navy-60);
+  }
+
+  @media (max-width: 920px) {
+    .fornecedores {
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+    }
+  }
+</style>

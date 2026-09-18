@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Página não encontrada" noindex={true}>
+  <section class="section section--tall erro">
+    <div class="shell">
+      <span class="eyebrow">Erro 404</span>
+      <h1 class="headline erro__title">Esta página não existe.</h1>
+      <p class="lede erro__text">
+        O endereço pode ter mudado, ou o link que trouxe você até aqui está desatualizado.
+      </p>
+      <div class="erro__actions">
+        <a class="btn" href="/">Voltar para a home</a>
+        <a class="link" href="/contato">
+          Solicitar orçamento
+          <span class="link__arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .erro {
+    padding-block: clamp(4rem, 12vw, 8rem);
+  }
+
+  .erro__title {
+    max-width: 14ch;
+  }
+
+  .erro__text {
+    margin-top: var(--space-l);
+  }
+
+  .erro__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-m) var(--space-xl);
+    margin-top: var(--space-xl);
+  }
+</style>

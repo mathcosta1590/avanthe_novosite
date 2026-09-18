@@ -1,0 +1,87 @@
+---
+import Field from './Field.astro';
+import Honeypot from './Honeypot.astro';
+import SuccessOverlay from './SuccessOverlay.astro';
+
+/**
+ * Isolado do funil de Ads: não dispara evento de conversão. Misturar candidatura
+ * na métrica de conversão mascara o CPA real das campanhas.
+ */
+---
+
+<form
+  class="form"
+  id="form-recrutamento"
+  name="recrutamento"
+  method="POST"
+  action="/recrutamento"
+  enctype="multipart/form-data"
+  data-avanthe-form
+  data-netlify="true"
+  netlify-honeypot="bot-field"
+  data-success="sucesso-recrutamento"
+>
+  <input type="hidden" name="form-name" value="recrutamento" />
+  <Honeypot />
+
+  <Field name="nome" label="Nome" required autocomplete="name" placeholder="Seu nome completo" />
+
+  <Field
+    name="contato"
+    label="Telefone ou e-mail"
+    required
+    validate="contact"
+    autocomplete="tel"
+    placeholder="(41) 90000-0000 ou voce@email.com"
+  />
+
+  <Field
+    name="area"
+    label="Área de interesse"
+    type="select"
+    required
+    options={[
+      'Obra (mão de obra e produção)',
+      'Engenharia',
+      'Administrativo',
+      'Estágio',
+      'Outra',
+    ]}
+  />
+
+  <Field
+    name="linkedin"
+    label="Link do LinkedIn"
+    type="url"
+    placeholder="https://linkedin.com/in/..."
+  />
+
+  <div class="field">
+    <span class="field__label">
+      Currículo<span class="field__optional"> (opcional se enviar o LinkedIn)</span>
+    </span>
+    <div class="file">
+      <button type="button" class="file__button" data-file-trigger>Escolher arquivo</button>
+      <span class="file__name" data-file-name>Nenhum arquivo selecionado</span>
+      <input
+        class="file__input"
+        type="file"
+        id="campo-curriculo"
+        name="curriculo"
+        accept=".pdf,application/pdf"
+        tabindex="-1"
+      />
+    </div>
+    <p class="field__hint">PDF, até 8 MB.</p>
+    <p class="field__error" role="alert" aria-live="polite"></p>
+  </div>
+
+  <button type="submit" class="btn form__submit">Enviar candidatura</button>
+  <p class="form__status" role="status" aria-live="polite" data-form-status></p>
+</form>
+
+<SuccessOverlay
+  id="sucesso-recrutamento"
+  title="Candidatura recebida."
+  text="Guardamos seu contato. Quando abrir uma vaga compatível com seu perfil, a Avanthe procura você."
+/>
