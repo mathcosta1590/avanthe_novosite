@@ -151,7 +151,17 @@ Estes pontos ficaram em aberto no briefing e estão marcados no código:
 - **Modelo de administração** em linguagem de benefício: ainda não escrito, e
   por decisão de briefing não entra na página Sobre. Destino provável: página
   própria ("Como trabalhamos") ou FAQ.
-- **Foto profissional do responsável técnico**, para a página Sobre.
+- ~~Foto do responsável técnico~~ — feita, em `public/equipe/`.
+- **Logotipo em vetor.** O componente `src/components/Logo.astro` reproduz o
+  lockup da marca ("avanthe." com o ponto, "engenharia" embaixo) desenhado em
+  Work Sans. O logotipo original usa um sans geométrico, de "a" circular, então
+  as letras ainda não batem. Com o arquivo vetorial em mãos, troque o
+  componente por um `<svg>` inline com `fill="currentColor"`: assim ele herda a
+  cor do contexto e serve fundo claro e escuro com um arquivo só, sem precisar
+  de uma versão branca e outra escura. Mesma coisa para o favicon, hoje um
+  desenho provisório em `public/favicon.svg`.
+- **Fotos das obras já publicadas** (Ruffino e as do portfólio do site antigo),
+  para substituir os blocos de cor.
 
 ## Deploy
 

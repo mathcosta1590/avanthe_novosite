@@ -1,33 +1,57 @@
 ---
-const { label = 'Avanthe Engenharia' } = Astro.props;
+/**
+ * Assinatura da marca: "avanthe." em caixa baixa com o ponto final, e
+ * "engenharia" embaixo — o lockup que está no uniforme e no capacete.
+ *
+ * PENDENTE: o logotipo original usa um sans geométrico (o "a" é de bojo
+ * circular, de andar único). Aqui ele está desenhado em Work Sans, cujo "a" é
+ * de dois andares, então as letras não batem exatamente com a marca. Assim que
+ * o arquivo vetorial chegar, troque este componente por um <svg> inline com
+ * fill="currentColor" — aí ele herda a cor e funciona sobre fundo claro e
+ * escuro sem precisar de duas versões.
+ */
+const { label = 'Avanthe Engenharia', stacked = true } = Astro.props;
 ---
 
-<span class="logo" aria-label={label}>
-  <span class="logo__word">Avanthe</span>
-  <span class="logo__mark" aria-hidden="true"></span>
+<span class="logo" data-stacked={stacked ? 'true' : 'false'} aria-label={label}>
+  <span class="logo__name">avanthe<span class="logo__dot">.</span></span>
+  <span class="logo__sub">engenharia</span>
 </span>
 
 <style>
   .logo {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.55rem;
-    font-size: 1.28rem;
-    font-weight: 600;
-    letter-spacing: -0.03em;
+    display: inline-grid;
     line-height: 1;
     color: currentColor;
   }
 
-  .logo__word {
-    display: inline-block;
+  .logo__name {
+    font-size: 1.32rem;
+    font-weight: 600;
+    letter-spacing: -0.035em;
   }
 
-  /* Marca: barra vertical, eco do rigor/prumo. */
-  .logo__mark {
-    width: 2px;
-    height: 0.95em;
-    background: currentColor;
-    opacity: 0.35;
+  .logo__dot {
+    /* O ponto é parte da marca: some junto com o resto se o texto encolher. */
+    font-weight: 700;
+  }
+
+  .logo__sub {
+    margin-top: 0.18em;
+    font-size: 0.66rem;
+    font-weight: 400;
+    letter-spacing: 0.015em;
+    opacity: 0.72;
+  }
+
+  /* Versão em linha única, para espaços apertados. */
+  .logo[data-stacked='false'] {
+    grid-auto-flow: column;
+    align-items: baseline;
+    gap: 0.4em;
+  }
+
+  .logo[data-stacked='false'] .logo__sub {
+    margin-top: 0;
   }
 </style>

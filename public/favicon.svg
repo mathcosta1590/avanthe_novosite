@@ -1,4 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
   <rect width="32" height="32" fill="#12213D"/>
-  <path d="M16 7 L23.5 25 H19.9 L16 15.1 L12.1 25 H8.5 Z" fill="#F5F5F3"/>
+  <text x="5" y="23.5" font-family="Work Sans, Helvetica, Arial, sans-serif"
+        font-size="20" font-weight="600" letter-spacing="-0.8" fill="#F5F5F3">a.</text>
 </svg>

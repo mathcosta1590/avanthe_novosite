@@ -7,13 +7,21 @@
  * Quando houver foto, passe `src` e `alt` — o tratamento em preto e branco é
  * aplicado por CSS, para unificar material de celular e material profissional.
  */
-const { caption, src, alt = '', ratio = '4 / 3', tone = 'navy' } = Astro.props;
+const { caption, src, alt = '', ratio = '4 / 3', tone = 'navy', width, height } = Astro.props;
 ---
 
 <figure class="media" data-tone={tone} style={`--ratio: ${ratio}`}>
   {
     src ? (
-      <img class="media__img" src={src} alt={alt} loading="lazy" decoding="async" />
+      <img
+        class="media__img"
+        src={src}
+        alt={alt}
+        width={width}
+        height={height}
+        loading="lazy"
+        decoding="async"
+      />
     ) : (
       <div class="media__block" aria-hidden="true" />
     )

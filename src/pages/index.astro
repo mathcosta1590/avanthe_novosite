@@ -14,10 +14,13 @@ import { featuredProject } from '../data/projects.js';
   <!-- Hero -->
   <section class="hero">
     <div class="shell">
-      <p class="hero__text display">
+      <h1 class="hero__text display">
+        Sua obra sai do papel <strong>exatamente como foi planejada</strong>.
+      </h1>
+      <p class="lede hero__lede">
         Na Avanthe, há <strong>metodologia</strong> e <strong>processo</strong>. Vemos beleza nisso,
         e por isso respeitamos cada etapa. Nossa fundação é feita de tecnologia, compromisso e
-        pessoas, pra sua obra sair do papel <strong>exatamente como foi planejada</strong>.
+        pessoas.
       </p>
       <div class="hero__actions">
         <a class="btn" href="/contato">Solicitar orçamento</a>
@@ -114,13 +117,12 @@ import { featuredProject } from '../data/projects.js';
   }
 
   .hero__text {
-    max-width: 24ch;
+    max-width: 16ch;
   }
 
-  @media (min-width: 900px) {
-    .hero__text {
-      max-width: 21ch;
-    }
+  .hero__lede {
+    margin-top: var(--space-l);
+    max-width: 54ch;
   }
 
   .hero__actions {
@@ -128,7 +130,7 @@ import { featuredProject } from '../data/projects.js';
     flex-wrap: wrap;
     align-items: center;
     gap: var(--space-m) var(--space-xl);
-    margin-top: clamp(2.5rem, 6vw, 4rem);
+    margin-top: clamp(2rem, 5vw, 3rem);
   }
 
   .section-head {
