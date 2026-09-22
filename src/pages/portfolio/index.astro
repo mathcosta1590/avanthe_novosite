@@ -29,7 +29,13 @@ const upcoming = projects.filter((p) => p.status !== 'complete');
       <section class="section section--tall">
         <div class="shell lead">
           <a class="lead__media" href={`/portfolio/${lead.slug}`} tabindex="-1" aria-hidden="true">
-            <MediaPlaceholder caption={lead.name} ratio="4 / 3" />
+            <MediaPlaceholder
+              caption={lead.name}
+              src={lead.gallery?.[0]?.src}
+              alt={lead.gallery?.[0]?.alt}
+              ratio="4 / 3"
+              priority={true}
+            />
           </a>
           <div class="lead__body">
             <span class="eyebrow">{lead.type}</span>

@@ -81,17 +81,38 @@ export const projects = [
   },
   {
     slug: 'apartamento-centro',
-    status: 'draft',
+    status: 'complete',
     featured: false,
     name: 'Apartamento Centro',
     client: null,
-    positioning: null,
+    positioning:
+      'Um apartamento no centro de Curitiba entregue pronto para morar, do piso à marcenaria.',
     type: 'Reforma residencial',
-    facts: [],
-    challenge: null,
-    body: [],
-    scope: [],
-    gallery: [],
+    // PENDENTE: área e prazo desta obra ainda não foram levantados. Assim que
+    // vierem, entram aqui e aparecem na página.
+    facts: [
+      { label: 'Intervenção', value: 'Reforma residencial completa' },
+      { label: 'Local', value: 'Centro, Curitiba' },
+      { label: 'Status', value: 'Concluída' },
+    ],
+    challenge:
+      'Um apartamento compacto, onde cada ambiente precisava ser resolvido por inteiro: piso, iluminação, revestimento e marcenaria entregues em conjunto, sem sobra de acabamento pela metade.',
+    body: [
+      'Reforma residencial completa em apartamento no centro de Curitiba. Sala, dormitório e banheiro refeitos, com piso novo em toda a área, iluminação embutida, revestimento de parede no banheiro e marcenaria sob medida.',
+    ],
+    scope: [
+      'Piso novo em toda a área',
+      'Iluminação embutida e sanca',
+      'Revestimento de parede no banheiro',
+      'Marcenaria sob medida',
+      'Pintura geral',
+    ],
+    gallery: [
+      { src: '/obras/apartamento-centro-01.jpg', alt: 'Sala do apartamento após a reforma' },
+      { src: '/obras/apartamento-centro-02.jpg', alt: 'Dormitório com piso e iluminação novos' },
+      { src: '/obras/apartamento-centro-03.jpg', alt: 'Banheiro com revestimento e nichos' },
+      { src: '/obras/apartamento-centro-04.jpg', alt: 'Sala em outro ângulo, com a marcenaria' },
+    ],
   },
   {
     /**

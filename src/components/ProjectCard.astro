@@ -3,6 +3,7 @@ import MediaPlaceholder from './MediaPlaceholder.astro';
 
 const { project } = Astro.props;
 const isDraft = project.status !== 'complete';
+const cover = project.gallery?.[0] ?? null;
 ---
 
 {
@@ -23,7 +24,12 @@ const isDraft = project.status !== 'complete';
   ) : (
     <article class="project-card">
       <a class="project-card__link" href={`/portfolio/${project.slug}`}>
-        <MediaPlaceholder caption={project.name} ratio="3 / 2" />
+        <MediaPlaceholder
+          caption={project.name}
+          src={cover?.src}
+          alt={cover?.alt}
+          ratio="3 / 2"
+        />
         <div class="project-card__body">
           <h3 class="project-card__name">{project.name}</h3>
           <p class="project-card__meta">{project.type}</p>

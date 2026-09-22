@@ -13,6 +13,10 @@ export function getStaticPaths() {
 }
 
 const { project } = Astro.props;
+// A primeira foto da galeria é a capa: abre a página, o card do portfólio e o
+// destaque da home. As demais ficam na galeria do fim.
+const cover = project.gallery[0] ?? null;
+const rest = project.gallery.slice(1);
 const others = projects.filter((p) => p.slug !== project.slug && p.status === 'complete');
 ---
 
@@ -49,7 +53,13 @@ const others = projects.filter((p) => p.slug !== project.slug && p.status === 'c
 
     <section class="section">
       <div class="shell">
-        <MediaPlaceholder caption={project.name} ratio="16 / 9" />
+        <MediaPlaceholder
+          caption={project.name}
+          src={cover?.src}
+          alt={cover?.alt}
+          ratio="16 / 9"
+          priority={true}
+        />
       </div>
     </section>
 
@@ -87,8 +97,8 @@ const others = projects.filter((p) => p.slug !== project.slug && p.status === 'c
     <section class="section">
       <div class="shell galeria">
         {
-          project.gallery.length > 0
-            ? project.gallery.map((image) => (
+          rest.length > 0
+            ? rest.map((image) => (
                 <MediaPlaceholder src={image.src} alt={image.alt} ratio="4 / 3" />
               ))
             : [1, 2].map(() => <MediaPlaceholder caption={project.name} ratio="4 / 3" tone="ink" />)

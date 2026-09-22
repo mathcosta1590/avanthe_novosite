@@ -7,7 +7,20 @@
  * Quando houver foto, passe `src` e `alt` — o tratamento em preto e branco é
  * aplicado por CSS, para unificar material de celular e material profissional.
  */
-const { caption, src, alt = '', ratio = '4 / 3', tone = 'navy', width, height } = Astro.props;
+const {
+  caption,
+  src,
+  alt = '',
+  ratio = '4 / 3',
+  tone = 'navy',
+  width,
+  height,
+  /**
+   * Imagem acima da dobra. Carrega de imediato e com prioridade, porque
+   * costuma ser o LCP da página — e LCP ruim pesa no Quality Score do Ads.
+   */
+  priority = false,
+} = Astro.props;
 ---
 
 <figure class="media" data-tone={tone} style={`--ratio: ${ratio}`}>
@@ -19,8 +32,9 @@ const { caption, src, alt = '', ratio = '4 / 3', tone = 'navy', width, height } 
         alt={alt}
         width={width}
         height={height}
-        loading="lazy"
-        decoding="async"
+        loading={priority ? 'eager' : 'lazy'}
+        fetchpriority={priority ? 'high' : undefined}
+        decoding={priority ? 'sync' : 'async'}
       />
     ) : (
       <div class="media__block" aria-hidden="true" />

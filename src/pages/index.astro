@@ -82,7 +82,12 @@ import { featuredProject } from '../data/projects.js';
           <span class="eyebrow">Obra em destaque</span>
           <div class="featured__grid">
             <div class="featured__media">
-              <MediaPlaceholder caption={featuredProject.name} ratio="4 / 3" />
+              <MediaPlaceholder
+                caption={featuredProject.name}
+                src={featuredProject.gallery?.[0]?.src}
+                alt={featuredProject.gallery?.[0]?.alt}
+                ratio="4 / 3"
+              />
             </div>
             <div class="featured__body">
               <h2 class="title featured__name">{featuredProject.name}</h2>
