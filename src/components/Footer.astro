@@ -13,9 +13,23 @@ const year = new Date().getFullYear();
         <div class="site-footer__top">
           <div class="site-footer__brand">
             <Logo />
+            <p class="site-footer__tagline">{site.tagline}</p>
             <p class="site-footer__line">
               Engenharia, obra e responsabilidade técnica direta. Curitiba e região metropolitana.
             </p>
+            <a
+              class="site-footer__social"
+              href={site.instagram}
+              target="_blank"
+              rel="noopener"
+              aria-label="Instagram da Avanthe"
+            >
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle cx="17.2" cy="6.8" r="1" />
+              </svg>
+            </a>
           </div>
 
           {footerLinks.map((group) => (
@@ -81,8 +95,30 @@ const year = new Date().getFullYear();
     border-bottom: 1px solid rgba(245, 245, 243, 0.16);
   }
 
+  .site-footer__tagline {
+    margin-top: var(--space-m);
+    font-size: var(--step-0);
+    font-weight: 400;
+    color: var(--paper);
+  }
+
+  .site-footer__social {
+    display: inline-flex;
+    margin-top: var(--space-m);
+    padding: 0.55rem;
+    color: rgba(245, 245, 243, 0.7);
+    border: 1px solid rgba(245, 245, 243, 0.24);
+    border-radius: 3px;
+    transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+  }
+
+  .site-footer__social:hover {
+    color: var(--paper);
+    border-color: var(--paper);
+  }
+
   .site-footer__line {
-    margin-top: var(--space-s);
+    margin-top: var(--space-2xs);
     max-width: 30ch;
     font-weight: 300;
     font-size: var(--step-0);

@@ -18,9 +18,11 @@ export const site = {
   },
   whatsapp: {
     // Número em formato internacional, sem símbolos (usado no link wa.me).
-    number: '5541999999999',
-    display: '(41) 99999-9999',
+    number: '5541984468168',
+    display: '(41) 98446-8168',
   },
+  instagram: 'https://www.instagram.com/avanthe.engenharia',
+  tagline: 'com você, seguimos avanthe.',
   email: 'contato@avanthe.com.br',
   // ID de conversão do Google Ads. Preencher com os valores reais da conta
   // antes de publicar: o evento só dispara no envio do formulário de orçamento.

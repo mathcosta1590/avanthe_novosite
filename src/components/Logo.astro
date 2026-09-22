@@ -1,57 +1,46 @@
 ---
 /**
- * Assinatura da marca: "avanthe." em caixa baixa com o ponto final, e
- * "engenharia" embaixo — o lockup que está no uniforme e no capacete.
+ * Assinatura da marca, vetorial e oficial (src/assets/logo-avanthe.svg).
  *
- * PENDENTE: o logotipo original usa um sans geométrico (o "a" é de bojo
- * circular, de andar único). Aqui ele está desenhado em Work Sans, cujo "a" é
- * de dois andares, então as letras não batem exatamente com a marca. Assim que
- * o arquivo vetorial chegar, troque este componente por um <svg> inline com
- * fill="currentColor" — aí ele herda a cor e funciona sobre fundo claro e
- * escuro sem precisar de duas versões.
+ * O SVG é injetado inline e teve o fill branco trocado por currentColor, então
+ * um único arquivo serve o header claro e o rodapé escuro: a cor vem do
+ * contexto. Inline também evita uma requisição e permite animar/ajustar por CSS.
  */
-const { label = 'Avanthe Engenharia', stacked = true } = Astro.props;
+import wordmark from '../assets/logo-avanthe.svg?raw';
+
+const { label = 'Avanthe Engenharia', sub = true } = Astro.props;
 ---
 
-<span class="logo" data-stacked={stacked ? 'true' : 'false'} aria-label={label}>
-  <span class="logo__name">avanthe<span class="logo__dot">.</span></span>
-  <span class="logo__sub">engenharia</span>
+<span class="logo" role="img" aria-label={label}>
+  <span class="logo__mark" set:html={wordmark} />
+  {sub && <span class="logo__sub">engenharia</span>}
 </span>
 
 <style>
   .logo {
     display: inline-grid;
+    justify-items: start;
     line-height: 1;
     color: currentColor;
   }
 
-  .logo__name {
-    font-size: 1.32rem;
-    font-weight: 600;
-    letter-spacing: -0.035em;
+  .logo__mark {
+    display: block;
+    width: auto;
   }
 
-  .logo__dot {
-    /* O ponto é parte da marca: some junto com o resto se o texto encolher. */
-    font-weight: 700;
+  .logo__mark :global(svg) {
+    display: block;
+    height: 1.18rem;
+    width: auto;
+    overflow: visible;
   }
 
   .logo__sub {
-    margin-top: 0.18em;
-    font-size: 0.66rem;
+    margin-top: 0.3em;
+    font-size: 0.64rem;
     font-weight: 400;
-    letter-spacing: 0.015em;
-    opacity: 0.72;
-  }
-
-  /* Versão em linha única, para espaços apertados. */
-  .logo[data-stacked='false'] {
-    grid-auto-flow: column;
-    align-items: baseline;
-    gap: 0.4em;
-  }
-
-  .logo[data-stacked='false'] .logo__sub {
-    margin-top: 0;
+    letter-spacing: 0.055em;
+    opacity: 0.7;
   }
 </style>
