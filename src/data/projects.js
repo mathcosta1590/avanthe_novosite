@@ -44,7 +44,16 @@ export const projects = [
       'Forro modular com lã de rocha para conforto acústico',
       'Contrapiso, piso e pintura renovados por completo',
     ],
-    gallery: [],
+    gallery: [
+      { src: '/obras/ruffino-01.jpg', alt: 'Área administrativa concluída, com piso, forro modular e parede de destaque' },
+      { src: '/obras/ruffino-02.jpg', alt: 'Salão administrativo aberto, com iluminação embutida e climatização' },
+      { src: '/obras/ruffino-03.jpg', alt: 'Ambiente de trabalho após a reforma' },
+      { src: '/obras/ruffino-04.jpg', alt: 'Sala com parede de destaque e pontos elétricos novos' },
+      { src: '/obras/ruffino-05.jpg', alt: 'Bloco de sanitários executado na reforma' },
+      // A confirmar: piso e forro desta foto diferem do restante do conjunto.
+      // Pode ser outra área do mesmo galpão, ou outra obra.
+      { src: '/obras/ruffino-06.jpg', alt: 'Área ampla com piso cerâmico e iluminação nova' },
+    ],
   },
   {
     slug: 'apartamento-bigorrilho',
