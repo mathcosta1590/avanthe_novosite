@@ -28,7 +28,10 @@ const others = projects.filter((p) => p.slug !== project.slug && p.status === 'c
   <article>
     <header class="obra-hero">
       <div class="shell">
-        <span class="eyebrow">{project.type}</span>
+        <span class="eyebrow">
+          {project.type}
+          {project.stage === 'andamento' && <span class="obra-hero__live">· obra em andamento</span>}
+        </span>
         <h1 class="headline obra-hero__title">{project.name}</h1>
         {project.positioning && <p class="lede obra-hero__lede">{project.positioning}</p>}
       </div>
@@ -132,6 +135,11 @@ const others = projects.filter((p) => p.slug !== project.slug && p.status === 'c
 <style>
   .obra-hero {
     padding-block: clamp(3.5rem, 9vw, 7rem) var(--space-xl);
+  }
+
+  .obra-hero__live {
+    color: var(--navy);
+    font-weight: 600;
   }
 
   .obra-hero__title {

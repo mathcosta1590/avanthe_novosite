@@ -5,6 +5,10 @@
  * `status: 'draft'`    — dados de obra ainda não levantados (metragem, tipo de
  *                        intervenção, prazo). O layout usa placeholder até lá.
  *
+ * `stage: 'andamento'` — obra em execução. Aparece no portfólio com selo, para
+ *                        não vender como entregue o que ainda está em obra.
+ *                        Ausente ou 'entregue' significa concluída.
+ *
  * Imagens: a primeira foto de `gallery` é a capa da obra e alimenta o topo da
  * página, o card do portfólio e o destaque da home. Onde ainda não há foto,
  * entra um bloco de cor sólida com legenda, em vez de banco de imagens
@@ -112,6 +116,37 @@ export const projects = [
       { src: '/obras/apartamento-centro-02.jpg', alt: 'Dormitório com piso e iluminação novos' },
       { src: '/obras/apartamento-centro-03.jpg', alt: 'Banheiro com revestimento e nichos' },
       { src: '/obras/apartamento-centro-04.jpg', alt: 'Sala em outro ângulo, com a marcenaria' },
+    ],
+  },
+  {
+    slug: 'dns',
+    status: 'complete',
+    stage: 'andamento',
+    featured: false,
+    name: 'DNS',
+    client: 'DNS',
+    positioning:
+      'Um pavimento inteiro sendo refeito em Curitiba, da pintura ao piso, com a obra acompanhada semana a semana.',
+    // PENDENTE: tipo de imóvel, área e prazo desta obra ainda não foram
+    // informados. Entram aqui e aparecem na página assim que chegarem.
+    type: 'Reforma',
+    facts: [
+      { label: 'Status', value: 'Em andamento' },
+      { label: 'Local', value: 'Curitiba' },
+    ],
+    challenge:
+      'Um pavimento amplo, de pé-direito alto e janelas corridas, refeito por inteiro: alvenaria, pintura e piso executados em sequência, com o cronograma reportado semana a semana enquanto a obra corre.',
+    body: [
+      'Obra em execução. As paredes já receberam pintura e o piso está sendo assentado por etapas. O registro completo, com área, prazo e escopo final, entra aqui na entrega.',
+    ],
+    scope: ['Alvenaria e divisórias', 'Pintura', 'Piso'],
+    gallery: [
+      { src: '/obras/dns-01.jpg', alt: 'Ambiente com pintura concluída e janelas corridas' },
+      { src: '/obras/dns-02.jpg', alt: 'Vista do pavimento em obra' },
+      { src: '/obras/dns-03.jpg', alt: 'Ambiente com parede em azul profundo' },
+      { src: '/obras/dns-04.jpg', alt: 'Circulação entre os ambientes' },
+      { src: '/obras/dns-05.jpg', alt: 'Piso de madeira já assentado' },
+      { src: '/obras/dns-06.jpg', alt: 'Equipe da Avanthe em campo' },
     ],
   },
   {

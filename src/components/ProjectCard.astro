@@ -4,6 +4,7 @@ import MediaPlaceholder from './MediaPlaceholder.astro';
 const { project } = Astro.props;
 const isDraft = project.status !== 'complete';
 const cover = project.gallery?.[0] ?? null;
+const emAndamento = project.stage === 'andamento';
 ---
 
 {
@@ -24,12 +25,15 @@ const cover = project.gallery?.[0] ?? null;
   ) : (
     <article class="project-card">
       <a class="project-card__link" href={`/portfolio/${project.slug}`}>
+        <div class="project-card__media">
         <MediaPlaceholder
           caption={project.name}
           src={cover?.src}
           alt={cover?.alt}
           ratio="3 / 2"
         />
+        {emAndamento && <span class="project-card__badge project-card__badge--live">Em andamento</span>}
+        </div>
         <div class="project-card__body">
           <h3 class="project-card__name">{project.name}</h3>
           <p class="project-card__meta">{project.type}</p>
@@ -97,6 +101,11 @@ const cover = project.gallery?.[0] ?? null;
 
   .project-card__media {
     position: relative;
+  }
+
+  .project-card__badge--live {
+    background: rgba(18, 33, 61, 0.82);
+    border-color: transparent;
   }
 
   .project-card__badge {
