@@ -122,11 +122,13 @@ existe para tráfego pago, e indexá-la concorreria com `/reforma-retrofit`.
   por peso e escala, não por troca de fonte. Negrito é usado com intenção em
   palavras-chave dentro de frases, não em frases inteiras.
 - **Header** sólido e não fixo no scroll.
-- **Fotografia.** Enquanto a produção nova não fica pronta, onde faltaria foto
-  entra um bloco de cor sólida com legenda `[ foto — nome da obra ]`, em vez de
-  banco de imagens genérico. Quando houver foto, o componente
-  `MediaPlaceholder` já aplica tratamento em preto e branco, o que unifica
-  material de celular e material profissional.
+- **Fotografia.** As fotos de obra saem **em cor**. O briefing previa preto e
+  branco para unificar material de celular com material profissional, mas em
+  obra de reforma o acabamento é o argumento de venda — o tom da madeira, o
+  mármore, o revestimento — e dessaturar joga fora justamente o que convence.
+  Decisão revista com o cliente. Onde ainda falta foto, entra um bloco de cor
+  sólida com legenda `[ foto — nome da obra ]`, em vez de banco de imagens
+  genérico.
 
 ### Publicar uma foto real
 

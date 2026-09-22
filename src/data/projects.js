@@ -5,10 +5,10 @@
  * `status: 'draft'`    — dados de obra ainda não levantados (metragem, tipo de
  *                        intervenção, prazo). O layout usa placeholder até lá.
  *
- * Imagens: enquanto a nova produção fotográfica não fica pronta, cada obra usa
- * blocos de cor sólida com legenda, em vez de banco de imagens genérico. Para
- * publicar uma foto real, preencha `gallery` com { src, alt } apontando para
- * arquivos em /public/obras/.
+ * Imagens: a primeira foto de `gallery` é a capa da obra e alimenta o topo da
+ * página, o card do portfólio e o destaque da home. Onde ainda não há foto,
+ * entra um bloco de cor sólida com legenda, em vez de banco de imagens
+ * genérico. Para publicar, aponte { src, alt } para arquivos em /public/obras/.
  */
 
 export const projects = [

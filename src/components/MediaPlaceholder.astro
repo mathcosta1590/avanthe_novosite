@@ -1,11 +1,13 @@
 ---
 /**
- * Bloco de cor sólida no lugar de foto. Enquanto a produção fotográfica nova
- * não fica pronta, isto substitui banco de imagens genérico: a legenda diz
- * exatamente qual foto vai entrar ali.
+ * Foto de obra, ou bloco de cor sólida no lugar dela enquanto a foto não
+ * existe — a legenda diz exatamente qual imagem vai entrar ali, em vez de
+ * banco de imagens genérico.
  *
- * Quando houver foto, passe `src` e `alt` — o tratamento em preto e branco é
- * aplicado por CSS, para unificar material de celular e material profissional.
+ * As fotos saem em cor. O briefing previa preto e branco para unificar
+ * material de celular com material profissional, mas em obra de reforma o
+ * acabamento é o argumento de venda: o tom da madeira, o mármore, o
+ * revestimento. Dessaturar joga fora justamente o que convence.
  */
 const {
   caption,
@@ -64,10 +66,8 @@ const {
     background: var(--ink);
   }
 
-  /* Preto e branco até a nova leva de fotos padronizar o material. */
   .media__img {
-    filter: grayscale(100%) contrast(1.04);
-    transition: filter 0.5s var(--ease);
+    background: var(--navy-12);
   }
 
   .media__caption {
