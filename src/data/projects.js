@@ -44,16 +44,25 @@ export const projects = [
   },
   {
     slug: 'apartamento-bigorrilho',
-    status: 'draft',
+    status: 'complete',
     featured: false,
     name: 'Apartamento Bigorrilho',
     client: null,
-    positioning: null,
+    positioning:
+      'Reforma residencial completa em 60 m², com as instalações elétricas e hidráulicas refeitas, em um mês.',
     type: 'Reforma residencial',
-    facts: [],
-    challenge: null,
-    body: [],
-    scope: [],
+    facts: [
+      { label: 'Área', value: '60 m²' },
+      { label: 'Intervenção', value: 'Reforma residencial completa' },
+      { label: 'Prazo', value: '1 mês' },
+      { label: 'Local', value: 'Bigorrilho, Curitiba' },
+    ],
+    challenge:
+      'Um apartamento que pedia mais do que acabamento novo: as instalações elétricas e hidráulicas precisavam ser atualizadas por baixo do que se via, sem estender a obra além do mês combinado.',
+    body: [
+      'Reforma residencial completa em 60 m², com pintura, acabamentos e atualização das instalações elétricas e hidráulicas. A obra foi entregue em um mês, no prazo combinado.',
+    ],
+    scope: ['Instalações elétricas atualizadas', 'Instalações hidráulicas atualizadas', 'Acabamentos', 'Pintura'],
     gallery: [],
   },
   {
