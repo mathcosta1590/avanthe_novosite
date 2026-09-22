@@ -12,16 +12,19 @@
 
 :root {
   /* Cor */
-  --navy: #12213d;
-  --navy-80: #41506a;
-  --navy-60: #717c92;
-  --navy-30: #b8bec9;
-  --navy-12: #dfe2e8;
+  /* Navy oficial da marca, conferido em dois arquivos: o ícone do app e o PDF
+     do logotipo. O briefing registrava #12213D, que é próximo mas não é o tom
+     dos arquivos de marca. */
+  --navy: #102449;
+  --navy-80: #3e4e6b;
+  --navy-60: #6c788d;
+  --navy-30: #b0b6c0;
+  --navy-12: #dadcdf;
   --ink: #16151a;
   --paper: #f5f5f3;
   --paper-pure: #ffffff;
-  --rule: rgba(18, 33, 61, 0.14);
-  --rule-strong: rgba(18, 33, 61, 0.28);
+  --rule: rgba(16, 36, 73, 0.14);
+  --rule-strong: rgba(16, 36, 73, 0.28);
 
   /* Tipografia */
   --font: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
