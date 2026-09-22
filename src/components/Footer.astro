@@ -12,11 +12,8 @@ const year = new Date().getFullYear();
       !bare && (
         <div class="site-footer__top">
           <div class="site-footer__brand">
-            <Logo />
+            <Logo variant="mark" />
             <p class="site-footer__tagline">{site.tagline}</p>
-            <p class="site-footer__line">
-              Engenharia, obra e responsabilidade técnica direta. Curitiba e região metropolitana.
-            </p>
             <a
               class="site-footer__social"
               href={site.instagram}
@@ -70,9 +67,6 @@ const year = new Date().getFullYear();
         © {year} {site.legalName} · CNPJ {site.cnpj}
       </p>
       <p>
-        {site.responsible.title}: {site.responsible.name} · {site.responsible.crea}
-      </p>
-      <p>
         <a href="/politica-de-privacidade">Política de privacidade</a>
       </p>
     </div>
@@ -96,7 +90,7 @@ const year = new Date().getFullYear();
   }
 
   .site-footer__tagline {
-    margin-top: var(--space-m);
+    margin-top: var(--space-l);
     font-size: var(--step-0);
     font-weight: 400;
     color: var(--paper);
@@ -104,7 +98,7 @@ const year = new Date().getFullYear();
 
   .site-footer__social {
     display: inline-flex;
-    margin-top: var(--space-m);
+    margin-top: var(--space-l);
     padding: 0.55rem;
     color: rgba(245, 245, 243, 0.7);
     border: 1px solid rgba(245, 245, 243, 0.24);
@@ -115,14 +109,6 @@ const year = new Date().getFullYear();
   .site-footer__social:hover {
     color: var(--paper);
     border-color: var(--paper);
-  }
-
-  .site-footer__line {
-    margin-top: var(--space-2xs);
-    max-width: 30ch;
-    font-weight: 300;
-    font-size: var(--step-0);
-    color: rgba(245, 245, 243, 0.68);
   }
 
   .site-footer__title {

@@ -168,7 +168,14 @@ function detectMisroute(text) {
 }
 
 /**
- * Aviso inline, nunca bloqueio: um falso positivo não pode derrubar um lead real.
+ * Triagem por palavra-chave no campo de mensagem.
+ *
+ * Quando o assunto é vaga ou fornecedor, o envio é barrado e o formulário
+ * correto é oferecido: assunto errado neste formulário contamina a métrica de
+ * conversão das campanhas, que é o que sustenta a medição do Ads.
+ *
+ * O bloqueio some assim que o termo sai do texto, então quem escreveu por
+ * engano corrige e envia. Não existe caminho de "continuar mesmo assim".
  */
 function wireMisrouteNotice(form) {
   const field = form.querySelector('[data-misroute-source]');
@@ -176,35 +183,31 @@ function wireMisrouteNotice(form) {
   if (!field || !notice) return;
 
   const link = notice.querySelector('[data-misroute-link]');
-  const dismiss = notice.querySelector('[data-misroute-dismiss]');
   const text = notice.querySelector('[data-misroute-text]');
-  let dismissed = false;
+  const submit = form.querySelector('[type="submit"]');
 
   const check = () => {
-    if (dismissed) return;
     const match = detectMisroute(field.value);
     if (match) {
       text.textContent = link
-        ? `Parece que sua mensagem é sobre ${match.label.toLowerCase()}. Esse assunto tem um formulário próprio, e por ali a resposta chega mais rápido.`
-        : `Parece que sua mensagem é sobre ${match.label.toLowerCase()}. Este formulário é para orçamento de obra; escreva para contato@avanthe.com.br se o assunto for outro.`;
+        ? `Sua mensagem é sobre ${match.label.toLowerCase()}. Esse assunto não é tratado por aqui, e tem um formulário próprio onde a resposta chega mais rápido.`
+        : `Sua mensagem é sobre ${match.label.toLowerCase()}. Este formulário é só para orçamento de obra; escreva para contato@avanthe.com.br se o assunto for outro.`;
       if (link) {
         link.setAttribute('href', match.target);
         link.textContent = `Ir para ${match.label}`;
       }
       notice.hidden = false;
+      form.dataset.misrouted = 'true';
+      if (submit) submit.disabled = true;
     } else {
       notice.hidden = true;
+      delete form.dataset.misrouted;
+      if (submit) submit.disabled = false;
     }
   };
 
   field.addEventListener('input', check);
   field.addEventListener('blur', check);
-
-  dismiss?.addEventListener('click', () => {
-    dismissed = true;
-    notice.hidden = true;
-    field.focus();
-  });
 }
 
 /* -------------------------------------------------------------------------
@@ -373,6 +376,13 @@ export function initForms() {
       // Honeypot preenchido: bot. Simulamos sucesso sem enviar nada.
       const trap = form.querySelector('.honeypot input');
       if (trap && trap.value) return;
+      if (form.dataset.misrouted === 'true') {
+        form.querySelector('[data-misroute-notice]')?.scrollIntoView({
+          block: 'center',
+          behavior: 'smooth',
+        });
+        return;
+      }
       if (!validateForm(form)) return;
       submit(form);
     });

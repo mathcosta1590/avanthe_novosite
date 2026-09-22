@@ -1,19 +1,23 @@
 ---
 /**
- * Assinatura da marca, vetorial e oficial (src/assets/logo-avanthe.svg).
+ * Assinatura da marca, vetorial e oficial.
  *
- * O SVG é injetado inline e teve o fill branco trocado por currentColor, então
- * um único arquivo serve o header claro e o rodapé escuro: a cor vem do
- * contexto. Inline também evita uma requisição e permite animar/ajustar por CSS.
+ * `variant="mark"` usa só o "a." — os mesmos glifos do wordmark, extraídos e
+ * reposicionados, não um redesenho. Usado no rodapé.
+ *
+ * Os dois SVGs vão inline com fill="currentColor", então herdam a cor do
+ * contexto: um arquivo serve o header claro e o rodapé escuro.
  */
 import wordmark from '../assets/logo-avanthe.svg?raw';
+import mark from '../assets/logo-mark.svg?raw';
 
-const { label = 'Avanthe Engenharia', sub = true } = Astro.props;
+const { label = 'Avanthe Engenharia', variant = 'full', sub = true } = Astro.props;
+const isMark = variant === 'mark';
 ---
 
-<span class="logo" role="img" aria-label={label}>
-  <span class="logo__mark" set:html={wordmark} />
-  {sub && <span class="logo__sub">engenharia</span>}
+<span class="logo" data-variant={variant} role="img" aria-label={label}>
+  <span class="logo__svg" set:html={isMark ? mark : wordmark} />
+  {!isMark && sub && <span class="logo__sub">engenharia</span>}
 </span>
 
 <style>
@@ -24,23 +28,32 @@ const { label = 'Avanthe Engenharia', sub = true } = Astro.props;
     color: currentColor;
   }
 
-  .logo__mark {
+  .logo__svg {
     display: block;
-    width: auto;
   }
 
-  .logo__mark :global(svg) {
+  .logo__svg :global(svg) {
     display: block;
-    height: 1.18rem;
+    height: 1.72rem;
     width: auto;
     overflow: visible;
   }
 
+  .logo[data-variant='mark'] .logo__svg :global(svg) {
+    height: 2.6rem;
+  }
+
   .logo__sub {
-    margin-top: 0.3em;
-    font-size: 0.64rem;
+    margin-top: 0.42em;
+    font-size: 0.72rem;
     font-weight: 400;
-    letter-spacing: 0.055em;
-    opacity: 0.7;
+    letter-spacing: 0.085em;
+    opacity: 0.68;
+  }
+
+  @media (max-width: 520px) {
+    .logo__svg :global(svg) {
+      height: 1.45rem;
+    }
   }
 </style>
