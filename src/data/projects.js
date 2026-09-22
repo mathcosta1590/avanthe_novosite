@@ -17,9 +17,56 @@
 
 export const projects = [
   {
-    slug: 'reforma-comercial-ruffino',
+    /**
+     * Destaque principal do site, conforme previsto no briefing: a obra assume
+     * o posto assim que as fotos profissionais ficam prontas.
+     *
+     * ATENÇÃO: o texto abaixo é rascunho, escrito a partir das fotos. O
+     * briefing registrava que o texto desta obra ainda não havia sido escrito.
+     * Precisa de validação antes de ir ao ar em produção.
+     */
+    slug: 'the-best-coffee',
     status: 'complete',
     featured: true,
+    name: 'The Best Coffee',
+    client: 'The Best Coffee',
+    positioning:
+      'Um ponto comercial entregue pronto para operar, da obra bruta ao balcão servindo o primeiro café.',
+    type: 'Franquia comercial',
+    // PENDENTE: área e prazo desta obra.
+    facts: [
+      { label: 'Intervenção', value: 'Reforma comercial completa' },
+      { label: 'Segmento', value: 'Franquia de cafeteria' },
+      { label: 'Local', value: 'Curitiba' },
+      { label: 'Status', value: 'Concluída' },
+    ],
+    challenge:
+      'Obra de franquia tem um prazo que não é só do cliente. É o aluguel que já corre, a data de inauguração anunciada e um padrão de marca que a franqueadora não negocia. O ponto precisava sair de espaço bruto para cafeteria operando, sem que nenhum desses três cedesse.',
+    body: [
+      'Reforma completa de ponto comercial para a franquia The Best Coffee. As instalações elétricas e hidráulicas foram dimensionadas para o uso real de uma cafeteria, com os pontos de força que máquina de café, balcão refrigerado e cozinha exigem em operação contínua.',
+      'O acabamento seguiu o manual da marca: iluminação em trilho, revestimentos, marcenaria sob medida no balcão, nas mesas e nos bancos, e a comunicação visual de parede. O resultado é um ponto pronto para abrir na data combinada.',
+    ],
+    scope: [
+      'Instalações elétricas dimensionadas para operação de cafeteria',
+      'Instalações hidráulicas',
+      'Forro e iluminação em trilho',
+      'Revestimentos e pisos',
+      'Marcenaria sob medida do balcão, mesas e bancos',
+      'Comunicação visual e fachada no padrão da franquia',
+    ],
+    gallery: [
+      { src: '/obras/the-best-coffee-01.jpg', alt: 'Salão da cafeteria com painel verde, balcão e mesas' },
+      { src: '/obras/the-best-coffee-02.jpg', alt: 'Vista do salão a partir da entrada, com marcenaria sob medida' },
+      { src: '/obras/the-best-coffee-03.jpg', alt: 'Área de atendimento e balcão refrigerado' },
+      { src: '/obras/the-best-coffee-04.jpg', alt: 'Ambiente de mesas com comunicação visual de parede' },
+      { src: '/obras/the-best-coffee-05.jpg', alt: 'Fachada da cafeteria concluída' },
+    ],
+  },
+
+  {
+    slug: 'reforma-comercial-ruffino',
+    status: 'complete',
+    featured: false,
     name: 'Reforma Comercial Ruffino',
     client: 'Ruffino',
     positioning:
@@ -51,47 +98,45 @@ export const projects = [
       { src: '/obras/ruffino-04.jpg', alt: 'Sala com parede de destaque e pontos elétricos novos' },
       { src: '/obras/ruffino-05.jpg', alt: 'Bloco de sanitários executado na reforma' },
       // A confirmar: piso e forro desta foto diferem do restante do conjunto.
-      // Pode ser outra área do mesmo galpão, ou outra obra.
       { src: '/obras/ruffino-06.jpg', alt: 'Área ampla com piso cerâmico e iluminação nova' },
     ],
   },
-  {
-    slug: 'apartamento-bigorrilho',
-    status: 'complete',
-    featured: false,
-    name: 'Apartamento Bigorrilho',
-    client: null,
-    positioning:
-      'Reforma residencial completa em 60 m², com as instalações elétricas e hidráulicas refeitas, em um mês.',
-    type: 'Reforma residencial',
-    facts: [
-      { label: 'Área', value: '60 m²' },
-      { label: 'Intervenção', value: 'Reforma residencial completa' },
-      { label: 'Prazo', value: '1 mês' },
-      { label: 'Local', value: 'Bigorrilho, Curitiba' },
-    ],
-    challenge:
-      'Um apartamento que pedia mais do que acabamento novo: as instalações elétricas e hidráulicas precisavam ser atualizadas por baixo do que se via, sem estender a obra além do mês combinado.',
-    body: [
-      'Reforma residencial completa em 60 m², com pintura, acabamentos e atualização das instalações elétricas e hidráulicas. A obra foi entregue em um mês, no prazo combinado.',
-    ],
-    scope: ['Instalações elétricas atualizadas', 'Instalações hidráulicas atualizadas', 'Acabamentos', 'Pintura'],
-    gallery: [],
-  },
+
   {
     slug: 'apartamento-301',
-    status: 'draft',
+    status: 'complete',
     featured: false,
     name: 'Apartamento 301',
     client: null,
-    positioning: null,
+    positioning:
+      'Um apartamento entregue no ponto de morar, com marcenaria sob medida e iluminação desenhada ambiente a ambiente.',
     type: 'Reforma residencial',
-    facts: [],
-    challenge: null,
-    body: [],
-    scope: [],
-    gallery: [],
+    // PENDENTE: área e prazo desta obra.
+    facts: [
+      { label: 'Intervenção', value: 'Reforma residencial completa' },
+      { label: 'Local', value: 'Curitiba' },
+      { label: 'Status', value: 'Concluída' },
+    ],
+    challenge:
+      'Integrar sala, cozinha e varanda num só ambiente contínuo exige que marcenaria, forro e iluminação sejam pensados juntos desde o começo. Cada sanca, cada ponto de luz e cada encontro de material precisa estar resolvido em projeto, porque em acabamento desse nível o erro aparece.',
+    body: [
+      'Reforma residencial completa, com integração entre sala, cozinha e varanda. A obra incluiu marcenaria sob medida em todos os ambientes, forro com sanca e iluminação embutida, revestimentos e pintura geral.',
+    ],
+    scope: [
+      'Integração entre sala, cozinha e varanda',
+      'Marcenaria sob medida',
+      'Forro com sanca e iluminação embutida',
+      'Revestimentos e pisos',
+      'Pintura geral',
+    ],
+    gallery: [
+      { src: '/obras/apartamento-301-01.jpg', alt: 'Sala integrada à cozinha após a reforma' },
+      { src: '/obras/apartamento-301-02.jpg', alt: 'Estar com iluminação embutida e marcenaria sob medida' },
+      { src: '/obras/apartamento-301-03.jpg', alt: 'Cozinha com ilha e bancada' },
+      { src: '/obras/apartamento-301-04.jpg', alt: 'Varanda integrada, com bancada e vista' },
+    ],
   },
+
   {
     slug: 'apartamento-centro',
     status: 'complete',
@@ -101,8 +146,7 @@ export const projects = [
     positioning:
       'Um apartamento no centro de Curitiba entregue pronto para morar, do piso à marcenaria.',
     type: 'Reforma residencial',
-    // PENDENTE: área e prazo desta obra ainda não foram levantados. Assim que
-    // vierem, entram aqui e aparecem na página.
+    // PENDENTE: área e prazo desta obra.
     facts: [
       { label: 'Intervenção', value: 'Reforma residencial completa' },
       { label: 'Local', value: 'Centro, Curitiba' },
@@ -127,18 +171,49 @@ export const projects = [
       { src: '/obras/apartamento-centro-04.jpg', alt: 'Sala em outro ângulo, com a marcenaria' },
     ],
   },
+
   {
-    slug: 'dns',
+    slug: 'apartamento-bigorrilho',
+    status: 'complete',
+    featured: false,
+    name: 'Apartamento Bigorrilho',
+    client: null,
+    positioning:
+      'Reforma residencial completa em 60 m², com as instalações elétricas e hidráulicas refeitas, em um mês.',
+    type: 'Reforma residencial',
+    facts: [
+      { label: 'Área', value: '60 m²' },
+      { label: 'Intervenção', value: 'Reforma residencial completa' },
+      { label: 'Prazo', value: '1 mês' },
+      { label: 'Local', value: 'Bigorrilho, Curitiba' },
+    ],
+    challenge:
+      'Um apartamento que pedia mais do que acabamento novo: as instalações elétricas e hidráulicas precisavam ser atualizadas por baixo do que se via, sem estender a obra além do mês combinado.',
+    body: [
+      'Reforma residencial completa em 60 m², com pintura, acabamentos e atualização das instalações elétricas e hidráulicas. A obra foi entregue em um mês, no prazo combinado.',
+    ],
+    scope: [
+      'Instalações elétricas atualizadas',
+      'Instalações hidráulicas atualizadas',
+      'Acabamentos',
+      'Pintura',
+    ],
+    gallery: [
+      { src: '/obras/apartamento-bigorrilho-01.jpg', alt: 'Ambiente integrado após a reforma, com piso novo' },
+    ],
+  },
+
+  {
+    slug: 'denise',
     status: 'complete',
     stage: 'andamento',
     featured: false,
-    name: 'DNS',
-    client: 'DNS',
+    name: 'Residência Denise',
+    client: null,
     positioning:
       'Um pavimento inteiro sendo refeito em Curitiba, da pintura ao piso, com a obra acompanhada semana a semana.',
-    // PENDENTE: tipo de imóvel, área e prazo desta obra ainda não foram
-    // informados. Entram aqui e aparecem na página assim que chegarem.
     type: 'Reforma',
+    // PENDENTE: tipo de imóvel, área e prazo desta obra.
     facts: [
       { label: 'Status', value: 'Em andamento' },
       { label: 'Local', value: 'Curitiba' },
@@ -157,25 +232,6 @@ export const projects = [
       { src: '/obras/dns-05.jpg', alt: 'Piso de madeira já assentado' },
       { src: '/obras/dns-06.jpg', alt: 'Equipe da Avanthe em campo' },
     ],
-  },
-  {
-    /**
-     * Assume o posto de destaque principal da home e do portfólio assim que as
-     * fotos profissionais ficarem prontas e o texto for escrito: basta trocar
-     * status para 'complete' e featured para true (e remover featured da Ruffino).
-     */
-    slug: 'the-best-coffee',
-    status: 'draft',
-    featured: false,
-    name: 'The Best Coffee',
-    client: 'The Best Coffee',
-    positioning: null,
-    type: 'Franquia comercial',
-    facts: [],
-    challenge: null,
-    body: [],
-    scope: [],
-    gallery: [],
   },
 ];
 
