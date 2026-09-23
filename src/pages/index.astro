@@ -11,7 +11,7 @@ import CtaSection from '../components/CtaSection.astro';
  *   'imersivo' — foto em largura total com véu escuro e texto em branco.
  * Trocar aqui troca a home inteira.
  */
-const HERO = 'dividido';
+const HERO = 'imersivo';
 ---
 
 <Base
@@ -179,10 +179,14 @@ const HERO = 'dividido';
 
   .hero[data-variante='imersivo'] {
     color: var(--paper);
+    min-height: clamp(30rem, 78vh, 46rem);
+    display: flex;
+    align-items: center;
   }
 
   .hero[data-variante='imersivo'] .hero__inner {
-    padding-block: clamp(5rem, 14vw, 10rem);
+    padding-block: clamp(3.5rem, 8vw, 6rem);
+    width: 100%;
   }
 
   .hero__fundo {
@@ -190,6 +194,7 @@ const HERO = 'dividido';
     inset: 0;
     z-index: -1;
     overflow: hidden;
+    background: var(--ink);
   }
 
   .hero__fundo img {
@@ -198,22 +203,49 @@ const HERO = 'dividido';
     object-fit: cover;
   }
 
-  /* Véu escuro: o texto em branco precisa de base, e o navy da marca mantém a
-     foto dentro da paleta em vez de virar um cinza qualquer. */
+  /*
+   * Véu neutro, em preto. A primeira tentativa usou navy e a foto saía tingida
+   * de azul, não escurecida: acabamento e madeira perdiam a cor real, que é
+   * justamente o que a foto tem para vender.
+   *
+   * O gradiente é mais forte à esquerda, onde o texto é lido, e abre à direita
+   * para a imagem respirar. Uniforme não serve: ou fica claro demais sob o
+   * título, ou escuro demais na foto inteira.
+   */
   .hero__fundo::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-      100deg,
-      rgba(16, 36, 73, 0.92) 0%,
-      rgba(16, 36, 73, 0.8) 42%,
-      rgba(16, 36, 73, 0.45) 100%
-    );
+    background:
+      linear-gradient(to top, rgba(0, 0, 0, 0.35) 0%, transparent 38%),
+      linear-gradient(
+        96deg,
+        rgba(0, 0, 0, 0.78) 0%,
+        rgba(0, 0, 0, 0.74) 40%,
+        rgba(0, 0, 0, 0.66) 62%,
+        rgba(0, 0, 0, 0.4) 84%,
+        rgba(0, 0, 0, 0.32) 100%
+      );
+  }
+
+  /* Na tela estreita o gradiente comprime e o texto alcança a parte clara da
+     foto. Medido: 2,89:1, abaixo do mínimo. Aqui o véu fica mais firme e mais
+     plano, já que a foto tem pouco espaço para respirar de qualquer forma. */
+  @media (max-width: 760px) {
+    .hero__fundo::after {
+      background:
+        linear-gradient(to top, rgba(0, 0, 0, 0.4) 0%, transparent 42%),
+        linear-gradient(
+          96deg,
+          rgba(0, 0, 0, 0.82) 0%,
+          rgba(0, 0, 0, 0.74) 60%,
+          rgba(0, 0, 0, 0.66) 100%
+        );
+    }
   }
 
   .hero[data-variante='imersivo'] .hero__lede {
-    color: rgba(245, 245, 243, 0.82);
+    color: rgba(245, 245, 243, 0.88);
   }
 
   .hero[data-variante='imersivo'] .btn {
@@ -222,8 +254,13 @@ const HERO = 'dividido';
     color: var(--navy);
   }
 
+  .hero[data-variante='imersivo'] .btn:hover {
+    background: transparent;
+    color: var(--paper);
+  }
+
   .hero[data-variante='imersivo'] .link {
-    border-color: rgba(245, 245, 243, 0.4);
+    border-color: rgba(245, 245, 243, 0.45);
   }
 
   /* ---------- comum ---------- */
