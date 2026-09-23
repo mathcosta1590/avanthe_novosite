@@ -1,10 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
 import Stats from '../components/Stats.astro';
+import Vitrine from '../components/Vitrine.astro';
 import ServiceGrid from '../components/ServiceGrid.astro';
-import MediaPlaceholder from '../components/MediaPlaceholder.astro';
 import CtaSection from '../components/CtaSection.astro';
-import { featuredProject } from '../data/projects.js';
 
 /**
  * Abordagem do hero.
@@ -72,6 +71,9 @@ const HERO = 'dividido';
     }
   </section>
 
+  <!-- Obras: a primeira coisa depois do hero -->
+  <Vitrine />
+
   <!-- Números -->
   <section class="section section--tight">
     <div class="shell">
@@ -110,44 +112,9 @@ const HERO = 'dividido';
         <span class="eyebrow">O que fazemos</span>
         <h2 class="headline section-head__title">Quatro frentes, um mesmo rigor.</h2>
       </div>
-      <ServiceGrid />
+      <ServiceGrid resumido={true} />
     </div>
   </section>
-
-  <!-- Obra em destaque -->
-  {
-    featuredProject && (
-      <section class="section section--tall featured">
-        <div class="shell">
-          <span class="eyebrow">Obra em destaque</span>
-          <div class="featured__grid">
-            <div class="featured__media" data-reveal-item>
-              <MediaPlaceholder
-                caption={featuredProject.name}
-                src={featuredProject.gallery?.[0]?.src}
-                alt={featuredProject.gallery?.[0]?.alt}
-                ratio="4 / 3"
-              />
-            </div>
-            <div class="featured__body" data-reveal-item>
-              <h2 class="title featured__name">{featuredProject.name}</h2>
-              <div class="prose featured__text">
-                {featuredProject.body.map((paragraph) => (
-                  <p>{paragraph}</p>
-                ))}
-              </div>
-              <a class="link featured__link" href={`/portfolio/${featuredProject.slug}`}>
-                Ver a obra completa
-                <span class="link__arrow" aria-hidden="true">
-                  →
-                </span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-    )
-  }
 
   <CtaSection
     title="Você deixa a chave e volta na data combinada."
@@ -321,29 +288,12 @@ const HERO = 'dividido';
     padding-top: var(--space-2xs);
   }
 
-  .featured__grid {
-    display: grid;
-    grid-template-columns: 1.15fr 1fr;
-    gap: var(--space-xl);
-    align-items: center;
-    margin-top: var(--space-l);
-  }
 
-  .featured__name {
-    max-width: 14ch;
-  }
 
-  .featured__text {
-    margin-top: var(--space-m);
-  }
 
-  .featured__link {
-    margin-top: var(--space-l);
-  }
 
   @media (max-width: 860px) {
-    .manifesto,
-    .featured__grid {
+    .manifesto {
       grid-template-columns: 1fr;
     }
   }

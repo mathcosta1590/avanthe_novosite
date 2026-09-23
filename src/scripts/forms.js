@@ -1,3 +1,5 @@
+import { classificar } from '../data/triagem.js';
+
 /**
  * Comportamento compartilhado pelos formulários do site.
  *
@@ -125,48 +127,6 @@ function validateForm(form) {
    Triagem reativa no campo de mensagem
    ------------------------------------------------------------------------- */
 
-const MISROUTE_PATTERNS = [
-  {
-    target: '/recrutamento',
-    label: 'Trabalhe conosco',
-    words: [
-      'vaga',
-      'vagas',
-      'emprego',
-      'currículo',
-      'curriculo',
-      'curriculum',
-      ' cv ',
-      'contratação',
-      'contratacao',
-      'estágio',
-      'estagio',
-      'trabalhar com voc',
-      'oportunidade de trabalho',
-    ],
-  },
-  {
-    target: '/fornecedores',
-    label: 'Fornecedor parceiro',
-    words: [
-      'fornecedor',
-      'fornecimento',
-      'representante comercial',
-      'representante de vendas',
-      'parceria comercial',
-      'catálogo de produtos',
-      'catalogo de produtos',
-      'tabela de preços',
-      'tabela de precos',
-    ],
-  },
-];
-
-function detectMisroute(text) {
-  const haystack = ` ${(text || '').toLowerCase()} `;
-  return MISROUTE_PATTERNS.find((p) => p.words.some((w) => haystack.includes(w))) || null;
-}
-
 /**
  * Triagem por palavra-chave no campo de mensagem.
  *
@@ -187,14 +147,14 @@ function wireMisrouteNotice(form) {
   const submit = form.querySelector('[type="submit"]');
 
   const check = () => {
-    const match = detectMisroute(field.value);
+    const match = classificar(field.value);
     if (match) {
       text.textContent = link
-        ? `Sua mensagem é sobre ${match.label.toLowerCase()}. Esse assunto não é tratado por aqui, e tem um formulário próprio onde a resposta chega mais rápido.`
-        : `Sua mensagem é sobre ${match.label.toLowerCase()}. Este formulário é só para orçamento de obra; escreva para contato@avanthe.com.br se o assunto for outro.`;
+        ? `Sua mensagem é sobre ${match.rotulo.toLowerCase()}. Esse assunto não é tratado por aqui, e tem um formulário próprio onde a resposta chega mais rápido.`
+        : `Sua mensagem é sobre ${match.rotulo.toLowerCase()}. Este formulário é só para orçamento de obra; escreva para contato@avanthe.com.br se o assunto for outro.`;
       if (link) {
-        link.setAttribute('href', match.target);
-        link.textContent = `Ir para ${match.label}`;
+        link.setAttribute('href', match.alvo);
+        link.textContent = `Ir para ${match.rotulo}`;
       }
       notice.hidden = false;
       form.dataset.misrouted = 'true';

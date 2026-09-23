@@ -1,7 +1,7 @@
 ---
 import { services } from '../data/site.js';
 
-const { items = services } = Astro.props;
+const { items = services, resumido = false } = Astro.props;
 ---
 
 <ul class="services">
@@ -11,7 +11,7 @@ const { items = services } = Astro.props;
         <a class="services__card" href={`/${service.slug}`}>
           <span class="services__index">{String(i + 1).padStart(2, '0')}</span>
           <h3 class="services__title">{service.title}</h3>
-          <p class="services__text">{service.short}</p>
+          {!resumido && <p class="services__text">{service.short}</p>}
           <span class="services__cue">
             Ver serviço
             <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
