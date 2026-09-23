@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Stats from '../components/Stats.astro';
 import Vitrine from '../components/Vitrine.astro';
+import HeroSlides from '../components/HeroSlides.astro';
 import ServiceGrid from '../components/ServiceGrid.astro';
 import CtaSection from '../components/CtaSection.astro';
 
@@ -22,7 +23,7 @@ const HERO = 'imersivo';
     slot="preload"
     rel="preload"
     as="image"
-    href={HERO === 'dividido' ? '/hero-painel.jpg' : '/hero-largo.jpg'}
+    href={HERO === 'dividido' ? '/hero-painel.jpg' : '/hero/h1.jpg'}
     fetchpriority="high"
   />
 
@@ -30,8 +31,8 @@ const HERO = 'imersivo';
   <section class="hero" data-variante={HERO}>
     {
       HERO === 'imersivo' && (
-        <div class="hero__fundo" aria-hidden="true">
-          <img src="/hero-largo.jpg" alt="" width="2000" height="1125" fetchpriority="high" />
+        <div class="hero__fundo">
+          <HeroSlides />
         </div>
       )
     }
@@ -197,12 +198,6 @@ const HERO = 'imersivo';
     background: var(--ink);
   }
 
-  .hero__fundo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
   /*
    * Véu neutro, em preto. A primeira tentativa usou navy e a foto saía tingida
    * de azul, não escurecida: acabamento e madeira perdiam a cor real, que é
@@ -216,6 +211,7 @@ const HERO = 'imersivo';
     content: '';
     position: absolute;
     inset: 0;
+    z-index: 1;
     background:
       linear-gradient(to top, rgba(0, 0, 0, 0.35) 0%, transparent 38%),
       linear-gradient(

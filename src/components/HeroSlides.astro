@@ -1,0 +1,129 @@
+---
+/**
+ * Fotos do hero em rotação, com zoom lento.
+ *
+ * Mecânica: os slides ficam empilhados e a animação é toda em CSS, com atraso
+ * escalonado por slide. Sem JS a primeira foto aparece parada e o hero
+ * funciona igual — a rotação é enfeite, não estrutura.
+ *
+ * Carga: só a primeira foto entra no caminho crítico, porque é ela que decide
+ * o LCP. As outras têm o endereço guardado em data-src e só são buscadas
+ * depois do load, quando não competem mais com nada.
+ */
+const slides = [
+  { src: '/hero/h1.jpg', alt: 'Sala integrada do Apartamento 301, obra entregue pela Avanthe' },
+  { src: '/hero/h2.jpg', alt: 'Salão da cafeteria The Best Coffee' },
+  { src: '/hero/h3.jpg', alt: 'Área administrativa da Ruffino após o retrofit' },
+  { src: '/hero/h4.jpg', alt: 'Varanda integrada do Apartamento 301' },
+];
+
+const CICLO = 28; // segundos para percorrer os quatro
+---
+
+<div class="slides" data-slides style={`--ciclo: ${CICLO}s; --n: ${slides.length}`}>
+  {
+    slides.map((s, i) =>
+      i === 0 ? (
+        <img class="slides__img" src={s.src} alt={s.alt} width="1920" height="1080"
+             fetchpriority="high" decoding="async" style={`--i: ${i}`} />
+      ) : (
+        <img class="slides__img" data-src={s.src} alt="" aria-hidden="true" width="1920" height="1080"
+             decoding="async" style={`--i: ${i}`} />
+      )
+    )
+  }
+</div>
+
+<style>
+  .slides {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .slides__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    will-change: transform, opacity;
+  }
+
+  /* Estado parado: só a primeira aparece. É o que vale sem JS, com movimento
+     reduzido, e enquanto as demais não terminaram de carregar. */
+  .slides__img {
+    opacity: 0;
+  }
+
+  .slides__img:first-child {
+    opacity: 1;
+  }
+
+  /* A rotação só liga quando o script confirma que as fotos chegaram, senão
+     o ciclo passaria por quadros vazios. */
+  .slides[data-pronto] .slides__img {
+    animation: passar var(--ciclo) linear infinite;
+    /* Atraso negativo escalonado: cada slide entra na roda já adiantado, e a
+       ordem sai na sequência do array. O slide 0 recebe um ciclo inteiro
+       negativo para começar visível, sem piscar no instante em que liga. */
+    animation-delay: calc(var(--ciclo) / var(--n) * (var(--i) - var(--n)));
+  }
+
+  /* Cada slide ocupa um quarto do ciclo. O zoom corre o tempo todo em que ele
+     está visível; a volta da escala acontece enquanto está invisível. A entrada
+     começa em 97%, antes de o anterior terminar de sair, para as duas fotos se
+     cruzarem em vez de piscar. */
+  @keyframes passar {
+    0% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    22% {
+      opacity: 1;
+      transform: scale(1.075);
+    }
+    27% {
+      opacity: 0;
+      transform: scale(1.09);
+    }
+    97% {
+      opacity: 0;
+      transform: scale(1);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .slides[data-pronto] .slides__img {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  const caixa = document.querySelector('[data-slides]');
+
+  if (caixa && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const iniciar = () => {
+      const pendentes = [...caixa.querySelectorAll('img[data-src]')];
+      Promise.all(
+        pendentes.map(
+          (img) =>
+            new Promise((resolve) => {
+              img.addEventListener('load', resolve, { once: true });
+              img.addEventListener('error', resolve, { once: true });
+              img.src = img.dataset.src;
+              img.removeAttribute('data-src');
+            })
+        )
+      ).then(() => caixa.setAttribute('data-pronto', ''));
+    };
+
+    if (document.readyState === 'complete') iniciar();
+    else window.addEventListener('load', iniciar, { once: true });
+  }
+</script>
