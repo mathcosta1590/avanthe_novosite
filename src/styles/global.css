@@ -438,3 +438,33 @@ main {
 .skip-link:focus {
   top: var(--space-s);
 }
+
+/* --------------------------------------------------------------------------
+   7. Entrada de blocos
+   --------------------------------------------------------------------------
+   O estado inicial depende de [data-reveal] na raiz, marca que só o script
+   coloca. Sem JS, ou com "reduzir movimento" ligado, tudo nasce visível.
+   -------------------------------------------------------------------------- */
+
+:root[data-reveal] [data-reveal-item] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.65s var(--ease) var(--reveal-delay, 0ms),
+    transform 0.65s var(--ease) var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+:root[data-reveal] [data-reveal-item][data-revealed] {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-reveal] [data-reveal-item] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

@@ -7,7 +7,7 @@ const { items = defaultStats, compact = false } = Astro.props;
 <dl class="stats" data-compact={compact ? 'true' : 'false'}>
   {
     items.map((stat) => (
-      <div class="stats__item">
+      <div class="stats__item" data-reveal-item>
         <dt class="stats__label">{stat.label}</dt>
         <dd class="stats__value">{stat.value}</dd>
       </div>

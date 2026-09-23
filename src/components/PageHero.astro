@@ -5,7 +5,7 @@ const { eyebrow, title, lede, align = 'start' } = Astro.props;
 <section class="page-hero" data-align={align}>
   <div class="shell">
     {eyebrow && <span class="eyebrow">{eyebrow}</span>}
-    <h1 class="headline page-hero__title" set:html={title} />
+    <h1 class="headline page-hero__title" data-reveal-item set:html={title} />
     {lede && <p class="lede page-hero__lede" set:html={lede} />}
     <slot />
   </div>

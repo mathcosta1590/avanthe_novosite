@@ -11,18 +11,21 @@ import { featuredProject } from '../data/projects.js';
   title={null}
   description="Construção, reforma e retrofit em Curitiba. 8 obras entregues, 100% no prazo, responsabilidade técnica direta e relatório semanal de andamento."
 >
+  <link slot="preload" rel="preload" as="image" href="/hero-bg.jpg" fetchpriority="high" />
+
   <!-- Hero -->
   <section class="hero">
-    <div class="shell">
-      <h1 class="hero__text display">
+    <div class="hero__bg" aria-hidden="true"></div>
+    <div class="shell hero__inner">
+      <h1 class="hero__text display" data-reveal-item>
         Sua obra sai do papel <strong>exatamente como foi planejada</strong>.
       </h1>
-      <p class="lede hero__lede">
+      <p class="lede hero__lede" data-reveal-item>
         Na Avanthe, há <strong>metodologia</strong> e <strong>processo</strong>. Vemos beleza nisso,
         e por isso respeitamos cada etapa. Nossa fundação é feita de tecnologia, compromisso e
         pessoas.
       </p>
-      <div class="hero__actions">
+      <div class="hero__actions" data-reveal-item>
         <a class="btn" href="/contato">Solicitar orçamento</a>
         <a class="link" href="/portfolio">
           Ver obras entregues
@@ -42,14 +45,14 @@ import { featuredProject } from '../data/projects.js';
   <!-- Manifesto: um dos dois momentos de quase-preto da página. -->
   <section class="section section--tall section--ink">
     <div class="shell manifesto">
-      <blockquote class="manifesto__quote">
+      <blockquote class="manifesto__quote" data-reveal-item>
         <p class="headline">"Todo mundo diz que faz alto padrão."</p>
         <p class="manifesto__turn subtitle">
           Mas se você precisa dizer que é alto padrão, <strong>você não é</strong>.
         </p>
       </blockquote>
 
-      <div class="manifesto__body prose">
+      <div class="manifesto__body prose" data-reveal-item>
         <p>
           Alto padrão é ter um engenheiro acompanhando sua obra. É ter cronograma, fluxo financeiro
           organizado, RT emitida, seguro de obra, contrato sério e nota fiscal de cada serviço.
@@ -66,7 +69,7 @@ import { featuredProject } from '../data/projects.js';
   <!-- Serviços -->
   <section class="section section--tall">
     <div class="shell">
-      <div class="section-head">
+      <div class="section-head" data-reveal-item>
         <span class="eyebrow">O que fazemos</span>
         <h2 class="headline section-head__title">Quatro frentes, um mesmo rigor.</h2>
       </div>
@@ -81,7 +84,7 @@ import { featuredProject } from '../data/projects.js';
         <div class="shell">
           <span class="eyebrow">Obra em destaque</span>
           <div class="featured__grid">
-            <div class="featured__media">
+            <div class="featured__media" data-reveal-item>
               <MediaPlaceholder
                 caption={featuredProject.name}
                 src={featuredProject.gallery?.[0]?.src}
@@ -89,7 +92,7 @@ import { featuredProject } from '../data/projects.js';
                 ratio="4 / 3"
               />
             </div>
-            <div class="featured__body">
+            <div class="featured__body" data-reveal-item>
               <h2 class="title featured__name">{featuredProject.name}</h2>
               <div class="prose featured__text">
                 {featuredProject.body.map((paragraph) => (
@@ -118,7 +121,43 @@ import { featuredProject } from '../data/projects.js';
 
 <style>
   .hero {
+    position: relative;
     padding-block: clamp(4rem, 12vw, 9rem) clamp(3rem, 8vw, 6rem);
+    isolation: isolate;
+  }
+
+  /* Foto de obra esmaecida atrás do texto. Fica num pseudo-fundo com opacidade
+     baixa sobre o papel, em vez de imagem com filtro em cima do texto: assim o
+     contraste do título não depende do que a foto tem naquele ponto. */
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background: url('/hero-bg.jpg') center 38% / cover no-repeat;
+    opacity: 0.16;
+    -webkit-mask-image: linear-gradient(to bottom, #000 58%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 58%, transparent 100%);
+  }
+
+  /* Véu de papel sobre a foto, mais denso à esquerda. O texto fica em campo
+     limpo e a imagem ganha força onde não há leitura. */
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+      100deg,
+      var(--paper) 0%,
+      rgba(245, 245, 243, 0.92) 30%,
+      rgba(245, 245, 243, 0.55) 58%,
+      rgba(245, 245, 243, 0.1) 100%
+    );
+    pointer-events: none;
+  }
+
+  .hero__inner {
+    position: relative;
   }
 
   .hero__text {

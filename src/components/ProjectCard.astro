@@ -9,7 +9,7 @@ const emAndamento = project.stage === 'andamento';
 
 {
   isDraft ? (
-    <article class="project-card project-card--draft">
+    <article class="project-card project-card--draft" data-reveal-item>
       <div class="project-card__media">
         <MediaPlaceholder caption={project.name} ratio="3 / 2" tone="ink" />
         <span class="project-card__badge">Em levantamento</span>
@@ -23,7 +23,7 @@ const emAndamento = project.stage === 'andamento';
       </div>
     </article>
   ) : (
-    <article class="project-card">
+    <article class="project-card" data-reveal-item>
       <a class="project-card__link" href={`/portfolio/${project.slug}`}>
         <div class="project-card__media">
         <MediaPlaceholder

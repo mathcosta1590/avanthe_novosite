@@ -5,7 +5,7 @@ const { items, title } = Astro.props;
 <ol class="steps" aria-label={title}>
   {
     items.map((step, i) => (
-      <li class="steps__item">
+      <li class="steps__item" data-reveal-item>
         <span class="steps__num">{String(i + 1).padStart(2, '0')}</span>
         <h3 class="steps__title">{step.title}</h3>
         <p class="steps__text">{step.text}</p>

@@ -27,7 +27,7 @@ const upcoming = projects.filter((p) => p.status !== 'complete');
   {
     lead && (
       <section class="section section--tall">
-        <div class="shell lead">
+        <div class="shell lead" data-reveal-item>
           <a class="lead__media" href={`/portfolio/${lead.slug}`} tabindex="-1" aria-hidden="true">
             <MediaPlaceholder
               caption={lead.name}

@@ -7,7 +7,7 @@ const { items = services } = Astro.props;
 <ul class="services">
   {
     items.map((service, i) => (
-      <li class="services__item">
+      <li class="services__item" data-reveal-item>
         <a class="services__card" href={`/${service.slug}`}>
           <span class="services__index">{String(i + 1).padStart(2, '0')}</span>
           <h3 class="services__title">{service.title}</h3>
