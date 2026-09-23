@@ -207,36 +207,86 @@ const HERO = 'imersivo';
    * para a imagem respirar. Uniforme não serve: ou fica claro demais sob o
    * título, ou escuro demais na foto inteira.
    */
+  /*
+   * Escurecimento leve e geral, só para dar unidade à foto.
+   */
   .hero__fundo::after {
     content: '';
     position: absolute;
     inset: 0;
     z-index: 1;
-    background:
-      linear-gradient(to top, rgba(0, 0, 0, 0.35) 0%, transparent 38%),
-      linear-gradient(
-        96deg,
-        rgba(0, 0, 0, 0.78) 0%,
-        rgba(0, 0, 0, 0.74) 40%,
-        rgba(0, 0, 0, 0.66) 62%,
-        rgba(0, 0, 0, 0.4) 84%,
-        rgba(0, 0, 0, 0.32) 100%
-      );
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.32) 0%, rgba(0, 0, 0, 0.06) 45%);
   }
 
-  /* Na tela estreita o gradiente comprime e o texto alcança a parte clara da
-     foto. Medido: 2,89:1, abaixo do mínimo. Aqui o véu fica mais firme e mais
-     plano, já que a foto tem pouco espaço para respirar de qualquer forma. */
+  /*
+   * O escurecimento pesado fica ancorado em cada bloco de texto, não na tela.
+   * Tentei antes um gradiente de tela inteira: para o título largo ficar
+   * legível era preciso escurecer até depois da metade da imagem, e a foto
+   * ficava apagada. Depois tentei uma mancha única atrás do bloco todo, mas
+   * ela se centrava entre título e lede: o lede ficava coberto de sobra
+   * (6:1) e o título, que é mais largo e fica em cima, caía para 1,5:1.
+   * Aqui cada bloco carrega a sua própria mancha, dimensionada em em, então
+   * ela acompanha o tamanho real do texto e morre logo depois dele.
+   */
+  .hero[data-variante='imersivo'] .hero__text,
+  .hero[data-variante='imersivo'] .hero__lede {
+    position: relative;
+  }
+
+  /*
+   * A mancha é um retângulo sólido com as bordas desfeitas por máscara, e não
+   * um gradiente radial. Com radial o platô escuro é uma fração do raio, então
+   * em texto de 4 ou 5 linhas a primeira e a última caíam fora dele (medido
+   * 2,06:1 no lede em tela estreita). Aqui a área desfeita vale exatamente o
+   * respiro (--vx/--vy, os mesmos do inset), logo todo glifo fica no platô,
+   * quantas linhas o texto tiver.
+   */
+  .hero[data-variante='imersivo'] .hero__text::before,
+  .hero[data-variante='imersivo'] .hero__lede::before {
+    content: '';
+    position: absolute;
+    inset: calc(var(--vy) * -1) calc(var(--vx) * -1);
+    z-index: -1;
+    pointer-events: none;
+    -webkit-mask-image:
+      linear-gradient(to right, transparent 0, #000 var(--vx), #000 calc(100% - var(--vx)), transparent 100%),
+      linear-gradient(to bottom, transparent 0, #000 var(--vy), #000 calc(100% - var(--vy)), transparent 100%);
+    mask-image:
+      linear-gradient(to right, transparent 0, #000 var(--vx), #000 calc(100% - var(--vx)), transparent 100%),
+      linear-gradient(to bottom, transparent 0, #000 var(--vy), #000 calc(100% - var(--vy)), transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-composite: intersect;
+  }
+
+  .hero[data-variante='imersivo'] .hero__text::before {
+    --vx: 4.6em;
+    --vy: 1.9em;
+    background: rgba(0, 0, 0, 0.68);
+  }
+
+  /* O lede é menor e fica na parte já escurecida da foto: precisa de menos. */
+  .hero[data-variante='imersivo'] .hero__lede::before {
+    --vx: 5.4em;
+    --vy: 2.8em;
+    background: rgba(0, 0, 0, 0.52);
+  }
+
+  /* Na tela estreita o texto ocupa quase toda a largura e as manchas não têm
+     para onde abrir na horizontal. Medido: 2,89:1 antes do ajuste. Aqui o véu
+     geral entra mais firme e as manchas ficam mais altas que largas. */
   @media (max-width: 760px) {
     .hero__fundo::after {
-      background:
-        linear-gradient(to top, rgba(0, 0, 0, 0.4) 0%, transparent 42%),
-        linear-gradient(
-          96deg,
-          rgba(0, 0, 0, 0.82) 0%,
-          rgba(0, 0, 0, 0.74) 60%,
-          rgba(0, 0, 0, 0.66) 100%
-        );
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.38) 0%, rgba(0, 0, 0, 0.1) 55%);
+    }
+
+    .hero[data-variante='imersivo'] .hero__text::before {
+      --vx: 2.4em;
+      --vy: 1.3em;
+    }
+
+    .hero[data-variante='imersivo'] .hero__lede::before {
+      --vx: 2.8em;
+      --vy: 2.2em;
     }
   }
 

@@ -6,6 +6,9 @@
  * escalonado por slide. Sem JS a primeira foto aparece parada e o hero
  * funciona igual — a rotação é enfeite, não estrutura.
  *
+ * As fotos daqui não se repetem no mosaico logo abaixo: ver a mesma imagem
+ * duas vezes na mesma tela faz o portfólio parecer menor do que é.
+ *
  * Carga: só a primeira foto entra no caminho crítico, porque é ela que decide
  * o LCP. As outras têm o endereço guardado em data-src e só são buscadas
  * depois do load, quando não competem mais com nada.
@@ -13,8 +16,8 @@
 const slides = [
   { src: '/hero/h1.jpg', alt: 'Sala integrada do Apartamento 301, obra entregue pela Avanthe' },
   { src: '/hero/h2.jpg', alt: 'Salão da cafeteria The Best Coffee' },
-  { src: '/hero/h3.jpg', alt: 'Área administrativa da Ruffino após o retrofit' },
-  { src: '/hero/h4.jpg', alt: 'Varanda integrada do Apartamento 301' },
+  { src: '/hero/h3.jpg', alt: 'Salão administrativo da Ruffino após o retrofit' },
+  { src: '/hero/h4.jpg', alt: 'Cozinha do Apartamento 301' },
 ];
 
 const CICLO = 28; // segundos para percorrer os quatro
