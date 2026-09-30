@@ -16,12 +16,6 @@ import FormRuntime from '../components/form/FormRuntime.astro';
  * que coletam dados.
  */
 
-const proof = [
-  { value: '100%', label: 'obras entregues no prazo' },
-  { value: '1 dia', label: 'útil para responder seu orçamento' },
-  { value: '7', label: 'semanas na reforma da Ruffino' },
-  { value: '~1.000', label: 'm² executados' },
-];
 
 const steps = [
   {
@@ -74,7 +68,7 @@ const steps = [
   <!-- Prova rápida -->
   <section class="section section--tight lp-proof">
     <div class="shell">
-      <Stats items={proof} compact={true} />
+      <Stats compact={true} />
     </div>
   </section>
 

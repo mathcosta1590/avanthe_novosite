@@ -40,7 +40,6 @@ export const site = {
  */
 export const stats = [
   { value: '100%', label: 'obras entregues no prazo' },
-  { value: '1 dia', label: 'útil para responder seu orçamento' },
   { value: '~1.000', label: 'm² de área executada', unit: 'm²' },
   { value: '2', label: 'obras em andamento' },
 ];
