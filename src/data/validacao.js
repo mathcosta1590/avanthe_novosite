@@ -104,3 +104,47 @@ export const SEGUNDOS_MINIMOS = 4;
 export function rapidoDemais(abertoEm) {
   return (Date.now() - abertoEm) / 1000 < SEGUNDOS_MINIMOS;
 }
+
+/**
+ * Máscara de telefone brasileiro.
+ *
+ * Formata enquanto a pessoa digita: (41) 98446-8168 para celular, (41)
+ * 3333-4444 para fixo. Só decide entre os dois quando chega no décimo primeiro
+ * dígito, senão o hífen pula de lugar no meio da digitação.
+ */
+export function mascararTelefone(valor) {
+  let d = digitos(valor);
+  if (d.startsWith('55') && d.length > 11) d = d.slice(2);
+  d = d.slice(0, 11);
+
+  if (d.length <= 2) return d.length ? `(${d}` : '';
+
+  const ddd = d.slice(0, 2);
+  const resto = d.slice(2);
+  // Celular sempre começa com 9; fixo nunca. Decidir por aí, e não pelo
+  // tamanho, evita o hífen pular de lugar no meio da digitação.
+  const celular = resto[0] === '9';
+  const corte = celular ? 5 : 4;
+
+  if (resto.length <= corte) return `(${ddd}) ${resto}`;
+  return `(${ddd}) ${resto.slice(0, corte)}-${resto.slice(corte)}`;
+}
+
+/**
+ * Onde o cursor deve parar depois de reformatar.
+ *
+ * Reescrever o campo joga o cursor para o fim, o que quebra quem volta para
+ * corrigir um dígito no meio. Conta quantos dígitos existiam antes do cursor e
+ * o recoloca depois do mesmo tanto.
+ */
+export function cursorDepoisDaMascara(formatado, digitosAntes) {
+  if (digitosAntes <= 0) return 0;
+  let vistos = 0;
+  for (let i = 0; i < formatado.length; i += 1) {
+    if (/\d/.test(formatado[i])) {
+      vistos += 1;
+      if (vistos === digitosAntes) return i + 1;
+    }
+  }
+  return formatado.length;
+}

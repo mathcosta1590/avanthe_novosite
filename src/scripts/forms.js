@@ -6,6 +6,8 @@ import {
   validarNome,
   validarTexto,
   rapidoDemais,
+  mascararTelefone,
+  cursorDepoisDaMascara,
 } from '../data/validacao.js';
 
 /**
@@ -126,6 +128,39 @@ function validateForm(form) {
     firstInvalid.scrollIntoView({ block: 'center', behavior: 'smooth' });
   }
   return !firstInvalid;
+}
+
+/* -------------------------------------------------------------------------
+   Máscara de telefone
+   -------------------------------------------------------------------------
+
+   Formata enquanto a pessoa digita, e devolve o cursor para onde ele estava.
+   Sem isso, reescrever o campo joga o cursor para o fim e quem volta corrigir
+   um dígito do meio digita o resto no lugar errado.
+
+   O campo "telefone ou e-mail" só é mascarado quando o conteúdo é só número:
+   quem começa a escrever um e-mail não pode ver parênteses aparecendo.
+   ------------------------------------------------------------------------- */
+
+function wirePhoneMask(form) {
+  form.querySelectorAll('[data-validate="phone"], [data-validate="contact"]').forEach((field) => {
+    const soTelefone = field.dataset.validate === 'phone';
+
+    field.addEventListener('input', () => {
+      const valor = field.value;
+      if (!soTelefone && /[a-z@]/i.test(valor)) return;
+      if (!valor) return;
+
+      const posicao = field.selectionStart ?? valor.length;
+      const digitosAntes = (valor.slice(0, posicao).match(/\d/g) || []).length;
+      const formatado = mascararTelefone(valor);
+      if (formatado === valor) return;
+
+      field.value = formatado;
+      const novaPos = cursorDepoisDaMascara(formatado, digitosAntes);
+      field.setSelectionRange(novaPos, novaPos);
+    });
+  });
 }
 
 /* -------------------------------------------------------------------------
@@ -371,6 +406,7 @@ export function initForms() {
     form.abertoEm = Date.now();
     fillContext(form);
     wireFileInput(form);
+    wirePhoneMask(form);
     wireMisrouteNotice(form);
     wireClienteNotice(form);
 
