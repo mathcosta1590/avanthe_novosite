@@ -203,6 +203,13 @@ export const projects = [
     ],
   },
 
+  /*
+   * FALTA UMA OBRA EM ANDAMENTO AQUI.
+   *
+   * A faixa de números diz 2 obras em andamento e o portfólio mostra 1. A
+   * diferença é proposital: a segunda existe, só não tem fotografia ainda.
+   * Não "corrigir" o número para 1 — o que falta é a obra, não o dado.
+   */
   {
     slug: 'apartamento-merces',
     status: 'complete',
