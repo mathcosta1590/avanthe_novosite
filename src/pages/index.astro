@@ -1,79 +1,36 @@
 ---
 import Base from '../layouts/Base.astro';
 import Stats from '../components/Stats.astro';
-import Vitrine from '../components/Vitrine.astro';
-import HeroSlides from '../components/HeroSlides.astro';
 import ServiceGrid from '../components/ServiceGrid.astro';
 import CtaSection from '../components/CtaSection.astro';
 
-/**
- * Abordagem do hero.
- *   'dividido' — texto à esquerda, foto sangrando à direita, em força total.
- *   'imersivo' — foto em largura total com véu escuro e texto em branco.
- * Trocar aqui troca a home inteira.
- */
-const HERO = 'imersivo';
 ---
 
 <Base
   title={null}
   description="Construção, reforma e retrofit em Curitiba. 100% das obras entregues no prazo, responsabilidade técnica direta e relatório semanal de andamento."
 >
-  <link
-    slot="preload"
-    rel="preload"
-    as="image"
-    href={HERO === 'dividido' ? '/hero-painel.jpg' : '/hero/h1.jpg'}
-    fetchpriority="high"
-  />
 
   <!-- Hero -->
-  <section class="hero" data-variante={HERO}>
-    {
-      HERO === 'imersivo' && (
-        <div class="hero__fundo">
-          <HeroSlides />
-        </div>
-      )
-    }
-
+  <section class="hero">
     <div class="shell hero__inner">
-      <div class="hero__texto">
-        <h1 class="hero__text display" data-reveal-item>
-          Sua obra sai do papel <strong>exatamente como foi planejada</strong>.
-        </h1>
-        <p class="lede hero__lede" data-reveal-item>
-          Na Avanthe, há <strong>metodologia</strong> e <strong>processo</strong>. Vemos beleza
-          nisso, e por isso respeitamos cada etapa. Nossa fundação é feita de tecnologia,
-          compromisso e pessoas.
-        </p>
-        <div class="hero__actions" data-reveal-item>
-          <a class="btn" href="/contato">Solicitar orçamento</a>
-          <a class="link" href="/portfolio">
-            Ver obras entregues
-            <span class="link__arrow" aria-hidden="true">→</span>
-          </a>
-        </div>
+      <h1 class="hero__text display" data-reveal-item>
+        Sua obra sai do papel <strong>exatamente como foi planejada</strong>.
+      </h1>
+      <p class="lede hero__lede" data-reveal-item>
+        Na Avanthe, há <strong>metodologia</strong> e <strong>processo</strong>. Vemos beleza
+        nisso, e por isso respeitamos cada etapa. Nossa fundação é feita de tecnologia,
+        compromisso e pessoas.
+      </p>
+      <div class="hero__actions" data-reveal-item>
+        <a class="btn" href="/contato">Solicitar orçamento</a>
+        <a class="link" href="/portfolio">
+          Ver obras entregues
+          <span class="link__arrow" aria-hidden="true">→</span>
+        </a>
       </div>
     </div>
-
-    {
-      HERO === 'dividido' && (
-        <div class="hero__painel">
-          <img
-            src="/hero-painel.jpg"
-            alt="Cozinha do Apartamento 301, obra entregue pela Avanthe"
-            width="1100"
-            height="1375"
-            fetchpriority="high"
-          />
-        </div>
-      )
-    }
   </section>
-
-  <!-- Obras: a primeira coisa depois do hero -->
-  <Vitrine />
 
   <!-- Números -->
   <section class="section section--tight">
@@ -126,202 +83,11 @@ const HERO = 'imersivo';
 
 <style>
   .hero {
-    position: relative;
-    isolation: isolate;
-  }
-
-  /* ---------- A: dividido ---------- */
-
-  .hero[data-variante='dividido'] {
-    display: grid;
-    grid-template-columns: 1fr;
-  }
-
-  .hero[data-variante='dividido'] .hero__inner {
     padding-block: clamp(3.5rem, 9vw, 7rem);
   }
 
-  .hero__painel {
-    display: none;
-  }
-
-  @media (min-width: 900px) {
-    .hero[data-variante='dividido'] {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 38vw);
-      align-items: stretch;
-    }
-
-    .hero[data-variante='dividido'] .hero__inner {
-      max-width: calc(var(--shell) * 0.62);
-      margin-inline: 0 0;
-      padding-left: max(var(--gutter), calc((100vw - var(--shell)) / 2 + var(--gutter)));
-      padding-right: var(--space-xl);
-      display: flex;
-      align-items: center;
-    }
-
-    .hero__painel {
-      display: block;
-      position: relative;
-      overflow: hidden;
-      min-height: clamp(30rem, 44vw, 40rem);
-    }
-
-    .hero__painel img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-  }
-
-  /* ---------- B: imersivo ---------- */
-
-  .hero[data-variante='imersivo'] {
-    color: var(--paper);
-    min-height: clamp(30rem, 78vh, 46rem);
-    display: flex;
-    align-items: center;
-  }
-
-  .hero[data-variante='imersivo'] .hero__inner {
-    padding-block: clamp(3.5rem, 8vw, 6rem);
-    width: 100%;
-  }
-
-  .hero__fundo {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    overflow: hidden;
-    background: var(--ink);
-  }
-
-  /*
-   * Véu neutro, em preto. A primeira tentativa usou navy e a foto saía tingida
-   * de azul, não escurecida: acabamento e madeira perdiam a cor real, que é
-   * justamente o que a foto tem para vender.
-   *
-   * O gradiente é mais forte à esquerda, onde o texto é lido, e abre à direita
-   * para a imagem respirar. Uniforme não serve: ou fica claro demais sob o
-   * título, ou escuro demais na foto inteira.
-   */
-  /*
-   * Escurecimento leve e geral, só para dar unidade à foto.
-   */
-  .hero__fundo::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.32) 0%, rgba(0, 0, 0, 0.06) 45%);
-  }
-
-  /*
-   * O escurecimento pesado fica ancorado em cada bloco de texto, não na tela.
-   * Tentei antes um gradiente de tela inteira: para o título largo ficar
-   * legível era preciso escurecer até depois da metade da imagem, e a foto
-   * ficava apagada. Depois tentei uma mancha única atrás do bloco todo, mas
-   * ela se centrava entre título e lede: o lede ficava coberto de sobra
-   * (6:1) e o título, que é mais largo e fica em cima, caía para 1,5:1.
-   * Aqui cada bloco carrega a sua própria mancha, dimensionada em em, então
-   * ela acompanha o tamanho real do texto e morre logo depois dele.
-   */
-  .hero[data-variante='imersivo'] .hero__text,
-  .hero[data-variante='imersivo'] .hero__lede {
-    position: relative;
-  }
-
-  /*
-   * A mancha é um retângulo sólido com as bordas desfeitas por máscara, e não
-   * um gradiente radial. Com radial o platô escuro é uma fração do raio, então
-   * em texto de 4 ou 5 linhas a primeira e a última caíam fora dele (medido
-   * 2,06:1 no lede em tela estreita). Aqui a área desfeita vale exatamente o
-   * respiro (--vx/--vy, os mesmos do inset), logo todo glifo fica no platô,
-   * quantas linhas o texto tiver.
-   */
-  .hero[data-variante='imersivo'] .hero__text::before,
-  .hero[data-variante='imersivo'] .hero__lede::before {
-    content: '';
-    position: absolute;
-    inset: calc(var(--vy) * -1) calc(var(--vx) * -1);
-    z-index: -1;
-    pointer-events: none;
-    -webkit-mask-image:
-      linear-gradient(to right, transparent 0, #000 var(--vx), #000 calc(100% - var(--vx)), transparent 100%),
-      linear-gradient(to bottom, transparent 0, #000 var(--vy), #000 calc(100% - var(--vy)), transparent 100%);
-    mask-image:
-      linear-gradient(to right, transparent 0, #000 var(--vx), #000 calc(100% - var(--vx)), transparent 100%),
-      linear-gradient(to bottom, transparent 0, #000 var(--vy), #000 calc(100% - var(--vy)), transparent 100%);
-    -webkit-mask-composite: source-in;
-    mask-composite: intersect;
-  }
-
-  .hero[data-variante='imersivo'] .hero__text::before {
-    --vx: 4.6em;
-    --vy: 1.9em;
-    background: rgba(0, 0, 0, 0.68);
-  }
-
-  /* O lede é menor e fica na parte já escurecida da foto: precisa de menos. */
-  .hero[data-variante='imersivo'] .hero__lede::before {
-    --vx: 5.4em;
-    --vy: 2.8em;
-    background: rgba(0, 0, 0, 0.52);
-  }
-
-  /* Na tela estreita o texto ocupa quase toda a largura e as manchas não têm
-     para onde abrir na horizontal. Medido: 2,89:1 antes do ajuste. Aqui o véu
-     geral entra mais firme e as manchas ficam mais altas que largas. */
-  @media (max-width: 760px) {
-    .hero__fundo::after {
-      background: linear-gradient(to top, rgba(0, 0, 0, 0.38) 0%, rgba(0, 0, 0, 0.1) 55%);
-    }
-
-    .hero[data-variante='imersivo'] .hero__text::before {
-      --vx: 2.4em;
-      --vy: 1.3em;
-    }
-
-    .hero[data-variante='imersivo'] .hero__lede::before {
-      --vx: 2.8em;
-      --vy: 2.2em;
-    }
-  }
-
-  .hero[data-variante='imersivo'] .hero__lede {
-    color: rgba(245, 245, 243, 0.88);
-  }
-
-  .hero[data-variante='imersivo'] .btn {
-    background: var(--paper);
-    border-color: var(--paper);
-    color: var(--navy);
-  }
-
-  .hero[data-variante='imersivo'] .btn:hover {
-    background: transparent;
-    color: var(--paper);
-  }
-
-  .hero[data-variante='imersivo'] .link {
-    border-color: rgba(245, 245, 243, 0.45);
-  }
-
-  /* ---------- comum ---------- */
-
   .hero__text {
     max-width: 16ch;
-  }
-
-  .hero[data-variante='dividido'] .hero__text {
-    font-size: clamp(2.3rem, 3.6vw, 3.9rem);
-    max-width: 14ch;
-  }
-
-  .hero[data-variante='dividido'] .hero__lede {
-    max-width: 46ch;
   }
 
   .hero__lede {
