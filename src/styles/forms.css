@@ -203,59 +203,6 @@ select.field__control {
   color: #9b2c2c;
 }
 
-/* Gate de triagem */
-.gate {
-  display: grid;
-  gap: var(--space-m);
-  max-width: 660px;
-}
-
-.gate__question {
-  font-size: var(--step-2);
-  font-weight: 400;
-  letter-spacing: -0.02em;
-}
-
-.gate__options {
-  display: grid;
-  gap: 0;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  border-top: 1px solid var(--rule);
-}
-
-.gate__options li {
-  border-bottom: 1px solid var(--rule);
-}
-
-.gate__option {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-m);
-  width: 100%;
-  padding: var(--space-m) 0;
-  font-size: var(--step-1);
-  font-weight: 400;
-  text-align: left;
-  text-decoration: none;
-  background: none;
-  border: 0;
-  color: var(--navy);
-  transition: padding-left 0.25s var(--ease), background 0.25s var(--ease);
-}
-
-.gate__option:hover {
-  padding-left: var(--space-s);
-  background: rgba(18, 33, 61, 0.03);
-}
-
-.gate__option svg {
-  flex: none;
-  color: var(--navy-60);
-}
-
 /* Overlay de sucesso */
 .success {
   position: fixed;

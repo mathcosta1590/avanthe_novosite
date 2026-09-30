@@ -19,7 +19,12 @@ import { site } from '../data/site.js';
   <section class="section section--tall">
     <div class="shell contato">
       <div class="contato__form">
-        <QuoteForm gate={true} />
+        <QuoteForm />
+
+        <p class="contato__desvio">
+          Currículo ou vaga? <a href="/recrutamento">Trabalhe conosco</a>. Quer fornecer
+          material ou serviço? <a href="/fornecedores">Fornecedor parceiro</a>.
+        </p>
       </div>
 
       <aside class="contato__aside">
@@ -56,6 +61,14 @@ import { site } from '../data/site.js';
     grid-template-columns: 1.5fr 1fr;
     gap: var(--space-2xl);
     align-items: start;
+  }
+
+  .contato__desvio {
+    margin-top: var(--space-l);
+    padding-top: var(--space-m);
+    border-top: 1px solid var(--rule);
+    font-size: var(--step--1);
+    color: var(--navy-60);
   }
 
   .contato__block + .contato__block {

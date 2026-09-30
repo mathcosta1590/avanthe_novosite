@@ -150,8 +150,8 @@ function wireMisrouteNotice(form) {
     const match = classificar(field.value);
     if (match) {
       text.textContent = link
-        ? `Sua mensagem é sobre ${match.rotulo.toLowerCase()}. Esse assunto não é tratado por aqui, e tem um formulário próprio onde a resposta chega mais rápido.`
-        : `Sua mensagem é sobre ${match.rotulo.toLowerCase()}. Este formulário é só para orçamento de obra; escreva para contato@avanthe.com.br se o assunto for outro.`;
+        ? `Isso parece ser sobre ${match.assunto}. Esse assunto tem formulário próprio, e por lá a resposta chega mais rápido.`
+        : `Isso parece ser sobre ${match.assunto}. Este formulário é só para orçamento de obra; escreva para contato@avanthe.com.br se o assunto for outro.`;
       if (link) {
         link.setAttribute('href', match.alvo);
         link.textContent = `Ir para ${match.rotulo}`;
