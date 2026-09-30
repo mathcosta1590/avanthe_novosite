@@ -204,16 +204,16 @@ export const projects = [
   },
 
   {
-    slug: 'denise',
+    slug: 'apartamento-merces',
     status: 'complete',
     stage: 'andamento',
     featured: false,
-    name: 'Residência Denise',
+    name: 'Apartamento Mercês',
     client: null,
     positioning:
       'Um pavimento inteiro sendo refeito em Curitiba, da pintura ao piso, com a obra acompanhada semana a semana.',
-    type: 'Reforma',
-    // PENDENTE: tipo de imóvel, área e prazo desta obra.
+    type: 'Reforma residencial',
+    // PENDENTE: área e prazo desta obra.
     facts: [
       { label: 'Status', value: 'Em andamento' },
       { label: 'Local', value: 'Curitiba' },
