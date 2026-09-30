@@ -24,7 +24,7 @@ import SuccessOverlay from './SuccessOverlay.astro';
   <input type="hidden" name="form-name" value="recrutamento" />
   <Honeypot />
 
-  <Field name="nome" label="Nome" required autocomplete="name" placeholder="Seu nome completo" />
+  <Field name="nome" validate="name" label="Nome" required autocomplete="name" placeholder="Seu nome completo" />
 
   <Field
     name="contato"
@@ -74,6 +74,21 @@ import SuccessOverlay from './SuccessOverlay.astro';
     </div>
     <p class="field__hint">PDF, até 8 MB.</p>
     <p class="field__error" role="alert" aria-live="polite"></p>
+  </div>
+
+  <Field
+    name="mensagem"
+    label="Conte um pouco sobre você"
+    type="textarea"
+    cliente={true}
+    placeholder="Onde trabalhou, o que sabe fazer, quando pode começar."
+  />
+
+  <div class="notice notice--suave" hidden data-cliente-notice>
+    <p>
+      Isso parece um pedido de obra, não uma candidatura.
+      <a href="/contato">Solicitar orçamento</a> chega mais rápido no engenheiro.
+    </p>
   </div>
 
   <button type="submit" class="btn form__submit">Enviar candidatura</button>

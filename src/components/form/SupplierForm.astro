@@ -23,7 +23,7 @@ import SuccessOverlay from './SuccessOverlay.astro';
   <Field name="empresa" label="Nome da empresa" required autocomplete="organization" />
 
   <div class="form__row">
-    <Field name="nome" label="Contato responsável" required autocomplete="name" />
+    <Field name="nome" validate="name" label="Contato responsável" required autocomplete="name" />
     <Field
       name="contato"
       label="Telefone ou e-mail"
@@ -58,8 +58,16 @@ import SuccessOverlay from './SuccessOverlay.astro';
     name="mensagem"
     label="O que sua empresa fornece"
     type="textarea"
+    cliente={true}
     placeholder="Linha de produtos ou serviços, região de atendimento, prazo médio de entrega."
   />
+
+  <div class="notice notice--suave" hidden data-cliente-notice>
+    <p>
+      Isso parece um pedido de obra, não uma oferta de fornecimento.
+      <a href="/contato">Solicitar orçamento</a> chega mais rápido no engenheiro.
+    </p>
+  </div>
 
   <button type="submit" class="btn form__submit">Enviar cadastro</button>
   <p class="form__status" role="status" aria-live="polite" data-form-status></p>

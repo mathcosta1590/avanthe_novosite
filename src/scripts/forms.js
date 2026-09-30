@@ -1,4 +1,12 @@
-import { classificar } from '../data/triagem.js';
+import { classificar, sinaisDeCliente } from '../data/triagem.js';
+import {
+  digitos,
+  validarTelefone,
+  validarEmail,
+  validarNome,
+  validarTexto,
+  rapidoDemais,
+} from '../data/validacao.js';
 
 /**
  * Comportamento compartilhado pelos formulários do site.
@@ -79,28 +87,25 @@ function fillContext(form) {
    Validação
    ------------------------------------------------------------------------- */
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-
-function digits(value) {
-  return (value || '').replace(/\D/g, '');
-}
-
 function validateField(field) {
   const value = (field.value || '').trim();
   const errorEl = field.parentElement?.querySelector('.field__error');
+  const tipo = field.dataset.validate;
   let message = '';
 
   if (field.required && !value) {
     message = 'Preencha este campo.';
-  } else if (value && field.type === 'email' && !EMAIL_RE.test(value)) {
-    message = 'Confira o e-mail digitado.';
-  } else if (value && field.dataset.validate === 'phone' && digits(value).length < 10) {
-    message = 'Informe o DDD e o número completo.';
-  } else if (value && field.dataset.validate === 'contact') {
-    const looksEmail = value.includes('@');
-    if (looksEmail ? !EMAIL_RE.test(value) : digits(value).length < 10) {
-      message = 'Informe um telefone com DDD ou um e-mail válido.';
-    }
+  } else if (value && field.type === 'email') {
+    message = validarEmail(value);
+  } else if (value && tipo === 'phone') {
+    message = validarTelefone(value);
+  } else if (value && tipo === 'name') {
+    message = validarNome(value);
+  } else if (value && tipo === 'contact') {
+    // campo que aceita telefone OU e-mail: decide pelo arroba
+    message = value.includes('@') ? validarEmail(value) : validarTelefone(value);
+  } else if (value && field.tagName === 'TEXTAREA') {
+    message = validarTexto(value);
   }
 
   field.setAttribute('aria-invalid', message ? 'true' : 'false');
@@ -166,8 +171,51 @@ function wireMisrouteNotice(form) {
     }
   };
 
-  field.addEventListener('input', check);
+  /*
+   * A checagem roda quando a pessoa termina de escrever — ao sair do campo e
+   * ao enviar — e não a cada tecla. Validar durante a digitação faz o aviso
+   * piscar no meio de uma frase que ainda não terminou, e desabilitar o botão
+   * enquanto alguém escreve é hostil.
+   *
+   * A exceção é quando o aviso já está na tela: aí vale reavaliar a cada tecla,
+   * para a pessoa ver o bloqueio sair assim que corrigir, sem precisar sair do
+   * campo para descobrir.
+   */
   field.addEventListener('blur', check);
+  field.addEventListener('input', () => {
+    if (form.dataset.misrouted === 'true') check();
+  });
+  form.revisarAssunto = check;
+}
+
+/* -------------------------------------------------------------------------
+   Triagem inversa: cliente no formulário errado
+   -------------------------------------------------------------------------
+
+   Nos formulários de vaga e de fornecedor o risco é o oposto do formulário de
+   orçamento: quem se perde ali é cliente, e cliente parado na caixa de
+   currículos é lead perdido sem ninguém perceber.
+
+   Aqui o aviso SUGERE e não barra. No orçamento barrar é certo, porque o erro
+   contamina a conversão do Ads. Aqui um engano meu bloquearia um fornecedor de
+   verdade sem ganhar nada em troca, então a pessoa continua livre para enviar.
+   ------------------------------------------------------------------------- */
+
+function wireClienteNotice(form) {
+  const field = form.querySelector('[data-cliente-source]');
+  const notice = form.querySelector('[data-cliente-notice]');
+  if (!field || !notice) return;
+
+  const check = () => {
+    // dois sinais de cliente e nenhum sinal do assunto desta página
+    const ehCliente = sinaisDeCliente(field.value).length >= 2 && !classificar(field.value);
+    notice.hidden = !ehCliente;
+  };
+
+  field.addEventListener('blur', check);
+  field.addEventListener('input', () => {
+    if (!notice.hidden) check();
+  });
 }
 
 /* -------------------------------------------------------------------------
@@ -320,9 +368,11 @@ export function initForms() {
   wireSuccessOverlay();
 
   document.querySelectorAll('form[data-avanthe-form]').forEach((form) => {
+    form.abertoEm = Date.now();
     fillContext(form);
     wireFileInput(form);
     wireMisrouteNotice(form);
+    wireClienteNotice(form);
 
     form.querySelectorAll('[data-validate], [required]').forEach((field) => {
       field.addEventListener('blur', () => validateField(field));
@@ -336,6 +386,10 @@ export function initForms() {
       // Honeypot preenchido: bot. Simulamos sucesso sem enviar nada.
       const trap = form.querySelector('.honeypot input');
       if (trap && trap.value) return;
+      // Preenchido rápido demais para ser gente lendo os campos. Bot não
+      // recebe erro, para não aprender o que travou: some em silêncio.
+      if (rapidoDemais(form.abertoEm)) return;
+      if (typeof form.revisarAssunto === 'function') form.revisarAssunto();
       if (form.dataset.misrouted === 'true') {
         form.querySelector('[data-misroute-notice]')?.scrollIntoView({
           block: 'center',

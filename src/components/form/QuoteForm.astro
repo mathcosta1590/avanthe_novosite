@@ -43,7 +43,7 @@ const sendTo = `${site.ads.conversionId}/${site.ads.conversionLabel}`;
   <Honeypot />
   <HiddenContext />
 
-  <Field idPrefix={idPrefix} name="nome" label="Nome" required autocomplete="name" placeholder="Seu nome completo" />
+  <Field idPrefix={idPrefix} name="nome" validate="name" label="Nome" required autocomplete="name" placeholder="Seu nome completo" />
 
   <div class="form__row">
     <Field

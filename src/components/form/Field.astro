@@ -11,6 +11,7 @@ const {
   hint = null,
   validate = null,
   misroute = false,
+  cliente = false,
   idPrefix = 'campo',
 } = Astro.props;
 
@@ -49,6 +50,7 @@ const isSelect = type === 'select';
         placeholder={placeholder}
         data-validate={validate ?? undefined}
         data-misroute-source={misroute ? 'true' : undefined}
+        data-cliente-source={cliente ? 'true' : undefined}
       />
     ) : (
       <input

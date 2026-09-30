@@ -203,6 +203,12 @@ select.field__control {
   color: #9b2c2c;
 }
 
+/* Aviso que sugere sem bloquear, nos formulários de vaga e fornecedor. */
+.notice--suave {
+  border-left-color: var(--navy-60);
+  background: rgba(18, 33, 61, 0.03);
+}
+
 /* Overlay de sucesso */
 .success {
   position: fixed;
