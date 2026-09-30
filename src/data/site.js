@@ -4,7 +4,7 @@ export const site = {
   cnpj: '64.676.692/0001-75',
   url: 'https://avanthe.com.br',
   description:
-    'Construção, reforma e retrofit em Curitiba com responsabilidade técnica direta, cronograma e prazo cumprido. 8 obras entregues, 100% no prazo.',
+    'Construção, reforma e retrofit em Curitiba com responsabilidade técnica direta, cronograma e prazo cumprido. 100% das obras entregues no prazo combinado.',
   address: {
     street: 'Av. Visc. de Guarapuava, 4628',
     district: 'Batel',
@@ -32,8 +32,13 @@ export const site = {
   },
 };
 
+/*
+ * Sem contagem de obras entregues. Volume é o único eixo em que uma empresa
+ * nova perde para qualquer construtora, e o portfólio logo abaixo deixa o
+ * número à vista de quem quiser contar. O que fica são taxas e trabalho em
+ * curso, que não convidam essa comparação.
+ */
 export const stats = [
-  { value: '8', label: 'obras entregues' },
   { value: '100%', label: 'no prazo' },
   { value: '~1.000', label: 'm² de área executada', unit: 'm²' },
   { value: '2', label: 'obras em andamento' },
