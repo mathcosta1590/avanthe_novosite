@@ -21,6 +21,12 @@
  *            solta. É o que separa "sou pedreiro" de "preciso de pedreiro" e
  *            "tenho mao de obra" de "preciso de mao de obra". Vale como forte.
  *
+ *   MEDIO    Frase curta e direta de quem procura trabalho — "preciso de
+ *            trabalho", "tem serviço pra mim", "voces contratam". Lê como
+ *            candidatura em quase todo contexto, mas encosta em frases de
+ *            cliente ("quero um trabalho bem feito"). Uma ocorrência barra,
+ *            e um único sinal de cliente já cancela.
+ *
  *   FRACO    Levanta suspeita mas cabe em pedido de cliente. Precisa de duas
  *            ocorrências e nenhum sinal de cliente para barrar.
  *
@@ -109,7 +115,26 @@ export const TRIAGEM = [
       // disponibilidade pessoal
       /\b(estou|to|me encontro)\s+(a\s+)?(disponivel|disposicao|procura de trabalho|procura de emprego)\b/,
     ],
+    // Frase curta de quem procura trabalho. O corpo de teste antigo só tinha
+    // frases bem escritas, e 13 de 28 mensagens curtas passavam direto.
+    medio: [
+      // precisar/querer trabalho, sem ser "trabalho de pintura"
+      /\b(preciso|precisando|procuro|procurando|busco|buscando|quero|querendo|queria|gostaria|aceito|atras)\s+(de\s+)?(um\s+|uma\s+|algum\s+)?(trabalho|emprego|servico|colocacao|recolocacao|ocupacao|renda|bico|bicos)\b(?!\s+(de|em|para|pra|na|no|nas|nos|bem|caprichado|profissional|urgente|rapido)\b)/,
+      /\b(preciso|quero|queria|gostaria|posso|pretendo)\s+trabalhar\b/,
+      // oferecer-se
+      /\b(tem|teria|ha|tem algum|tem alguma)\s+(trabalho|servico|vaga|coisa|algo)\s+(ai|pra mim|para mim|disponivel|sobrando)\b/,
+      /\bme\s+(contrata|contratem|contrate|chama|chamem|aceita|aceitam|da uma chance)\b/,
+      /\b(voces|vcs|a empresa|voce)\s+(contratam|contrata|estao contratando|ta contratando|tao contratando|precisam de alguem|precisa de alguem)\b/,
+      /\b(preciso|quero|queria|gostaria|busco|procuro)\s+(de\s+)?(uma\s+|alguma\s+)?(oportunidade|chance)\b/,
+      /\b(sou|trabalho como|atuo como)\s+(autonomo|autonoma|freelancer|diarista|prestador)\b/,
+      /\b(tenho|possuo|levo)\s+(ferramenta|ferramentas|equipamento proprio|equipamentos proprios|transporte proprio|carro proprio|moto propria)\b/,
+      /\b(topo|aceito|faco)\s+(qualquer|qualquer tipo de)\s+(servico|trabalho)\b/,
+      /\bfaco\s+bico/,
+      /\b(estou|to)\s+(sem trabalho|sem emprego|parado|desempregado|desempregada)\b/,
+      /\b(tenho|possuo|estou com)\s+(total\s+|toda\s+|ampla\s+)?disponibilidade\b/,
+    ],
     fraco: [
+      'autonomo', 'autonoma', 'freelancer', 'diarista', 'bico', 'bicos',
       'experiencia', 'experiencias', 'anos de experiencia', 'oportunidade', 'oportunidades',
       'disponibilidade', 'disponivel para inicio', 'imediato', 'curriculo atualizado',
       'qualificacao', 'certificado', 'certificados', 'nr35', 'nr 35', 'nr18', 'nr 18',
@@ -163,6 +188,11 @@ export const TRIAGEM = [
       // spam de marketing endereçado ao site do cliente
       /\b(site|instagram|google|redes sociais|trafego|anuncios)\b[^.]{0,60}\b(melhorar|aumentar|otimizar|posicionar|crescer|dobrar|alavancar|ajudar)\b/,
       /\b(melhorar|aumentar|otimizar|posicionar|dobrar|alavancar)\b[^.]{0,60}\b(site|instagram|google|redes sociais|trafego|anuncios|suas vendas|seu faturamento)\b/,
+    ],
+    medio: [
+      /\b(gostaria|queria|quero|podemos|posso|teria interesse)\s+(de\s+|em\s+)?(agendar|marcar|fazer)\s+(uma\s+)?(visita|reuniao|apresentacao|call)\b/,
+      /\b(quem|com quem)\s+(fala|falo|devo falar|posso falar)\s+(sobre|de)\s+(compras|suprimentos|materiais)\b/,
+      /\b(setor|departamento|area)\s+de\s+(compras|suprimentos)\b/,
     ],
     fraco: [
       'representante', 'representacao', 'catalogo', 'distribuir', 'fabricante',
@@ -229,9 +259,24 @@ export function classificar(texto) {
     }
   }
 
-  // Um sinal de cliente já basta para cancelar os FRACOS, que são ambíguos
-  // por definição.
+  // Um único sinal de cliente já cancela MEDIO e FRACO, que são ambíguos por
+  // definição. Quem escreve "quero um trabalho bem feito na minha casa" tem
+  // "minha casa" para se salvar; quem escreve só "preciso de trabalho" não.
   if (cliente.length === 0) {
+    for (const grupo of TRIAGEM) {
+      const medios = (grupo.medio || []).filter((re) => re.test(t));
+      if (medios.length > 0) {
+        return {
+          alvo: grupo.alvo,
+          rotulo: grupo.rotulo,
+          assunto: grupo.assunto,
+          motivo: medios.map((re) => re.source.slice(0, 40)),
+          nivel: 'medio',
+          cliente,
+        };
+      }
+    }
+
     for (const grupo of TRIAGEM) {
       const fracos = grupo.fraco.filter((termo) => contem(t, termo));
       if (fracos.length >= 2) {

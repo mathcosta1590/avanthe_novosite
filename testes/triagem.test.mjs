@@ -97,6 +97,33 @@ const vagas = [
   'Sou jovem aprendiz e queria uma chance na construção.',
 ];
 
+// ------------------------ deve BARRAR: mensagem curta e crua de quem procura
+// trabalho. Quem manda currículo escreve frase inteira; quem procura serviço
+// escreve três palavras. O corpo de teste antigo só tinha o primeiro caso, e
+// 13 de 28 mensagens deste bloco passavam direto.
+const vagasCurtas = [
+  'preciso de trabalho',
+  'quero trabalho',
+  'tô precisando de trabalho',
+  'preciso trabalhar',
+  'tem trabalho aí?',
+  'tem serviço pra mim?',
+  'aceito trabalho',
+  'faço bico',
+  'estou precisando de uma renda',
+  'me contrata',
+  'vocês contratam?',
+  'tenho disponibilidade',
+  'preciso de uma oportunidade',
+  'tenho ferramentas próprias',
+  'sou autônomo',
+  'topo qualquer serviço',
+  'estou desempregado',
+  'sou arquiteta',
+  'sou pintor',
+  'estou disponível',
+];
+
 // ------------------------------- deve BARRAR: fornecedor, representante, spam
 const fornecedores = [
   'Somos fabricantes de porcelanato e gostaria de apresentar nossa linha.',
@@ -140,6 +167,7 @@ for (const m of clientes) {
 
 for (const [nome, lista] of [
   ['vaga', vagas],
+  ['vaga curta', vagasCurtas],
   ['fornecedor', fornecedores],
 ]) {
   for (const m of lista) {
@@ -151,12 +179,13 @@ for (const [nome, lista] of [
   }
 }
 
-const totalBarrar = vagas.length + fornecedores.length;
+const totalBarrar = vagas.length + vagasCurtas.length + fornecedores.length;
 const total = clientes.length + totalBarrar;
 
 console.log(`mensagens no corpo de teste : ${total}`);
 console.log(`  clientes legítimos        : ${clientes.length}`);
 console.log(`  candidaturas a vaga       : ${vagas.length}`);
+console.log(`  mensagens curtas de vaga  : ${vagasCurtas.length}`);
 console.log(`  fornecedor e spam         : ${fornecedores.length}`);
 console.log('');
 console.log(`falsos positivos (cliente barrado)  : ${falsoPositivo}  <- erro caro, derruba o teste`);
