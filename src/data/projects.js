@@ -67,7 +67,7 @@ export const projects = [
     slug: 'reforma-comercial-ruffino',
     status: 'complete',
     featured: false,
-    name: 'Reforma Comercial Ruffino',
+    name: 'Comercial Ruffino',
     client: 'Ruffino',
     positioning:
       'Um galpão dos anos 70, décadas sem uso, virou o centro administrativo da Ruffino em sete semanas.',
