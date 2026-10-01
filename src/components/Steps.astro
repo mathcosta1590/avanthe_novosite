@@ -2,7 +2,7 @@
 const { items, title } = Astro.props;
 ---
 
-<ol class="steps" aria-label={title} data-etapas>
+<ol class="steps" aria-label={title} data-etapas style={`--n: ${items.length}`}>
   {
     items.map((step, i) => (
       <li class="steps__item" data-etapa style={`--i: ${i}`}>
@@ -21,6 +21,16 @@ const { items, title } = Astro.props;
     list-style: none;
     margin: 0;
     padding: 0;
+  }
+
+  /* Em tela larga as colunas acompanham a quantidade de etapas, em vez de o
+     auto-fit decidir. Com cinco etapas e quatro colunas, a última ficava
+     sozinha numa linha — e numa sequência isso lê como se faltasse algo. */
+  @media (min-width: 1080px) {
+    .steps {
+      grid-template-columns: repeat(var(--n, 3), minmax(0, 1fr));
+      gap: var(--space-m);
+    }
   }
 
   /*

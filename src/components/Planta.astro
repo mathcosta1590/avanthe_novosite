@@ -1,4 +1,6 @@
 ---
+const { fundo = false } = Astro.props;
+
 /**
  * Planta baixa que se desenha.
  *
@@ -13,7 +15,7 @@
  */
 ---
 
-<div class="planta" data-planta aria-hidden="true">
+<div class="planta" data-planta data-fundo={fundo ? 'true' : undefined} aria-hidden="true">
   <svg viewBox="0 0 560 350" role="presentation">
     <path data-traco d="M64 40 H536 V264 H64 Z"></path>
     <path data-traco d="M370 40 V176"></path>
@@ -58,5 +60,33 @@
   .planta [data-traco][data-cota] {
     stroke-width: 1.1;
     stroke: var(--logo-dot, #00bf63);
+  }
+
+  /*
+   * Modo marca d'água: o desenho vira textura atrás do texto.
+   *
+   * A transparência fica no grupo inteiro e não em cada traço. Por traço, onde
+   * duas linhas se cruzam as opacidades se somam e o cruzamento fica o dobro
+   * mais escuro que o resto — medi 147,154,170 num desenho que deveria ser
+   * quase branco, e o corpo das etapas caía para 3,92:1 em cima dele. Com a
+   * transparência no grupo, o desenho é composto uma vez só e o cruzamento
+   * pesa igual ao traço solto.
+   */
+  .planta[data-fundo] {
+    opacity: 0.16;
+  }
+
+  .planta[data-fundo] [data-traco] {
+    stroke: var(--navy);
+    stroke-width: 1.4;
+  }
+
+  .planta[data-fundo] [data-traco][data-fino] {
+    stroke-width: 1;
+  }
+
+  .planta[data-fundo] [data-traco][data-cota] {
+    stroke: var(--logo-dot, #00bf63);
+    stroke-width: 1.2;
   }
 </style>

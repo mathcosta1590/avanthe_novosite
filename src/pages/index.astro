@@ -2,6 +2,9 @@
 import Base from '../layouts/Base.astro';
 import Stats from '../components/Stats.astro';
 import ServiceGrid from '../components/ServiceGrid.astro';
+import Steps from '../components/Steps.astro';
+import Planta from '../components/Planta.astro';
+import { METODO } from '../data/metodo.js';
 import CtaSection from '../components/CtaSection.astro';
 
 ---
@@ -63,6 +66,31 @@ import CtaSection from '../components/CtaSection.astro';
     </div>
   </section>
 
+  <!--
+    Como trabalhamos.
+
+    Vem logo depois do manifesto de propósito: o manifesto acusa o mercado de
+    não ter engenheiro, cronograma, RT nem contrato, e esta seção mostra isso
+    acontecendo. Acusação e prova, uma embaixo da outra.
+
+    A planta é textura, não informação: desenhada em traço fino atrás das
+    etapas, atravessando a seção inteira.
+  -->
+  <section class="section section--tall metodo">
+    <div class="metodo__fundo" aria-hidden="true">
+      <Planta fundo={true} />
+    </div>
+    <div class="shell">
+      <div class="section-head" data-reveal-item>
+        <span class="eyebrow">Como trabalhamos</span>
+        <h2 class="headline section-head__title" data-subir>
+          Cinco etapas, sempre na mesma ordem.
+        </h2>
+      </div>
+      <Steps title="Como trabalhamos" items={METODO} />
+    </div>
+  </section>
+
   <!-- Serviços -->
   <section class="section section--tall">
     <div class="shell">
@@ -101,6 +129,33 @@ import CtaSection from '../components/CtaSection.astro';
     align-items: center;
     gap: var(--space-m) var(--space-xl);
     margin-top: clamp(2rem, 5vw, 3rem);
+  }
+
+  .metodo {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+
+  .metodo__fundo {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    display: grid;
+    place-items: center;
+    pointer-events: none;
+  }
+
+  /* O desenho sangra para fora da coluna de leitura: dentro dela viraria um
+     quadro, e a intenção é textura. */
+  .metodo__fundo > :global(.planta) {
+    width: min(132%, 86rem);
+  }
+
+  @media (max-width: 760px) {
+    .metodo__fundo > :global(.planta) {
+      width: 190%;
+    }
   }
 
   .section-head {

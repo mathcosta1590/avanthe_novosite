@@ -2,6 +2,8 @@
 import Base from '../layouts/Base.astro';
 import Stats from '../components/Stats.astro';
 import Steps from '../components/Steps.astro';
+import Cronograma from '../components/Cronograma.astro';
+import { serviceContent } from '../data/services-content.js';
 import MediaPlaceholder from '../components/MediaPlaceholder.astro';
 import QuoteForm from '../components/form/QuoteForm.astro';
 import FormRuntime from '../components/form/FormRuntime.astro';
@@ -95,6 +97,25 @@ const steps = [
           </p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!--
+    Cronograma logo depois do case.
+
+    Quem clica num anúncio de reforma comercial tem loja, clínica ou
+    escritório, e o medo não é preço: é quanto tempo fica fechado. O case acima
+    diz "sete semanas" em texto; o cronograma mostra o que texto nenhum mostra,
+    que é as etapas se sobrepondo — que é como o prazo encurta.
+  -->
+  <section class="section section--tall">
+    <div class="shell">
+      <Cronograma
+        titulo={serviceContent['reforma-retrofit'].cronograma.titulo}
+        etapas={serviceContent['reforma-retrofit'].cronograma.etapas}
+        semanas={serviceContent['reforma-retrofit'].cronograma.semanas}
+        nota={serviceContent['reforma-retrofit'].cronograma.nota}
+      />
     </div>
   </section>
 
