@@ -1,9 +1,7 @@
 /**
  * Movimento do site.
  *
- * Quatro comportamentos de site inteiro, num arquivo só porque dependem uns
- * dos outros: a rolagem amortecida muda o que o cabeçalho e os reveladores
- * enxergam como "posição da página".
+ * Os comportamentos que o site tem em comum, num arquivo só.
  *
  * Tudo aqui é desligado por `prefers-reduced-motion` e nada é obrigatório para
  * o site funcionar: sem JavaScript, o texto aparece, o cabeçalho fica fixo e
@@ -11,75 +9,9 @@
  */
 
 const PARADO = window.matchMedia('(prefers-reduced-motion: reduce)');
-const TOQUE = window.matchMedia('(hover: none)');
 
 /* -------------------------------------------------------------------------
-   1. Rolagem amortecida
-   -------------------------------------------------------------------------
-
-   Cancela a rolagem do navegador na roda do mouse e caminha até o destino um
-   pedaço por quadro. É o que dá peso à página.
-
-   Fica fora do celular de propósito: lá a rolagem é por dedo, o sistema já tem
-   a própria inércia, e substituí-la deixa a página com atraso em vez de
-   suave. Teclado, barra de rolagem e âncoras continuam nativos — só a roda é
-   interceptada, então quem navega por teclado não perde nada.
-   ------------------------------------------------------------------------- */
-
-function rolagemAmortecida() {
-  if (PARADO.matches || TOQUE.matches) return;
-
-  let destino = window.scrollY;
-  let raf = null;
-  let ativo = false;
-
-  const limite = () =>
-    Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
-
-  const passo = () => {
-    raf = null;
-    const falta = destino - window.scrollY;
-    if (Math.abs(falta) < 0.5) {
-      ativo = false;
-      window.scrollTo(0, destino);
-      return;
-    }
-    window.scrollTo(0, window.scrollY + falta * 0.12);
-    pedir();
-  };
-
-  const pedir = () => {
-    if (raf === null) raf = requestAnimationFrame(passo);
-  };
-
-  window.addEventListener(
-    'wheel',
-    (e) => {
-      // Ctrl+roda é zoom do navegador, não rolagem.
-      if (e.ctrlKey) return;
-      e.preventDefault();
-      if (!ativo) {
-        ativo = true;
-        destino = window.scrollY;
-      }
-      destino = Math.max(0, Math.min(limite(), destino + e.deltaY));
-      pedir();
-    },
-    { passive: false }
-  );
-
-  // Qualquer rolagem que não veio da roda reassume o controle.
-  window.addEventListener(
-    'scroll',
-    () => {
-      if (!ativo) destino = window.scrollY;
-    },
-    { passive: true }
-  );
-}
-
-/* -------------------------------------------------------------------------
-   2. Linhas que sobem
+   1. Linhas que sobem
    -------------------------------------------------------------------------
 
    Troca os nós de texto por palavras embrulhadas, sem tocar nas tags que já
@@ -178,7 +110,7 @@ function linhasQueSobem() {
 }
 
 /* -------------------------------------------------------------------------
-   3. Cabeçalho que se recolhe
+   2. Cabeçalho que se recolhe
    -------------------------------------------------------------------------
 
    Descendo, sai da frente e devolve a tela ao conteúdo. Subindo, volta na
@@ -221,7 +153,7 @@ function cabecalhoQueRecolhe() {
 }
 
 /* -------------------------------------------------------------------------
-   4. Contagem até o número
+   3. Contagem até o número
    -------------------------------------------------------------------------
 
    Desacelera no fim, em vez de correr parelho: o número chega e assenta. Os
@@ -293,7 +225,7 @@ function contarNumeros() {
 }
 
 /* -------------------------------------------------------------------------
-   5. Etapas acendendo em ordem
+   4. Etapas acendendo em ordem
    -------------------------------------------------------------------------
 
    A régua de cada etapa é a trilha: a linha corre sobre ela e a etapa só ganha
@@ -340,7 +272,7 @@ function etapasEmOrdem() {
 }
 
 /* -------------------------------------------------------------------------
-   6. A planta se desenhando
+   5. A planta se desenhando
    -------------------------------------------------------------------------
 
    Velocidade constante em pixels: traço longo leva mais tempo que traço curto,
@@ -393,7 +325,7 @@ function plantaQueSeDesenha() {
 }
 
 /* -------------------------------------------------------------------------
-   7. Cronograma preenchendo
+   6. Cronograma preenchendo
    ------------------------------------------------------------------------- */
 
 function cronogramaPreenchendo() {
@@ -419,7 +351,6 @@ function cronogramaPreenchendo() {
 }
 
 export function initMovimento() {
-  rolagemAmortecida();
   linhasQueSobem();
   cabecalhoQueRecolhe();
   contarNumeros();
