@@ -14,9 +14,18 @@ import CtaSection from '../components/CtaSection.astro';
     slot="preload"
     rel="preload"
     as="image"
-    href="/home/abertura.jpg"
-    imagesrcset="/home/abertura-sm.jpg 900w, /home/abertura.jpg 2000w"
+    href="/home/capa-larga.jpg"
+    imagesrcset="/home/capa-larga-md.jpg 1200w, /home/capa-larga.jpg 2000w"
     imagesizes="100vw"
+    media="(min-width: 761px)"
+    fetchpriority="high"
+  />
+  <link
+    slot="preload"
+    rel="preload"
+    as="image"
+    href="/home/capa-estreita.jpg"
+    media="(max-width: 760px)"
     fetchpriority="high"
   />
 
@@ -30,18 +39,31 @@ import CtaSection from '../components/CtaSection.astro';
 
     No celular a faixa tem pouco mais da metade da altura. Lá a tela é curta e
     quem chega por anúncio precisa alcançar o título e o botão sem rolar.
+
+    São dois recortes da mesma foto, um por formato de tela. Com um arquivo só,
+    a faixa do desktop é bem mais larga que a do celular e o corte automático
+    comia metade da cena num dos dois — aqui cada tela recebe um enquadramento
+    já pensado para ela.
   -->
   <section class="abertura">
-    <img
-      src="/home/abertura.jpg"
-      srcset="/home/abertura-sm.jpg 900w, /home/abertura.jpg 2000w"
-      sizes="100vw"
-      alt="Salão da cafeteria The Best Coffee, obra entregue pela Avanthe em Curitiba"
-      width="2000"
-      height="857"
-      fetchpriority="high"
-      decoding="async"
-    />
+    <picture>
+      <source
+        media="(max-width: 760px)"
+        srcset="/home/capa-estreita.jpg"
+        width="820"
+        height="410"
+      />
+      <img
+        src="/home/capa-larga.jpg"
+        srcset="/home/capa-larga-md.jpg 1200w, /home/capa-larga.jpg 2000w"
+        sizes="100vw"
+        alt="Sala integrada do Apartamento 301, obra entregue pela Avanthe em Curitiba"
+        width="2000"
+        height="560"
+        fetchpriority="high"
+        decoding="async"
+      />
+    </picture>
   </section>
 
   <!-- Hero -->
@@ -118,9 +140,10 @@ import CtaSection from '../components/CtaSection.astro';
   /*
    * Altura em vh, com piso e teto.
    *
-   * O número saiu de medição, não de gosto: a 42vh o botão de orçamento caía
-   * 174px abaixo da dobra num monitor de 1440x900, que é o tamanho mais comum.
-   * A 26vh ele cabe, e em tela alta a faixa cresce junto porque o vh acompanha.
+   * O número saiu de medição, não de gosto: o botão de orçamento precisa caber
+   * acima da dobra num monitor de 1440x900, que é o tamanho mais comum. A
+   * folga para subir de 26 para 32vh veio de encolher o título, não de
+   * empurrar o botão para baixo.
    */
   .abertura {
     display: block;
@@ -137,13 +160,13 @@ import CtaSection from '../components/CtaSection.astro';
      * efeito nenhum.
      */
     object-position: 50% 24%;
-    height: clamp(11rem, 26vh, 22rem);
+    height: clamp(12rem, 32vh, 24rem);
     object-fit: cover;
   }
 
   @media (max-width: 760px) {
     .abertura img {
-      height: clamp(8rem, 21vh, 12rem);
+      height: clamp(9rem, 24vh, 14rem);
     }
   }
 
@@ -151,8 +174,13 @@ import CtaSection from '../components/CtaSection.astro';
     padding-block: clamp(1.8rem, 4vw, 2.8rem) clamp(3.5rem, 9vw, 7rem);
   }
 
+  /* O título da home era o maior tipo do site, em três linhas, e sozinho
+     ocupava mais altura que a faixa de foto. Um passo abaixo na escala e mais
+     caracteres por linha: continua sendo a primeira coisa que se lê, e sobra
+     tela para a obra. */
   .hero__text {
-    max-width: 16ch;
+    font-size: var(--step-4);
+    max-width: 19ch;
   }
 
   .hero__lede {
