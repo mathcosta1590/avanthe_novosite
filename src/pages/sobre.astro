@@ -2,6 +2,9 @@
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import Stats from '../components/Stats.astro';
+import Steps from '../components/Steps.astro';
+import Planta from '../components/Planta.astro';
+import { METODO } from '../data/metodo.js';
 import MediaPlaceholder from '../components/MediaPlaceholder.astro';
 import CtaSection from '../components/CtaSection.astro';
 import { site } from '../data/site.js';
@@ -64,6 +67,25 @@ import { site } from '../data/site.js';
     </div>
   </section>
 
+  <section class="section section--tall">
+    <div class="shell metodo">
+      <div class="metodo__texto">
+        <div class="section-head" data-reveal-item>
+          <span class="eyebrow">Como trabalhamos</span>
+          <h2 class="headline section-head__title" data-subir>
+            Cinco etapas, sempre na mesma ordem.
+          </h2>
+        </div>
+        <Steps title="Como trabalhamos" items={METODO} />
+      </div>
+
+      <!-- Decoração, e assumidamente: não informa nada que o texto não diga. -->
+      <div class="metodo__planta">
+        <Planta />
+      </div>
+    </div>
+  </section>
+
   <section class="section section--tall section--ink">
     <div class="shell">
       <p class="headline sobre__pull">
@@ -112,6 +134,32 @@ import { site } from '../data/site.js';
     font-size: var(--step-0);
     font-weight: 300;
     color: var(--navy-80);
+  }
+
+  .metodo {
+    display: grid;
+    gap: var(--space-xl);
+  }
+
+  .metodo__planta {
+    display: none;
+  }
+
+  /* A planta é enfeite, então só entra onde sobra largura: em tela estreita o
+     espaço é todo do conteúdo. Fica abaixo das etapas e não ao lado, para o
+     desenho poder ser grande em vez de espremido numa coluna. */
+  @media (min-width: 900px) {
+    .metodo__planta {
+      display: block;
+      /* justify-self em vez de margin auto: margem automática em item de
+         grade encolhe a caixa até o conteúdo, e o conteúdo é um SVG, que vale
+         300px por padrão quando não tem width. Ficava com 300 de 544. */
+      justify-self: center;
+      width: 100%;
+      max-width: 38rem;
+      padding-top: var(--space-l);
+      border-top: 1px solid var(--rule);
+    }
   }
 
   .sobre__pull {

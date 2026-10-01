@@ -6,6 +6,7 @@ const { items, title } = Astro.props;
   {
     items.map((step, i) => (
       <li class="steps__item" data-etapa style={`--i: ${i}`}>
+        <span class="steps__num">{String(i + 1).padStart(2, '0')}</span>
         <h3 class="steps__title">{step.title}</h3>
         <p class="steps__text">{step.text}</p>
       </li>
@@ -77,8 +78,16 @@ const { items, title } = Astro.props;
     [data-etapas] .steps__item { opacity: 1 !important; }
   }
 
+  .steps__num {
+    font-size: var(--step--1);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: var(--navy-30);
+    font-variant-numeric: tabular-nums;
+  }
+
   .steps__title {
-    margin-top: var(--space-s);
+    margin-top: var(--space-m);
     font-size: var(--step-1);
     font-weight: 600;
     letter-spacing: -0.02em;
@@ -93,6 +102,11 @@ const { items, title } = Astro.props;
   :global(.section--ink) .steps__item,
   :global(.section--navy) .steps__item {
     border-color: rgba(245, 245, 243, 0.22);
+  }
+
+  :global(.section--ink) .steps__num,
+  :global(.section--navy) .steps__num {
+    color: rgba(245, 245, 243, 0.5);
   }
 
   :global(.section--ink) .steps__item::before,
