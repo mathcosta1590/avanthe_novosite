@@ -73,6 +73,16 @@
 html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
+  /*
+   * O fundo da tela, não o da página.
+   *
+   * Sem isto o html é transparente e quem pinta a área além do conteúdo é o
+   * body, que é off-white. No iPhone, o elástico do fim da rolagem revela essa
+   * área: aparecia uma faixa clara colada no rodapé navy, lida como quebra de
+   * layout. O navy também é o theme-color, então a barra do Safari, o topo e o
+   * fim passam a ser a mesma cor.
+   */
+  background: var(--navy);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -96,6 +106,9 @@ body {
   line-height: 1.6;
   color: var(--navy);
   background: var(--paper);
+  /* O body precisa cobrir a tela inteira mesmo numa página curta, senão o
+     navy do html aparece por baixo do conteúdo em vez de só no elástico. */
+  min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   min-height: 100vh;

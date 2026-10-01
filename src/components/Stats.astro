@@ -74,16 +74,23 @@ const { items = defaultStats, compact = false } = Astro.props;
     color: rgba(245, 245, 243, 0.55);
   }
 
+  /*
+   * No celular, uma coluna só.
+   *
+   * Em duas colunas, um número ímpar de índices deixa a última célula vazia:
+   * o filete de baixo morria no meio da tela e o item órfão ficava com uma
+   * borda à esquerda que não encostava em nada. Lia-se como layout quebrado,
+   * não como grade. Empilhado, cada filete atravessa a largura inteira e o
+   * arranjo funciona com dois, três ou quatro índices sem caso especial.
+   */
   @media (max-width: 720px) {
     .stats {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
     }
 
+    .stats__item,
     .stats__item + .stats__item {
-      padding-left: var(--space-s);
-    }
-
-    .stats__item:nth-child(odd) {
+      padding-right: 0;
       padding-left: 0;
       border-left: 0;
     }

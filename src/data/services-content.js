@@ -4,10 +4,14 @@ export const serviceContent = {
   'construcao-do-zero': {
     // Uma foto por frente, em retrato, na coluna ao lado do texto. As páginas
     // de serviço eram as únicas do site sem imagem nenhuma.
-    foto: {
-      src: '/servicos/construcao-do-zero.jpg',
-      alt: 'Sala de estar entregue, com esquadrias novas e piso assentado.',
-    },
+    /*
+     * Sem foto, de propósito.
+     *
+     * A imagem que ficava aqui era um recorte do Apartamento Bigorrilho, que é
+     * uma reforma. Ilustrar a página de obra do zero com uma reforma é o tipo
+     * de detalhe que outro engenheiro percebe, e custa mais credibilidade do
+     * que a foto agrega. Volta assim que houver foto de uma obra do zero.
+     */
     title: 'Construção do zero',
     lede: 'A maioria dos problemas que aparecem numa construção não surge no dia da entrega. Surge anos depois.',
     body: [
@@ -32,6 +36,7 @@ export const serviceContent = {
     foto: {
       src: '/servicos/reforma-retrofit.jpg',
       alt: 'Parede viva e comunicação visual da cafeteria The Best Coffee, obra entregue pela Avanthe.',
+      obra: { slug: 'the-best-coffee', nome: 'The Best Coffee', tipo: 'Franquia comercial' },
     },
     /*
      * PENDENTE DE VALIDAÇÃO: estes prazos são a média do setor para um
@@ -77,6 +82,7 @@ export const serviceContent = {
     foto: {
       src: '/servicos/regularizacao-tecnica.jpg',
       alt: 'Salão administrativo da Ruffino depois do retrofit.',
+      obra: { slug: 'reforma-comercial-ruffino', nome: 'Comercial Ruffino', tipo: 'Galpão de mais de 30 anos' },
     },
     title: 'Regularização técnica',
     lede: 'Regularização de obra não segue um caminho único. Cada situação começa de um ponto diferente.',
@@ -102,6 +108,7 @@ export const serviceContent = {
     foto: {
       src: '/servicos/gestao-de-obras.jpg',
       alt: 'Obra em execução, com acompanhamento técnico semanal.',
+      obra: { slug: 'apartamento-merces', nome: 'Apartamento Mercês', tipo: 'Reforma residencial' },
     },
     title: 'Gestão de obras',
     lede: 'Gestão de obra, na Avanthe, é um sistema, não uma promessa vaga de "acompanhamento".',

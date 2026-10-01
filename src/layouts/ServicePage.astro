@@ -24,15 +24,27 @@ const others = services.filter((s) => s.slug !== slug);
       <aside class="service__aside">
         {
           content.foto && (
-            <img
-              class="service__foto"
-              src={content.foto.src}
-              alt={content.foto.alt}
-              width="900"
-              height="1200"
-              loading="lazy"
-              decoding="async"
-            />
+            <figure class="obra-prova">
+              <img
+                class="obra-prova__foto"
+                src={content.foto.src}
+                alt={content.foto.alt}
+                width="900"
+                height="1200"
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption class="obra-prova__legenda">
+                <span class="obra-prova__rotulo">Obra entregue</span>
+                <a class="obra-prova__link" href={`/portfolio/${content.foto.obra.slug}`}>
+                  {content.foto.obra.nome}
+                  <span class="obra-prova__seta" aria-hidden="true">
+                    &rarr;
+                  </span>
+                </a>
+                <span class="obra-prova__tipo">{content.foto.obra.tipo}</span>
+              </figcaption>
+            </figure>
           )
         }
 
@@ -100,14 +112,72 @@ const others = services.filter((s) => s.slug !== slug);
     gap: var(--space-l);
   }
 
-  /* Retrato, para a coluna estreita virar vantagem em vez de limitação: a
-     foto ocupa a altura que o texto ao lado ocupa. */
-  .service__foto {
+  /*
+   * A foto como prova, não como enfeite.
+   *
+   * Solta na coluna, sem legenda, ela não dizia o que era: parecia banco de
+   * imagem. Nomeada e ligada ao case, ela passa a sustentar o texto ao lado —
+   * é uma obra que existe, com página própria e fotos de antes e depois.
+   *
+   * A legenda repete a régua do bloco abaixo (filete navy de 2px) para a
+   * coluna inteira ler como um sistema, e não como peças empilhadas.
+   */
+  .obra-prova {
+    margin: 0;
+  }
+
+  .obra-prova__foto {
     display: block;
     width: 100%;
     height: auto;
     aspect-ratio: 3 / 4;
     object-fit: cover;
+  }
+
+  .obra-prova__legenda {
+    display: grid;
+    gap: var(--space-3xs);
+    margin-top: var(--space-s);
+    padding-top: var(--space-xs);
+    border-top: 2px solid var(--navy);
+  }
+
+  .obra-prova__rotulo {
+    font-size: var(--step--1);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--navy-60);
+  }
+
+  .obra-prova__link {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--space-2xs);
+    font-size: var(--step-0);
+    font-weight: 600;
+    color: var(--navy);
+    text-decoration: none;
+  }
+
+  .obra-prova__link:hover,
+  .obra-prova__link:focus-visible {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .obra-prova__seta {
+    transition: transform 0.25s var(--ease);
+  }
+
+  .obra-prova__link:hover .obra-prova__seta {
+    transform: translateX(0.2em);
+  }
+
+  .obra-prova__tipo {
+    font-size: var(--step--1);
+    font-weight: 300;
+    color: var(--navy-80);
   }
 
   .service__aside-bloco {
@@ -174,6 +244,13 @@ const others = services.filter((s) => s.slug !== slug);
     .service {
       grid-template-columns: 1fr;
       gap: var(--space-xl);
+    }
+
+    /* Em coluna única o retrato 3:4 virava um painel alto demais, empurrando
+       a lista para fora da tela. Deitada, a foto vira faixa e a legenda
+       encosta no texto que ela comprova. */
+    .obra-prova__foto {
+      aspect-ratio: 4 / 3;
     }
   }
 </style>
