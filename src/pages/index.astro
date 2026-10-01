@@ -10,6 +10,39 @@ import CtaSection from '../components/CtaSection.astro';
   title={null}
   description="Construção, reforma e retrofit em Curitiba. 100% das obras entregues no prazo, responsabilidade técnica direta e relatório semanal de andamento."
 >
+  <link
+    slot="preload"
+    rel="preload"
+    as="image"
+    href="/home/abertura.jpg"
+    imagesrcset="/home/abertura-sm.jpg 900w, /home/abertura.jpg 2000w"
+    imagesizes="100vw"
+    fetchpriority="high"
+  />
+
+  <!--
+    Abertura.
+
+    A obra é a primeira coisa que o visitante vê, e não há texto em cima dela.
+    Cinco tentativas anteriores colocaram o título sobre a foto e todas
+    morreram no mesmo lugar: ou a foto escurecia até não valer a pena, ou o
+    texto ficava ilegível — a última media 1,49:1 de contraste.
+
+    No celular a faixa tem pouco mais da metade da altura. Lá a tela é curta e
+    quem chega por anúncio precisa alcançar o título e o botão sem rolar.
+  -->
+  <section class="abertura">
+    <img
+      src="/home/abertura.jpg"
+      srcset="/home/abertura-sm.jpg 900w, /home/abertura.jpg 2000w"
+      sizes="100vw"
+      alt="Salão da cafeteria The Best Coffee, obra entregue pela Avanthe em Curitiba"
+      width="2000"
+      height="857"
+      fetchpriority="high"
+      decoding="async"
+    />
+  </section>
 
   <!-- Hero -->
   <section class="hero">
@@ -82,8 +115,40 @@ import CtaSection from '../components/CtaSection.astro';
 </Base>
 
 <style>
+  /*
+   * Altura em vh, com piso e teto.
+   *
+   * O número saiu de medição, não de gosto: a 42vh o botão de orçamento caía
+   * 174px abaixo da dobra num monitor de 1440x900, que é o tamanho mais comum.
+   * A 26vh ele cabe, e em tela alta a faixa cresce junto porque o vh acompanha.
+   */
+  .abertura {
+    display: block;
+  }
+
+  .abertura img {
+    display: block;
+    width: 100%;
+    /*
+     * A faixa renderiza por volta de 6:1 no desktop, bem mais larga que o 21:9
+     * do arquivo, então o cover ainda corta na vertical. Pelo centro ele comia
+     * o letreiro de neon no meio; puxando para cima, o letreiro inteiro entra.
+     * No celular a faixa é quase 2:1 e cabe a altura toda, onde isto não tem
+     * efeito nenhum.
+     */
+    object-position: 50% 24%;
+    height: clamp(11rem, 26vh, 22rem);
+    object-fit: cover;
+  }
+
+  @media (max-width: 760px) {
+    .abertura img {
+      height: clamp(8rem, 21vh, 12rem);
+    }
+  }
+
   .hero {
-    padding-block: clamp(3.5rem, 9vw, 7rem);
+    padding-block: clamp(1.8rem, 4vw, 2.8rem) clamp(3.5rem, 9vw, 7rem);
   }
 
   .hero__text {
