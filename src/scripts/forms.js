@@ -164,63 +164,53 @@ function wirePhoneMask(form) {
 }
 
 /* -------------------------------------------------------------------------
-   Triagem reativa no campo de mensagem
+   Roteamento silencioso no envio
+   -------------------------------------------------------------------------
+
+   Antes isto era um aviso que aparecia no meio do formulário e travava o
+   botão. Funcionava e era grosseiro: a pessoa escrevia, era repreendida e
+   mandada embora para outra página, onde recomeçava do zero.
+
+   Agora ninguém é barrado. A triagem roda no envio, decide para qual caixa a
+   mensagem vai, e o visitante só vê que deu certo.
+
+   O que muda conforme a decisão:
+
+     cliente     → vai para a caixa de orçamento e dispara a conversão do Ads.
+     vaga        → vai para a caixa de candidaturas, sem conversão.
+     fornecedor  → vai para a caixa de fornecedores, sem conversão.
+
+   A conversão é o motivo de tudo isto existir: o Google Ads aprende com o que
+   recebe como conversão, então currículo contado ali ensina a campanha a
+   procurar mais currículos.
+
+   O que a pessoa escreveu e o que a triagem decidiu vão juntos no envio
+   (assunto_detectado e assunto_motivo), para dar para auditar uma decisão
+   errada em vez de descobrir meses depois que leads sumiram.
    ------------------------------------------------------------------------- */
 
-/**
- * Triagem por palavra-chave no campo de mensagem.
- *
- * Quando o assunto é vaga ou fornecedor, o envio é barrado e o formulário
- * correto é oferecido: assunto errado neste formulário contamina a métrica de
- * conversão das campanhas, que é o que sustenta a medição do Ads.
- *
- * O bloqueio some assim que o termo sai do texto, então quem escreveu por
- * engano corrige e envia. Não existe caminho de "continuar mesmo assim".
- */
-function wireMisrouteNotice(form) {
-  const field = form.querySelector('[data-misroute-source]');
-  const notice = form.querySelector('[data-misroute-notice]');
-  if (!field || !notice) return;
+const CAIXA = {
+  '/recrutamento': 'recrutamento',
+  '/fornecedores': 'fornecedores',
+};
 
-  const link = notice.querySelector('[data-misroute-link]');
-  const text = notice.querySelector('[data-misroute-text]');
-  const submit = form.querySelector('[type="submit"]');
+function rotear(form, dados) {
+  const campo = form.querySelector('[data-misroute-source]');
+  if (!campo) return null;
 
-  const check = () => {
-    const match = classificar(field.value);
-    if (match) {
-      text.textContent = link
-        ? `Isso parece ser sobre ${match.assunto}. Esse assunto tem formulário próprio, e por lá a resposta chega mais rápido.`
-        : `Isso parece ser sobre ${match.assunto}. Este formulário é só para orçamento de obra; escreva para contato@avanthe.com.br se o assunto for outro.`;
-      if (link) {
-        link.setAttribute('href', match.alvo);
-        link.textContent = `Ir para ${match.rotulo}`;
-      }
-      notice.hidden = false;
-      form.dataset.misrouted = 'true';
-      if (submit) submit.disabled = true;
-    } else {
-      notice.hidden = true;
-      delete form.dataset.misrouted;
-      if (submit) submit.disabled = false;
-    }
-  };
+  const achado = classificar(campo.value);
+  if (!achado) {
+    dados.set('assunto_detectado', 'orcamento');
+    return null;
+  }
 
-  /*
-   * A checagem roda quando a pessoa termina de escrever — ao sair do campo e
-   * ao enviar — e não a cada tecla. Validar durante a digitação faz o aviso
-   * piscar no meio de uma frase que ainda não terminou, e desabilitar o botão
-   * enquanto alguém escreve é hostil.
-   *
-   * A exceção é quando o aviso já está na tela: aí vale reavaliar a cada tecla,
-   * para a pessoa ver o bloqueio sair assim que corrigir, sem precisar sair do
-   * campo para descobrir.
-   */
-  field.addEventListener('blur', check);
-  field.addEventListener('input', () => {
-    if (form.dataset.misrouted === 'true') check();
-  });
-  form.revisarAssunto = check;
+  const caixa = CAIXA[achado.alvo];
+  if (!caixa) return null;
+
+  dados.set('form-name', caixa);
+  dados.set('assunto_detectado', caixa);
+  dados.set('assunto_motivo', `${achado.nivel}: ${achado.motivo.slice(0, 3).join(' | ')}`);
+  return achado;
 }
 
 /* -------------------------------------------------------------------------
@@ -311,12 +301,53 @@ function fireConversion(form) {
    Overlay de sucesso
    ------------------------------------------------------------------------- */
 
-function showSuccess(form, data) {
+/*
+ * Retorno ao visitante.
+ *
+ * Quem foi desviado recebe o texto da caixa para onde foi, e não o do
+ * orçamento: dizer "um engenheiro vai analisar o seu projeto" para quem mandou
+ * currículo é pior do que não dizer nada. E ninguém fica sem resposta.
+ */
+const RETORNO = {
+  recrutamento: {
+    titulo: 'Recebemos sua mensagem.',
+    texto:
+      'Ela foi para quem cuida das contratações na Avanthe. Se o perfil encaixar em alguma frente, entramos em contato.',
+  },
+  fornecedores: {
+    titulo: 'Recebemos sua mensagem.',
+    texto:
+      'Ela foi para quem cuida de compras e fornecedores na Avanthe. Se fizer sentido para alguma obra, entramos em contato.',
+  },
+};
+
+function showSuccess(form, data, desviado) {
   const overlay = document.querySelector(`#${form.dataset.success}`);
   if (!overlay) return;
 
+  const destino = desviado && RETORNO[(data.get('assunto_detectado') || '').toString()];
+  const tituloEl = overlay.querySelector('[data-success-titulo]');
+  const textoEl = overlay.querySelector('[data-success-texto]');
+  if (tituloEl && textoEl) {
+    if (destino) {
+      if (!tituloEl.dataset.original) {
+        tituloEl.dataset.original = tituloEl.textContent;
+        textoEl.dataset.original = textoEl.textContent;
+      }
+      tituloEl.textContent = destino.titulo;
+      textoEl.textContent = destino.texto;
+    } else if (tituloEl.dataset.original) {
+      tituloEl.textContent = tituloEl.dataset.original;
+      textoEl.textContent = textoEl.dataset.original;
+    }
+  }
+
+  // Quem não é cliente não recebe o atalho do WhatsApp comercial.
+  const bloco = overlay.querySelector('[data-whatsapp-bloco]');
+  if (bloco) bloco.hidden = Boolean(destino);
+
   const whatsapp = overlay.querySelector('[data-whatsapp]');
-  if (whatsapp) {
+  if (whatsapp && !destino) {
     const nome = (data.get('nome') || '').toString().trim().split(' ')[0];
     const tipo = (data.get('tipo_servico') || '').toString().trim();
     const parts = ['Olá! Acabei de enviar o formulário no site da Avanthe.'];
@@ -366,6 +397,7 @@ async function submit(form) {
   }
 
   const data = new FormData(form);
+  const desviado = rotear(form, data);
 
   try {
     const response = await fetch(form.getAttribute('action') || window.location.pathname, {
@@ -375,8 +407,9 @@ async function submit(form) {
 
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
-    fireConversion(form);
-    showSuccess(form, data);
+    // Conversão só quando a mensagem é mesmo de obra.
+    if (!desviado) fireConversion(form);
+    showSuccess(form, data, desviado);
     form.reset();
     const nameEl = form.querySelector('[data-file-name]');
     if (nameEl) nameEl.textContent = 'Nenhum arquivo selecionado';
@@ -407,7 +440,6 @@ export function initForms() {
     fillContext(form);
     wireFileInput(form);
     wirePhoneMask(form);
-    wireMisrouteNotice(form);
     wireClienteNotice(form);
 
     form.querySelectorAll('[data-validate], [required]').forEach((field) => {
@@ -425,14 +457,6 @@ export function initForms() {
       // Preenchido rápido demais para ser gente lendo os campos. Bot não
       // recebe erro, para não aprender o que travou: some em silêncio.
       if (rapidoDemais(form.abertoEm)) return;
-      if (typeof form.revisarAssunto === 'function') form.revisarAssunto();
-      if (form.dataset.misrouted === 'true') {
-        form.querySelector('[data-misroute-notice]')?.scrollIntoView({
-          block: 'center',
-          behavior: 'smooth',
-        });
-        return;
-      }
       if (!validateForm(form)) return;
       submit(form);
     });

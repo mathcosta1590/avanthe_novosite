@@ -20,13 +20,14 @@ const {
 >
   <div class="success__panel">
     <button type="button" class="success__close" data-success-close aria-label="Fechar">×</button>
-    <h2 class="success__title" id={`${id}-titulo`}>{title}</h2>
-    <p class="success__text">{text}</p>
+    <h2 class="success__title" id={`${id}-titulo`} data-success-titulo>{title}</h2>
+    <p class="success__text" data-success-texto>{text}</p>
     <div class="success__actions">
       {
         whatsapp && (
           <a
             class="btn"
+            data-whatsapp-bloco
             data-whatsapp={site.whatsapp.number}
             href={`https://wa.me/${site.whatsapp.number}`}
             target="_blank"

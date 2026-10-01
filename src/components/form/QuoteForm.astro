@@ -108,13 +108,6 @@ const sendTo = `${site.ads.conversionId}/${site.ads.conversionLabel}`;
     misroute={true}
   />
 
-  <div class="notice" hidden data-misroute-notice>
-    <p data-misroute-text></p>
-    <div class="notice__actions">
-      {allowExitLinks && <a href="/recrutamento" data-misroute-link>Ir para o formulário certo</a>}
-    </div>
-  </div>
-
   <button type="submit" class="btn form__submit">Solicitar orçamento</button>
   <p class="form__status" role="status" aria-live="polite" data-form-status></p>
 </form>
