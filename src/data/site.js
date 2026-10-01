@@ -30,6 +30,10 @@ export const site = {
     conversionId: 'AW-XXXXXXXXX',
     conversionLabel: 'XXXXXXXXXXXXXXXXXX',
   },
+  // Google Analytics 4. Mede comportamento — quantos chegaram no formulário e
+  // desistiram, em que campo pararam — que é o que o Ads sozinho não conta.
+  // Deixar vazio desliga: nenhum script é emitido.
+  ga4: 'G-XXXXXXXXXX',
 };
 
 /*

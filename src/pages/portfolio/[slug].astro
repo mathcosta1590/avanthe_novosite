@@ -24,6 +24,17 @@ const others = projects.filter((p) => p.slug !== project.slug && p.status === 'c
   title={project.name}
   description={project.positioning ?? `${project.name}, obra entregue pela Avanthe Engenharia.`}
   ogType="article"
+  ogImage={`/og/obra-${project.slug}.jpg`}
+  schema={{
+    '@context': 'https://schema.org',
+    '@type': 'CreativeWork',
+    name: project.name,
+    description: project.positioning,
+    about: project.type,
+    creator: { '@id': 'https://avanthe.com.br/#empresa' },
+    locationCreated: { '@type': 'Place', name: 'Curitiba, PR' },
+    image: new URL(`/og/obra-${project.slug}.jpg`, 'https://avanthe.com.br').href,
+  }}
 >
   <article>
     <header class="obra-hero">

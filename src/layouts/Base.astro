@@ -12,10 +12,67 @@ const {
   bare = false,
   noindex = false,
   ogType = 'website',
+  /** Imagem de compartilhamento. Cada obra tem a sua; o resto cai na padrão. */
+  ogImage = '/og/default.jpg',
+  /** Dados estruturados extras desta página, somados aos da empresa. */
+  schema = null,
 } = Astro.props;
 
 const fullTitle = title ? `${title} — ${site.name}` : `${site.name} — Construção, reforma e retrofit em Curitiba`;
 const canonical = new URL(Astro.url.pathname.replace(/\/$/, '') || '/', site.url).href;
+const ogImageUrl = new URL(ogImage, site.url).href;
+
+/*
+ * Dados estruturados.
+ *
+ * Sem isto o Google lê o site como "um site" e não como uma construtora em
+ * Curitiba com responsável técnico registrado. É o que alimenta a busca local
+ * — "engenheiro civil Curitiba", "reforma Batel" — e o painel lateral do
+ * resultado. Invisível para quem visita, decisivo para o robô.
+ */
+const empresa = {
+  '@context': 'https://schema.org',
+  '@type': 'GeneralContractor',
+  '@id': `${site.url}/#empresa`,
+  name: site.name,
+  legalName: site.legalName,
+  url: site.url,
+  description: site.description,
+  image: new URL('/og/default.jpg', site.url).href,
+  logo: new URL('/icon-512.png', site.url).href,
+  email: site.email,
+  telephone: `+${site.whatsapp.number}`,
+  taxID: site.cnpj,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: site.address.street,
+    addressLocality: site.address.city,
+    addressRegion: site.address.state,
+    addressCountry: 'BR',
+  },
+  areaServed: [
+    { '@type': 'City', name: 'Curitiba' },
+    { '@type': 'AdministrativeArea', name: 'Região Metropolitana de Curitiba' },
+  ],
+  knowsAbout: [
+    'construção civil',
+    'reforma residencial',
+    'reforma comercial',
+    'retrofit',
+    'regularização de obra',
+    'gestão de obras',
+    'patologia construtiva',
+  ],
+  founder: {
+    '@type': 'Person',
+    name: site.responsible.name,
+    jobTitle: site.responsible.title,
+    identifier: site.responsible.crea,
+  },
+  sameAs: [site.instagram].filter(Boolean),
+};
+
+const dados = schema ? [empresa, schema] : [empresa];
 ---
 
 <!doctype html>
@@ -34,7 +91,12 @@ const canonical = new URL(Astro.url.pathname.replace(/\/$/, '') || '/', site.url
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:site_name" content={site.name} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={fullTitle} />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImageUrl} />
 
     <meta name="theme-color" content="#102449" />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
@@ -48,6 +110,8 @@ const canonical = new URL(Astro.url.pathname.replace(/\/$/, '') || '/', site.url
       type="font/woff2"
       crossorigin
     />
+
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(dados)} />
 
     <Analytics />
 

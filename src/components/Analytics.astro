@@ -2,27 +2,38 @@
 import { site } from '../data/site.js';
 
 /**
- * Google Ads / gtag.
+ * Google Ads e Google Analytics 4.
  *
- * O script só é emitido quando o ID de conversão está de fato preenchido em
- * src/data/site.js — evita carregar tag quebrada em ambiente sem conta ligada.
- * O evento de conversão NÃO é disparado aqui: quem dispara é o envio
- * bem-sucedido do formulário de orçamento, em src/scripts/forms.js.
+ * Os dois usam o mesmo gtag.js, carregado uma vez só. Cada ID entra num
+ * `config` próprio, e nenhum script é emitido enquanto o ID não estiver
+ * preenchido de verdade — assim o site não carrega tag quebrada antes das
+ * contas existirem.
+ *
+ * A conversão do Ads NÃO é disparada aqui: quem dispara é o envio
+ * bem-sucedido do formulário de orçamento, em src/scripts/forms.js. É o que
+ * garante que currículo e oferta de fornecedor não entrem na conta.
  */
-const id = site.ads.conversionId;
-const enabled = Boolean(id) && !id.includes('XXX');
+const valido = (id) => Boolean(id) && !id.includes('XXX');
+
+const ads = valido(site.ads.conversionId) ? site.ads.conversionId : null;
+const ga4 = valido(site.ga4) ? site.ga4 : null;
+const principal = ads || ga4;
 ---
 
 {
-  enabled && (
+  principal && (
     <>
-      <script async src={`https://www.googletagmanager.com/gtag/js?id=${id}`} />
-      <script is:inline set:html={`
+      <script async src={`https://www.googletagmanager.com/gtag/js?id=${principal}`} />
+      <script
+        is:inline
+        set:html={`
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-gtag('config', '${id}');
-`} />
+${ads ? `gtag('config', '${ads}');` : ''}
+${ga4 ? `gtag('config', '${ga4}');` : ''}
+`}
+      />
     </>
   )
 }
