@@ -64,7 +64,7 @@ export const serviceContent = {
     body: [
       'Toda reforma começa com uma pergunta: existe projeto do imóvel, ou não? A partir disso, fazemos um alinhamento sempre presencial, verificando o estado real da estrutura, possíveis patologias, falhas construtivas e as alterações necessárias para acomodar o que o cliente precisa. É esse diagnóstico em campo, e não um orçamento à distância, que define o escopo real da obra.',
       'Reformar é diferente de construir do zero: você não sabe exatamente o que existe atrás de cada parede até abrir a obra. Foi assim na Ruffino, um galpão com mais de 30 anos, onde nem tudo estava visível antes da execução começar. É essa imprevisibilidade natural que exige experiência real, não teoria, para conduzir a obra sem que o imprevisto vire atraso ou custo fora de controle.',
-      'Depois do diagnóstico, apresentamos uma proposta comercial com valores, prazo e escopo definidos com clareza, o que está incluso e o que não está. Avançando, formalizamos contrato, emitimos RT e seguro de obra antes do início da execução. Em reformas dentro de condomínio, cuidamos também da parte burocrática que costuma travar esse tipo de obra: aprovação de síndico, adequação a horários e regras específicas do prédio, e toda a documentação técnica exigida.',
+      'Depois do diagnóstico, apresentamos uma proposta comercial com valores, prazo e escopo definidos com clareza, o que está incluso e o que não está. Avançando, formalizamos contrato, emitimos RT e seguro de obra antes do início da execução.',
     ],
     aside: {
       title: 'Reforma em condomínio',
