@@ -141,6 +141,13 @@ import { site } from '../data/site.js';
     gap: var(--space-xl);
   }
 
+  /* As réguas que abrem cada etapa precisam de distância do título, senão
+     leem como um sublinhado picotado dele em vez de marcar o começo de cada
+     coluna. */
+  .metodo__texto .section-head {
+    margin-bottom: var(--space-2xl);
+  }
+
   .metodo__planta {
     display: none;
   }
@@ -158,7 +165,6 @@ import { site } from '../data/site.js';
       width: 100%;
       max-width: 38rem;
       padding-top: var(--space-l);
-      border-top: 1px solid var(--rule);
     }
   }
 

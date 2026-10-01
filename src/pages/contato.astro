@@ -77,7 +77,11 @@ import { site } from '../data/site.js';
     margin-top: var(--space-xl);
   }
 
+  /* A mesma entrelinha do rótulo do formulário: com 14,5px aqui e 21,5px lá,
+     as duas colunas começavam no mesmo pixel mas o texto de cada uma assentava
+     em alturas diferentes, e o desalinhamento ficava à vista. */
   .contato__title {
+    line-height: 1.6;
     padding-bottom: var(--space-2xs);
     font-size: var(--step--1);
     font-weight: 500;

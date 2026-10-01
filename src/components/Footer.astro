@@ -52,7 +52,9 @@ const year = new Date().getFullYear();
                 <a href="/contato">Solicitar orçamento</a>
               </li>
               <li class="site-footer__address">
-                {site.address.street}
+                {/* Espaço inquebrável antes do número, para ele nunca orfanar
+                    numa linha só, em nenhuma largura. */}
+                <span set:html={site.address.street.replace(/,\s+(\d)/, ',&nbsp;$1')} />
                 <br />
                 {site.address.district}, {site.address.city} - {site.address.state}
               </li>
@@ -83,7 +85,10 @@ const year = new Date().getFullYear();
 
   .site-footer__top {
     display: grid;
-    grid-template-columns: 1.6fr repeat(3, 1fr);
+    /* A última coluna leva o endereço, que é a linha mais longa do rodapé.
+       Com quatro colunas iguais faltavam 4px e o número da rua caía sozinho
+       numa terceira linha. */
+    grid-template-columns: 1.5fr 1fr 1fr 1.25fr;
     gap: var(--space-xl) var(--space-l);
     padding-bottom: var(--space-xl);
     border-bottom: 1px solid rgba(245, 245, 243, 0.16);

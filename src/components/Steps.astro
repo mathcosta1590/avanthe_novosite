@@ -35,30 +35,16 @@ const { items, title } = Astro.props;
   }
 
   /*
-   * A régua de cima de cada etapa é a trilha: uma linha escura corre sobre ela
-   * da esquerda para a direita, e a etapa só ganha cor quando a linha chega.
-   * Uma de cada vez, nunca todas juntas — é a ordem do processo que o efeito
-   * está contando, não a chegada do bloco na tela.
+   * A ordem é contada só pelo acendimento, uma etapa por vez.
+   *
+   * Havia também uma linha escura correndo sobre a régua de cada etapa. Ela
+   * caía colada no título da seção e lia como sublinhado dele, não como
+   * trilha — o recurso contava a ordem para quem já sabia que era uma trilha,
+   * e confundia todo o resto.
    */
   .steps__item {
     padding-top: var(--space-m);
     border-top: 1px solid var(--rule);
-    position: relative;
-  }
-
-  .steps__item::before {
-    content: '';
-    position: absolute;
-    top: -1px;
-    left: 0;
-    height: 2px;
-    width: 0;
-    background: var(--navy);
-  }
-
-  [data-etapas][data-andando] .steps__item::before {
-    width: 100%;
-    transition: width 0.5s var(--ease) calc(var(--i) * 420ms);
   }
 
   [data-etapas][data-andando] .steps__item {
@@ -74,7 +60,6 @@ const { items, title } = Astro.props;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    [data-etapas] .steps__item::before { display: none; }
     [data-etapas] .steps__item { opacity: 1 !important; }
   }
 
@@ -107,11 +92,6 @@ const { items, title } = Astro.props;
   :global(.section--ink) .steps__num,
   :global(.section--navy) .steps__num {
     color: rgba(245, 245, 243, 0.5);
-  }
-
-  :global(.section--ink) .steps__item::before,
-  :global(.section--navy) .steps__item::before {
-    background: var(--paper);
   }
 
   :global(.section--ink) .steps__text,

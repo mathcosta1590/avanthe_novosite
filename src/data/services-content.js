@@ -2,6 +2,12 @@
 
 export const serviceContent = {
   'construcao-do-zero': {
+    // Uma foto por frente, em retrato, na coluna ao lado do texto. As páginas
+    // de serviço eram as únicas do site sem imagem nenhuma.
+    foto: {
+      src: '/servicos/construcao-do-zero.jpg',
+      alt: 'Sala de estar entregue, com esquadrias novas e piso assentado.',
+    },
     title: 'Construção do zero',
     lede: 'A maioria dos problemas que aparecem numa construção não surge no dia da entrega. Surge anos depois.',
     body: [
@@ -21,6 +27,12 @@ export const serviceContent = {
   },
 
   'reforma-retrofit': {
+    // Uma foto por frente, em retrato, na coluna ao lado do texto. As páginas
+    // de serviço eram as únicas do site sem imagem nenhuma.
+    foto: {
+      src: '/servicos/reforma-retrofit.jpg',
+      alt: 'Parede viva e comunicação visual da cafeteria The Best Coffee, obra entregue pela Avanthe.',
+    },
     /*
      * PENDENTE DE VALIDAÇÃO: estes prazos são a média do setor para um
      * apartamento de porte médio, não medições de obra da Avanthe. Matheus
@@ -60,6 +72,12 @@ export const serviceContent = {
   },
 
   'regularizacao-tecnica': {
+    // Uma foto por frente, em retrato, na coluna ao lado do texto. As páginas
+    // de serviço eram as únicas do site sem imagem nenhuma.
+    foto: {
+      src: '/servicos/regularizacao-tecnica.jpg',
+      alt: 'Salão administrativo da Ruffino depois do retrofit.',
+    },
     title: 'Regularização técnica',
     lede: 'Regularização de obra não segue um caminho único. Cada situação começa de um ponto diferente.',
     body: [
@@ -79,6 +97,12 @@ export const serviceContent = {
   },
 
   'gestao-de-obras': {
+    // Uma foto por frente, em retrato, na coluna ao lado do texto. As páginas
+    // de serviço eram as únicas do site sem imagem nenhuma.
+    foto: {
+      src: '/servicos/gestao-de-obras.jpg',
+      alt: 'Obra em execução, com acompanhamento técnico semanal.',
+    },
     title: 'Gestão de obras',
     lede: 'Gestão de obra, na Avanthe, é um sistema, não uma promessa vaga de "acompanhamento".',
     body: [

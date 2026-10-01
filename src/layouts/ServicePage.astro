@@ -23,10 +23,26 @@ const others = services.filter((s) => s.slug !== slug);
       </div>
 
       <aside class="service__aside">
-        <h2 class="service__aside-title">{content.aside.title}</h2>
-        <ul class="service__list">
-          {content.aside.items.map((item) => <li>{item}</li>)}
-        </ul>
+        {
+          content.foto && (
+            <img
+              class="service__foto"
+              src={content.foto.src}
+              alt={content.foto.alt}
+              width="900"
+              height="1200"
+              loading="lazy"
+              decoding="async"
+            />
+          )
+        }
+
+        <div class="service__aside-bloco">
+          <h2 class="service__aside-title">{content.aside.title}</h2>
+          <ul class="service__list">
+            {content.aside.items.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
       </aside>
     </div>
   </section>
@@ -87,6 +103,21 @@ const others = services.filter((s) => s.slug !== slug);
   }
 
   .service__aside {
+    display: grid;
+    gap: var(--space-l);
+  }
+
+  /* Retrato, para a coluna estreita virar vantagem em vez de limitação: a
+     foto ocupa a altura que o texto ao lado ocupa. */
+  .service__foto {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+  }
+
+  .service__aside-bloco {
     padding-top: var(--space-s);
     border-top: 2px solid var(--navy);
   }
