@@ -2,7 +2,6 @@
 import Base from './Base.astro';
 import PageHero from '../components/PageHero.astro';
 import CtaSection from '../components/CtaSection.astro';
-import Stats from '../components/Stats.astro';
 import { serviceContent } from '../data/services-content.js';
 import Cronograma from '../components/Cronograma.astro';
 import { services } from '../data/site.js';
@@ -44,12 +43,6 @@ const others = services.filter((s) => s.slug !== slug);
           </ul>
         </div>
       </aside>
-    </div>
-  </section>
-
-  <section class="section section--tight">
-    <div class="shell">
-      <Stats compact={true} />
     </div>
   </section>
 
