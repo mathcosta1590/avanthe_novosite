@@ -468,3 +468,55 @@ main {
     transition: none;
   }
 }
+
+/* =========================================================================
+   Movimento
+   =========================================================================
+   Os estados de repouso aqui são aplicados por JavaScript (o atributo
+   data-subir vira data-subiu, data-cabecalho ganha data-oculto). Sem
+   JavaScript nenhuma destas regras morde, e a página aparece inteira — é o
+   que garante que o conteúdo nunca fique preso invisível.
+   ========================================================================= */
+
+/* Linhas que sobem: cada palavra é cortada por uma janela própria, com
+   respiro embaixo para o rabo do "p" e do "j" não serem decepados. */
+.palavra {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-bottom: 0.16em;
+  margin-bottom: -0.16em;
+}
+
+.palavra > i {
+  display: block;
+  font-style: normal;
+  transform: translateY(110%);
+}
+
+[data-subiu] .palavra > i {
+  transform: none;
+  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) var(--atraso, 0ms);
+}
+
+/* Cabeçalho que se recolhe. */
+.site-header[data-cabecalho] {
+  transition:
+    transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    padding 0.3s var(--ease),
+    box-shadow 0.3s var(--ease);
+}
+
+.site-header[data-compacto] {
+  box-shadow: 0 6px 20px rgba(16, 36, 73, 0.07);
+}
+
+.site-header[data-oculto] {
+  transform: translateY(-101%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .palavra > i { transform: none; }
+  .site-header[data-cabecalho] { transition: none; }
+  .site-header[data-oculto] { transform: none; }
+}

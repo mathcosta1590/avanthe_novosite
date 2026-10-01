@@ -10,7 +10,7 @@ const isSection = (item) =>
   isCurrent(item.href) || (item.children ?? []).some((c) => isCurrent(c.href));
 ---
 
-<header class="site-header" data-bare={bare ? 'true' : 'false'}>
+<header class="site-header" data-cabecalho data-bare={bare ? 'true' : 'false'}>
   <div class="shell site-header__inner">
     {
       /* Na landing de campanha a marca não é link: a regra da página proíbe
@@ -126,8 +126,12 @@ const isSection = (item) =>
 
 <style>
   /* Header sólido, não fixo no scroll. */
+  /* Gruda no topo para poder se recolher na rolagem. O z-index fica acima do
+     conteúdo e abaixo do overlay de sucesso dos formulários. */
   .site-header {
-    position: relative;
+    position: sticky;
+    top: 0;
+    z-index: 20;
     background: var(--paper);
     border-bottom: 1px solid var(--rule);
   }
@@ -137,6 +141,20 @@ const isSection = (item) =>
     align-items: center;
     gap: var(--space-l);
     min-height: 96px;
+    transition: min-height 0.3s var(--ease);
+  }
+
+  /* Encolhe depois dos primeiros pixels de rolagem, devolvendo tela. */
+  .site-header[data-compacto] .site-header__inner {
+    min-height: 68px;
+  }
+
+  .site-header[data-compacto] .logo svg {
+    height: 2.1rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-header__inner { transition: none; }
   }
 
   .site-header__brand {
