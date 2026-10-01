@@ -160,7 +160,21 @@ import CtaSection from '../components/CtaSection.astro';
      * efeito nenhum.
      */
     object-position: 50% 24%;
-    height: clamp(12rem, 32vh, 24rem);
+    /*
+     * A altura acompanha a largura, não só a altura da janela.
+     *
+     * Com um teto fixo em rem, a faixa parava de crescer enquanto a tela
+     * continuava alargando: numa tela de 2560 a faixa renderizava a 6,67:1
+     * contra os 3,57:1 do arquivo, e o cover descartava 46% da foto. O 26vw
+     * mantém a proporção renderizada perto da do arquivo em qualquer largura;
+     * o 50vh impede que a faixa coma a dobra numa tela larga mas baixa.
+     *
+     * Os dois números saíram de medição, não de gosto: com 26vw o botão de
+     * orçamento caía abaixo da dobra num MacBook de 13 e de 14 polegadas. Em
+     * 24vw a proporção renderizada fica em 4,17:1 de 1366 até 2560 de largura,
+     * e o botão volta a caber.
+     */
+    height: clamp(12rem, min(24vw, 50vh), 46rem);
     object-fit: cover;
   }
 
