@@ -4,6 +4,7 @@ import PageHero from '../components/PageHero.astro';
 import CtaSection from '../components/CtaSection.astro';
 import Stats from '../components/Stats.astro';
 import { serviceContent } from '../data/services-content.js';
+import Cronograma from '../components/Cronograma.astro';
 import { services } from '../data/site.js';
 
 const { slug } = Astro.props;
@@ -35,6 +36,21 @@ const others = services.filter((s) => s.slug !== slug);
       <Stats compact={true} />
     </div>
   </section>
+
+  {
+    content.cronograma && (
+      <section class="section section--tall">
+        <div class="shell">
+          <Cronograma
+            titulo={content.cronograma.titulo}
+            etapas={content.cronograma.etapas}
+            semanas={content.cronograma.semanas}
+            nota={content.cronograma.nota}
+          />
+        </div>
+      </section>
+    )
+  }
 
   <section class="section">
     <div class="shell">

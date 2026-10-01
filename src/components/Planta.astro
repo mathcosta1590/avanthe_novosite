@@ -1,0 +1,62 @@
+---
+/**
+ * Planta baixa que se desenha.
+ *
+ * Paredes primeiro, depois esquadrias, depois o giro da porta, e as cotas por
+ * último — a ordem em que um projeto é desenhado de verdade. A velocidade é
+ * constante em pixels por segundo, então traço longo leva mais tempo que traço
+ * curto: é isso que faz parecer mão e não efeito.
+ *
+ * É decoração, e assumidamente: não informa nada que o texto ao lado não diga.
+ * Por isso fica escondida de leitor de tela e só no Sobre, nunca na home nem
+ * na landing que recebe anúncio, onde competiria com o formulário.
+ */
+---
+
+<div class="planta" data-planta aria-hidden="true">
+  <svg viewBox="0 0 560 350" role="presentation">
+    <path data-traco d="M64 40 H536 V264 H64 Z"></path>
+    <path data-traco d="M370 40 V176"></path>
+    <path data-traco d="M370 176 H536"></path>
+    <path data-traco d="M210 176 H370"></path>
+    <path data-traco d="M210 176 V194"></path>
+    <path data-traco data-fino d="M210 194 H280"></path>
+    <path data-traco data-fino d="M280 194 A70 70 0 0 1 210 264"></path>
+    <path data-traco data-fino d="M150 40 H266"></path>
+    <path data-traco data-fino d="M150 32 H266"></path>
+    <path data-traco data-fino d="M404 264 H484"></path>
+    <path data-traco data-fino d="M404 272 H484"></path>
+    <path data-traco data-cota d="M64 304 H536"></path>
+    <path data-traco data-cota d="M64 297 V311"></path>
+    <path data-traco data-cota d="M536 297 V311"></path>
+    <path data-traco data-cota d="M38 40 V264"></path>
+    <path data-traco data-cota d="M31 40 H45"></path>
+    <path data-traco data-cota d="M31 264 H45"></path>
+  </svg>
+</div>
+
+<style>
+  .planta svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+  }
+
+  .planta [data-traco] {
+    fill: none;
+    stroke: var(--navy);
+    stroke-width: 2.4;
+    stroke-linecap: square;
+  }
+
+  .planta [data-traco][data-fino] {
+    stroke-width: 1.1;
+    stroke: var(--navy-60);
+  }
+
+  .planta [data-traco][data-cota] {
+    stroke-width: 1.1;
+    stroke: var(--logo-dot, #00bf63);
+  }
+</style>

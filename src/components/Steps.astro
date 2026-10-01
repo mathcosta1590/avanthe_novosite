@@ -2,10 +2,10 @@
 const { items, title } = Astro.props;
 ---
 
-<ol class="steps" aria-label={title}>
+<ol class="steps" aria-label={title} data-etapas>
   {
     items.map((step, i) => (
-      <li class="steps__item" data-reveal-item>
+      <li class="steps__item" data-etapa style={`--i: ${i}`}>
         <span class="steps__num">{String(i + 1).padStart(2, '0')}</span>
         <h3 class="steps__title">{step.title}</h3>
         <p class="steps__text">{step.text}</p>
@@ -24,9 +24,48 @@ const { items, title } = Astro.props;
     padding: 0;
   }
 
+  /*
+   * A régua de cima de cada etapa é a trilha: uma linha escura corre sobre ela
+   * da esquerda para a direita, e a etapa só ganha cor quando a linha chega.
+   * Uma de cada vez, nunca todas juntas — é a ordem do processo que o efeito
+   * está contando, não a chegada do bloco na tela.
+   */
   .steps__item {
     padding-top: var(--space-m);
     border-top: 1px solid var(--rule);
+    position: relative;
+  }
+
+  .steps__item::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 0;
+    height: 2px;
+    width: 0;
+    background: var(--navy);
+  }
+
+  [data-etapas][data-andando] .steps__item::before {
+    width: 100%;
+    transition: width 0.5s var(--ease) calc(var(--i) * 420ms);
+  }
+
+  [data-etapas][data-andando] .steps__item {
+    opacity: 1;
+  }
+
+  [data-etapas][data-andou] .steps__item {
+    transition: opacity 0.4s var(--ease) calc(var(--i) * 420ms + 180ms);
+  }
+
+  [data-etapas][data-andou] .steps__item:not([data-aceso]) {
+    opacity: 0.42;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-etapas] .steps__item::before { display: none; }
+    [data-etapas] .steps__item { opacity: 1 !important; }
   }
 
   .steps__num {
@@ -53,6 +92,11 @@ const { items, title } = Astro.props;
   :global(.section--ink) .steps__item,
   :global(.section--navy) .steps__item {
     border-color: rgba(245, 245, 243, 0.22);
+  }
+
+  :global(.section--ink) .steps__item::before,
+  :global(.section--navy) .steps__item::before {
+    background: var(--paper);
   }
 
   :global(.section--ink) .steps__num,

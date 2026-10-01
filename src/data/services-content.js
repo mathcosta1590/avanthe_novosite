@@ -21,6 +21,27 @@ export const serviceContent = {
   },
 
   'reforma-retrofit': {
+    /*
+     * PENDENTE DE VALIDAÇÃO: estes prazos são a média do setor para um
+     * apartamento de porte médio, não medições de obra da Avanthe. Matheus
+     * precisa conferir antes de publicar — prazo errado no site de um
+     * engenheiro é o tipo de detalhe que derruba a confiança de outro técnico.
+     */
+    cronograma: {
+      titulo: 'Como uma reforma de apartamento se distribui no tempo',
+      semanas: 12,
+      nota:
+        'Exemplo de um apartamento de porte médio, com as etapas se sobrepondo como acontece na obra — a instalação começa antes de a demolição acabar. O cronograma da sua obra sai do diagnóstico técnico, com as datas da sua.',
+      etapas: [
+        { nome: 'Demolição e remoção', de: 0, ate: 1.5 },
+        { nome: 'Hidráulica e elétrica', de: 1, ate: 4 },
+        { nome: 'Alvenaria e forro', de: 3, ate: 6 },
+        { nome: 'Revestimentos e pisos', de: 5, ate: 8.5 },
+        { nome: 'Marcenaria e bancadas', de: 7.5, ate: 10 },
+        { nome: 'Pintura, louças e metais', de: 9, ate: 11.5 },
+        { nome: 'Limpeza fina e entrega', de: 11.5, ate: 12 },
+      ],
+    },
     title: 'Reformas e retrofits',
     lede: 'Toda reforma começa com uma pergunta: existe projeto do imóvel, ou não?',
     body: [

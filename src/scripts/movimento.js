@@ -292,9 +292,138 @@ function contarNumeros() {
   }
 }
 
+/* -------------------------------------------------------------------------
+   5. Etapas acendendo em ordem
+   -------------------------------------------------------------------------
+
+   A régua de cada etapa é a trilha: a linha corre sobre ela e a etapa só ganha
+   cor quando a linha chega. Uma de cada vez — o que o efeito conta é a ordem
+   do processo, não a chegada do bloco na tela.
+
+   O escurecimento das etapas que ainda não acenderam para em 42% de opacidade:
+   abaixo disso o texto deixa de ser legível para quem quiser ler fora de
+   ordem, e isso não é enfeite, é conteúdo.
+   ------------------------------------------------------------------------- */
+
+function etapasEmOrdem() {
+  const listas = [...document.querySelectorAll('[data-etapas]')];
+  if (!listas.length || PARADO.matches) return;
+
+  const acender = (lista) => {
+    const itens = [...lista.querySelectorAll('[data-etapa]')];
+    lista.setAttribute('data-andou', '');
+    // deixa o navegador aplicar a opacidade de repouso antes de começar
+    requestAnimationFrame(() => {
+      lista.setAttribute('data-andando', '');
+      itens.forEach((li, i) => {
+        window.setTimeout(() => li.setAttribute('data-aceso', ''), i * 420 + 180);
+      });
+    });
+  };
+
+  if ('IntersectionObserver' in window) {
+    const obs = new IntersectionObserver(
+      (entradas) => {
+        entradas.forEach((e) => {
+          if (!e.isIntersecting) return;
+          acender(e.target);
+          obs.unobserve(e.target);
+        });
+      },
+      { threshold: 0.3 }
+    );
+    listas.forEach((l) => obs.observe(l));
+    window.setTimeout(() => listas.forEach(acender), 4000);
+  } else {
+    listas.forEach(acender);
+  }
+}
+
+/* -------------------------------------------------------------------------
+   6. A planta se desenhando
+   -------------------------------------------------------------------------
+
+   Velocidade constante em pixels: traço longo leva mais tempo que traço curto,
+   que é o que faz parecer mão e não efeito. Cada traço começa antes do
+   anterior terminar, senão o desenho fica entrecortado.
+   ------------------------------------------------------------------------- */
+
+function plantaQueSeDesenha() {
+  const plantas = [...document.querySelectorAll('[data-planta]')];
+  if (!plantas.length) return;
+
+  const desenhar = (planta) => {
+    const tracos = [...planta.querySelectorAll('[data-traco]')];
+    if (PARADO.matches) {
+      tracos.forEach((el) => {
+        el.style.strokeDasharray = 'none';
+        el.style.strokeDashoffset = '0';
+      });
+      return;
+    }
+    let acumulado = 0;
+    tracos.forEach((el) => {
+      const c = el.getTotalLength();
+      const dur = Math.max(140, Math.min(900, c * 1.15));
+      el.style.transition = 'none';
+      el.style.strokeDasharray = `${c} ${c}`;
+      el.style.strokeDashoffset = String(c);
+      el.getBoundingClientRect();
+      el.style.transition = `stroke-dashoffset ${dur}ms cubic-bezier(.35,.1,.25,1) ${acumulado}ms`;
+      el.style.strokeDashoffset = '0';
+      acumulado += dur * 0.62;
+    });
+  };
+
+  if ('IntersectionObserver' in window) {
+    const obs = new IntersectionObserver(
+      (entradas) => {
+        entradas.forEach((e) => {
+          if (!e.isIntersecting) return;
+          desenhar(e.target);
+          obs.unobserve(e.target);
+        });
+      },
+      { threshold: 0.3 }
+    );
+    plantas.forEach((p) => obs.observe(p));
+  } else {
+    plantas.forEach(desenhar);
+  }
+}
+
+/* -------------------------------------------------------------------------
+   7. Cronograma preenchendo
+   ------------------------------------------------------------------------- */
+
+function cronogramaPreenchendo() {
+  const quadros = [...document.querySelectorAll('[data-cronograma]')];
+  if (!quadros.length || PARADO.matches) return;
+
+  if ('IntersectionObserver' in window) {
+    const obs = new IntersectionObserver(
+      (entradas) => {
+        entradas.forEach((e) => {
+          if (!e.isIntersecting) return;
+          e.target.setAttribute('data-correndo', '');
+          obs.unobserve(e.target);
+        });
+      },
+      { threshold: 0.3 }
+    );
+    quadros.forEach((q) => obs.observe(q));
+    window.setTimeout(() => quadros.forEach((q) => q.setAttribute('data-correndo', '')), 4000);
+  } else {
+    quadros.forEach((q) => q.setAttribute('data-correndo', ''));
+  }
+}
+
 export function initMovimento() {
   rolagemAmortecida();
   linhasQueSobem();
   cabecalhoQueRecolhe();
   contarNumeros();
+  etapasEmOrdem();
+  plantaQueSeDesenha();
+  cronogramaPreenchendo();
 }

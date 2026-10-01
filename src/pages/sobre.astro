@@ -2,6 +2,8 @@
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import Stats from '../components/Stats.astro';
+import Steps from '../components/Steps.astro';
+import Planta from '../components/Planta.astro';
 import MediaPlaceholder from '../components/MediaPlaceholder.astro';
 import CtaSection from '../components/CtaSection.astro';
 import { site } from '../data/site.js';
@@ -64,6 +66,45 @@ import { site } from '../data/site.js';
     </div>
   </section>
 
+  <section class="section section--tall">
+    <div class="shell metodo">
+      <div class="metodo__texto">
+        <div class="section-head">
+          <span class="eyebrow">Como trabalhamos</span>
+          <h2 class="headline section-head__title">Cinco etapas, sempre na mesma ordem.</h2>
+        </div>
+        <Steps
+          title="Como trabalhamos"
+          items={[
+            {
+              title: 'Visita técnica.',
+              text: 'Medição no local e levantamento do que existe, antes de qualquer proposta.',
+            },
+            {
+              title: 'Orçamento fechado.',
+              text: 'Preço por serviço, com escopo definido, sem administração por percentual.',
+            },
+            {
+              title: 'Contrato e RT.',
+              text: 'Responsabilidade técnica emitida e seguro de obra contratado antes de começar.',
+            },
+            {
+              title: 'Execução acompanhada.',
+              text: 'Relatório semanal com foto e avanço por etapa, para você saber onde a obra está.',
+            },
+            {
+              title: 'Entrega e garantia.',
+              text: 'Vistoria final, manual do que foi executado e nota fiscal de cada serviço.',
+            },
+          ]}
+        />
+      </div>
+      <div class="metodo__planta">
+        <Planta />
+      </div>
+    </div>
+  </section>
+
   <section class="section section--tall section--ink">
     <div class="shell">
       <p class="headline sobre__pull">
@@ -112,6 +153,29 @@ import { site } from '../data/site.js';
     font-size: var(--step-0);
     font-weight: 300;
     color: var(--navy-80);
+  }
+
+  .metodo {
+    display: grid;
+    gap: var(--space-2xl);
+  }
+
+  .metodo__planta {
+    display: none;
+  }
+
+  /* A planta só entra onde há largura sobrando para ela. Em tela estreita o
+     espaço é do conteúdo. */
+  @media (min-width: 1100px) {
+    .metodo {
+      grid-template-columns: minmax(0, 1fr) 20rem;
+      align-items: start;
+    }
+
+    .metodo__planta {
+      display: block;
+      padding-top: var(--space-xl);
+    }
   }
 
   .sobre__pull {

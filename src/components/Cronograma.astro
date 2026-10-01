@@ -1,0 +1,161 @@
+---
+/**
+ * Cronograma de obra.
+ *
+ * As barras preenchem de cima para baixo com as sobreposições reais entre
+ * etapas — instalação começa antes da demolição acabar, revestimento antes da
+ * alvenaria fechar. É isso que separa um cronograma de verdade de uma lista de
+ * etapas em sequência.
+ *
+ * O rótulo de exemplo é obrigatório e fica à vista: prazo publicado por
+ * engenheiro é compromisso, e este aqui é referência de uma obra típica, não
+ * promessa para a obra de quem está lendo.
+ */
+const { etapas, semanas = 12, titulo, nota } = Astro.props;
+---
+
+<div class="crono" data-cronograma>
+  {titulo && <h3 class="crono__titulo">{titulo}</h3>}
+
+  <div class="crono__regua" aria-hidden="true">
+    <span>etapa</span>
+    <span class="crono__semanas">
+      {[0, semanas / 4, semanas / 2, (semanas * 3) / 4, semanas].map((s) => (
+        <i>{Number.isInteger(s) ? s : s.toFixed(1).replace('.', ',')}</i>
+      ))}
+    </span>
+    <span>duração</span>
+  </div>
+
+  <ol class="crono__lista">
+    {
+      etapas.map((e, i) => (
+        <li class="crono__linha">
+          <span class="crono__nome">{e.nome}</span>
+          <span class="crono__trilho">
+            <span
+              class="crono__barra"
+              style={`--ini: ${e.de}; --fim: ${e.ate}; --total: ${semanas}; --i: ${i}`}
+            />
+          </span>
+          <span class="crono__dur">
+            {String(e.ate - e.de).replace('.', ',')} sem
+          </span>
+        </li>
+      ))
+    }
+  </ol>
+
+  <p class="crono__nota">{nota}</p>
+</div>
+
+<style>
+  .crono {
+    display: grid;
+    gap: var(--space-2xs);
+  }
+
+  .crono__titulo {
+    font-size: var(--step-1);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: var(--space-s);
+  }
+
+  .crono__regua,
+  .crono__linha {
+    display: grid;
+    grid-template-columns: 12rem minmax(0, 1fr) 4.5rem;
+    gap: var(--space-s);
+    align-items: center;
+  }
+
+  .crono__regua {
+    font-size: var(--step--1);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--navy-60);
+    align-items: end;
+    margin-bottom: var(--space-2xs);
+  }
+
+  .crono__semanas {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: var(--space-3xs, 0.25rem);
+    font-variant-numeric: tabular-nums;
+    font-style: normal;
+  }
+
+  .crono__semanas i {
+    font-style: normal;
+  }
+
+  /* O recuo padrão da lista empurrava a coluna inteira para fora do alinhamento
+     com o cabeçalho da régua. */
+  .crono__lista {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 2px;
+  }
+
+  .crono__nome {
+    font-size: var(--step--1);
+    min-width: 0;
+  }
+
+  .crono__trilho {
+    position: relative;
+    height: 1.5rem;
+    background: var(--navy-05, #ecebe6);
+    min-width: 0;
+  }
+
+  .crono__barra {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(var(--ini) / var(--total) * 100%);
+    width: 0;
+    background: var(--navy);
+  }
+
+  [data-cronograma][data-correndo] .crono__barra {
+    width: calc((var(--fim) - var(--ini)) / var(--total) * 100%);
+    transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1) calc(var(--i) * 150ms);
+  }
+
+  .crono__dur {
+    font-size: var(--step--1);
+    color: var(--navy-60);
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+  }
+
+  .crono__nota {
+    margin-top: var(--space-m);
+    font-size: var(--step--1);
+    color: var(--navy-60);
+    max-width: 62ch;
+  }
+
+  @media (max-width: 720px) {
+    .crono__regua,
+    .crono__linha {
+      grid-template-columns: 8rem minmax(0, 1fr);
+    }
+
+    .crono__dur {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .crono__barra {
+      width: calc((var(--fim) - var(--ini)) / var(--total) * 100%);
+    }
+  }
+</style>
