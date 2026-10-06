@@ -21,47 +21,47 @@ const others = services.filter((s) => s.slug !== slug);
         {content.body.map((paragraph) => <p>{paragraph}</p>)}
       </div>
 
-      <aside class="service__aside">
-        {
-          content.aside && (
-            <div class="service__aside-bloco">
-              <h2 class="service__aside-title">{content.aside.title}</h2>
-              <ul class="service__list">
-                {content.aside.items.map((item) => (
-                  <li>{item}</li>
-                ))}
-              </ul>
-            </div>
-          )
-        }
-
-        {
-          content.foto && (
-            <figure class="obra-prova">
-              <img
-                class="obra-prova__foto"
-                src={content.foto.src}
-                alt={content.foto.alt}
-                width="1600"
-                height="800"
-                loading="lazy"
-                decoding="async"
-              />
-              <figcaption class="obra-prova__legenda">
-                <span class="obra-prova__rotulo">Obra entregue</span>
-                <a class="obra-prova__link" href={`/portfolio/${content.foto.obra.slug}`}>
-                  {content.foto.obra.nome}
-                  <span class="obra-prova__seta" aria-hidden="true">
-                    &rarr;
-                  </span>
-                </a>
-                <span class="obra-prova__tipo">{content.foto.obra.tipo}</span>
-              </figcaption>
-            </figure>
-          )
-        }
-      </aside>
+      {
+        content.aside && (
+          <aside class="service__aside-bloco">
+            <h2 class="service__aside-title">{content.aside.title}</h2>
+            <ul class="service__list">
+              {content.aside.items.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </aside>
+        )
+      }
     </div>
+
+    {
+      content.foto && (
+        <div class="shell">
+          <figure class="obra-prova">
+            <img
+              class="obra-prova__foto"
+              src={content.foto.src}
+              alt={content.foto.alt}
+              width="1600"
+              height="800"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption class="obra-prova__legenda">
+              <span class="obra-prova__rotulo">Obra entregue</span>
+              <a class="obra-prova__link" href={`/portfolio/${content.foto.obra.slug}`}>
+                {content.foto.obra.nome}
+                <span class="obra-prova__seta" aria-hidden="true">
+                  &rarr;
+                </span>
+              </a>
+              <span class="obra-prova__tipo">{content.foto.obra.tipo}</span>
+            </figcaption>
+          </figure>
+        </div>
+      )
+    }
   </section>
 
   {
@@ -120,16 +120,17 @@ const others = services.filter((s) => s.slug !== slug);
    */
   .service {
     display: grid;
+    grid-template-columns: 1.6fr 1fr;
     gap: var(--space-2xl);
+    align-items: start;
   }
 
-  .service__body {
-    max-width: var(--measure);
-  }
-
-  .service__aside {
-    display: grid;
-    gap: var(--space-xl);
+  /* A foixa fica fora da grade, atravessando a largura toda. Foi a foto
+     dentro da coluna estreita que quebrava a estrutura: alta demais ao lado
+     de um texto de outra altura, deixava um vazio embaixo à esquerda. Os
+     pontos, que são curtos, convivem com o texto sem esse efeito. */
+  .obra-prova {
+    margin: var(--space-2xl) 0 0;
   }
 
   /*
@@ -142,10 +143,6 @@ const others = services.filter((s) => s.slug !== slug);
    * A legenda repete a régua do bloco abaixo (filete navy de 2px) para a
    * coluna inteira ler como um sistema, e não como peças empilhadas.
    */
-  .obra-prova {
-    margin: 0;
-  }
-
   .obra-prova__foto {
     display: block;
     width: 100%;
@@ -204,7 +201,6 @@ const others = services.filter((s) => s.slug !== slug);
   }
 
   .service__aside-bloco {
-    max-width: var(--measure);
     padding-top: var(--space-s);
     border-top: 2px solid var(--navy);
   }
@@ -270,15 +266,14 @@ const others = services.filter((s) => s.slug !== slug);
       gap: var(--space-xl);
     }
 
-    /* Em coluna única o retrato 3:4 virava um painel alto demais, empurrando
-       a lista para fora da tela. Deitada, a foto vira faixa e a legenda
-       encosta no texto que ela comprova. */
+    /* No celular a tela é estreita e 2:1 deixaria a faixa baixa demais para
+       se ler alguma coisa dentro dela. */
     .obra-prova__foto {
       aspect-ratio: 3 / 2;
     }
 
-    .service__body {
-      max-width: none;
+    .obra-prova {
+      margin-top: var(--space-xl);
     }
   }
 </style>

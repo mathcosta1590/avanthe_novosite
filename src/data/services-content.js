@@ -59,6 +59,14 @@ export const serviceContent = {
         { nome: 'Limpeza fina e entrega', de: 11.5, ate: 12 },
       ],
     },
+    aside: {
+      title: 'Reforma em condomínio',
+      items: [
+        'Aprovação de síndico',
+        'Adequação a horários e regras do prédio',
+        'Documentação técnica exigida pela administração',
+      ],
+    },
     title: 'Reformas e retrofits',
     lede: 'Toda reforma começa com uma pergunta: existe projeto do imóvel, ou não?',
     body: [
@@ -76,6 +84,15 @@ export const serviceContent = {
       alt: 'Salão administrativo da Ruffino depois do retrofit.',
       obra: { slug: 'reforma-comercial-ruffino', nome: 'Comercial Ruffino', tipo: 'Galpão de mais de 30 anos' },
     },
+    aside: {
+      title: 'Cenários que atendemos',
+      items: [
+        'Existe alvará, mas não projeto aprovado',
+        'Existe projeto, mas a obra foi executada em desacordo',
+        'Falta nota fiscal ou falta o SMOP',
+        'Obra abandonada pelo responsável técnico anterior',
+      ],
+    },
     title: 'Regularização técnica',
     lede: 'Regularização de obra não segue um caminho único. Cada situação começa de um ponto diferente.',
     body: [
@@ -92,6 +109,15 @@ export const serviceContent = {
       src: '/servicos/gestao-de-obras.jpg',
       alt: 'Ambiente em execução no Apartamento Mercês, durante o acompanhamento técnico.',
       obra: { slug: 'apartamento-merces', nome: 'Apartamento Mercês', tipo: 'Reforma residencial' },
+    },
+    aside: {
+      title: 'O que entra no relatório semanal',
+      items: [
+        'Cronograma físico atualizado',
+        'Mão de obra detalhada por função em campo',
+        'Atividades realizadas e previstas',
+        'Avanço físico previsto versus realizado',
+      ],
     },
     title: 'Gestão de obras',
     lede: 'Gestão de obra, na Avanthe, é um sistema, não uma promessa vaga de "acompanhamento".',
