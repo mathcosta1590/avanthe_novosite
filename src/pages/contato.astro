@@ -1,10 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
-import { site, whatsapp, alvoDeConversao } from '../data/site.js';
-
-const MENSAGEM =
-  'Olá! Vim pelo site da Avanthe e quero um orçamento para a minha obra.';
+import QuoteForm from '../components/form/QuoteForm.astro';
+import FormRuntime from '../components/form/FormRuntime.astro';
+import { site } from '../data/site.js';
 ---
 
 <Base
@@ -16,46 +15,13 @@ const MENSAGEM =
   <PageHero
     eyebrow="Contato"
     title="Comece pelo <strong>diagnóstico</strong>."
-    lede="Chame no WhatsApp e fale direto com um engenheiro. Se tiver planta ou foto, mande junto: acelera o diagnóstico."
+    lede="Preencha o formulário e um engenheiro analisa o seu projeto. Se houver planta ou projeto, anexe: acelera a resposta."
   />
 
   <section class="section section--tall">
     <div class="shell contato">
       <div class="contato__form">
-        <!--
-          Sem formulário, de propósito.
-
-          O formulário pedia cinco campos obrigatórios de quem clicou num
-          anúncio no celular só para saber um preço. Chegava lead, mas a
-          barreira era alta demais para o volume que a campanha paga.
-
-          O WhatsApp abre com a mensagem já escrita: o cliente não precisa
-          decidir como começar, que é onde a maioria desiste.
-        -->
-        <div class="zap">
-          <p class="zap__lede">
-            Manda uma mensagem. Um engenheiro responde — não é atendente, não é robô.
-          </p>
-
-          <a
-            class="btn zap__btn"
-            href={whatsapp(MENSAGEM)}
-            target="_blank"
-            rel="noopener"
-            data-conversao={alvoDeConversao}
-            data-origem="contato"
-          >
-            Falar no WhatsApp
-          </a>
-
-          <p class="zap__numero">
-            ou ligue <a href={`tel:+${site.whatsapp.number}`}>{site.whatsapp.display}</a>
-          </p>
-
-          <p class="zap__email">
-            Prefere escrever? <a href={`mailto:${site.email}`}>{site.email}</a>
-          </p>
-        </div>
+        <QuoteForm />
 
         <p class="contato__desvio">
           Currículo ou vaga? <a href="/recrutamento">Trabalhe conosco</a>. Quer fornecer
@@ -65,9 +31,9 @@ const MENSAGEM =
 
       <aside class="contato__aside">
         <div class="contato__block">
-          <h2 class="contato__title">Como funciona depois do contato</h2>
+          <h2 class="contato__title">Como funciona depois do envio</h2>
           <ol class="contato__steps">
-            <li>Um engenheiro responde no WhatsApp, em até um dia útil.</li>
+            <li>Um engenheiro lê o que você enviou e retorna em até um dia útil.</li>
             <li>Agendamos o diagnóstico técnico presencial, sempre em campo.</li>
             <li>Você recebe proposta com valores, prazo e escopo definidos com clareza.</li>
           </ol>
@@ -88,42 +54,10 @@ const MENSAGEM =
     </div>
   </section>
 
+  <FormRuntime />
 </Base>
 
 <style>
-  .zap {
-    display: grid;
-    justify-items: start;
-    gap: var(--space-m);
-    padding-top: var(--space-s);
-    border-top: 2px solid var(--navy);
-  }
-
-  .zap__lede {
-    margin: 0;
-    font-size: var(--step-1);
-    font-weight: 300;
-    max-width: 32ch;
-  }
-
-  .zap__btn {
-    font-size: var(--step-1);
-    padding: var(--space-s) var(--space-xl);
-  }
-
-  .zap__numero,
-  .zap__email {
-    margin: 0;
-    font-size: var(--step-0);
-    color: var(--navy-80);
-  }
-
-  .zap__numero a,
-  .zap__email a {
-    color: var(--navy);
-    font-weight: 600;
-  }
-
   .contato {
     display: grid;
     grid-template-columns: 1.5fr 1fr;

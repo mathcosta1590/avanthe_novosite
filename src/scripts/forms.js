@@ -1,11 +1,6 @@
 import { classificar, sinaisDeCliente } from '../data/triagem.js';
 import {
   digitos,
-  validarTelefone,
-  validarEmail,
-  validarNome,
-  validarTexto,
-  rapidoDemais,
   mascararTelefone,
   cursorDepoisDaMascara,
 } from '../data/validacao.js';
@@ -89,26 +84,23 @@ function fillContext(form) {
    Validação
    ------------------------------------------------------------------------- */
 
+/*
+ * Só confere se o campo obrigatório foi preenchido.
+ *
+ * As regras rígidas saíram: exigir sobrenome, validar DDD e nono dígito,
+ * conferir domínio de e-mail, limitar links. Elas barravam gente real com
+ * pressa — alguém que digitou só o primeiro nome, ou um e-mail de domínio
+ * próprio — e esse custo é maior que o do lead ruim, que dá para descartar
+ * lendo. Quem quiser escrever errado, escreve: é problema de quem atende,
+ * não de quem está tentando contratar.
+ *
+ * O honeypot continua, porque ele não incomoda ninguém: é um campo invisível
+ * que só robô preenche.
+ */
 function validateField(field) {
   const value = (field.value || '').trim();
   const errorEl = field.parentElement?.querySelector('.field__error');
-  const tipo = field.dataset.validate;
-  let message = '';
-
-  if (field.required && !value) {
-    message = 'Preencha este campo.';
-  } else if (value && field.type === 'email') {
-    message = validarEmail(value);
-  } else if (value && tipo === 'phone') {
-    message = validarTelefone(value);
-  } else if (value && tipo === 'name') {
-    message = validarNome(value);
-  } else if (value && tipo === 'contact') {
-    // campo que aceita telefone OU e-mail: decide pelo arroba
-    message = value.includes('@') ? validarEmail(value) : validarTelefone(value);
-  } else if (value && field.tagName === 'TEXTAREA') {
-    message = validarTexto(value);
-  }
+  const message = field.required && !value ? 'Preencha este campo.' : '';
 
   field.setAttribute('aria-invalid', message ? 'true' : 'false');
   if (errorEl) errorEl.textContent = message;
@@ -454,9 +446,6 @@ export function initForms() {
       // Honeypot preenchido: bot. Simulamos sucesso sem enviar nada.
       const trap = form.querySelector('.honeypot input');
       if (trap && trap.value) return;
-      // Preenchido rápido demais para ser gente lendo os campos. Bot não
-      // recebe erro, para não aprender o que travou: some em silêncio.
-      if (rapidoDemais(form.abertoEm)) return;
       if (!validateForm(form)) return;
       submit(form);
     });
