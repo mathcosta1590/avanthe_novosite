@@ -35,7 +35,7 @@ export const serviceContent = {
     // de serviço eram as únicas do site sem imagem nenhuma.
     foto: {
       src: '/servicos/reforma-retrofit.jpg',
-      alt: 'Parede viva e comunicação visual da cafeteria The Best Coffee, obra entregue pela Avanthe.',
+      alt: 'Salão da cafeteria The Best Coffee, com a parede viva e o balcão, obra entregue pela Avanthe.',
       obra: { slug: 'the-best-coffee', nome: 'The Best Coffee', tipo: 'Franquia comercial' },
     },
     /*
@@ -66,14 +66,6 @@ export const serviceContent = {
       'Reformar é diferente de construir do zero: você não sabe exatamente o que existe atrás de cada parede até abrir a obra. Foi assim na Ruffino, um galpão com mais de 30 anos, onde nem tudo estava visível antes da execução começar. É essa imprevisibilidade natural que exige experiência real, não teoria, para conduzir a obra sem que o imprevisto vire atraso ou custo fora de controle.',
       'Depois do diagnóstico, apresentamos uma proposta comercial com valores, prazo e escopo definidos com clareza, o que está incluso e o que não está. Avançando, formalizamos contrato, emitimos RT e seguro de obra antes do início da execução.',
     ],
-    aside: {
-      title: 'Reforma em condomínio',
-      items: [
-        'Aprovação de síndico',
-        'Adequação a horários e regras do prédio',
-        'Documentação técnica exigida pela administração',
-      ],
-    },
   },
 
   'regularizacao-tecnica': {
@@ -91,15 +83,6 @@ export const serviceContent = {
       'Um dos cenários mais comuns é o abandono da obra pelo responsável técnico anterior. Nesses casos, conduzimos a transição da responsabilidade técnica, o desenvolvimento de memoriais e a adequação do projeto até a atualização do alvará de construção junto aos órgãos competentes, SMU, Sanepar, Copel, entre outros. Já atuamos também em obras concluídas onde o projeto não correspondia à realidade executada, refazendo projeto e alvará do zero para colocar a obra em conformidade.',
       'Normalmente, esse é um serviço avulso, prestado como consultoria técnica independente de outras frentes de obra.',
     ],
-    aside: {
-      title: 'Cenários que atendemos',
-      items: [
-        'Existe alvará, mas não projeto aprovado',
-        'Existe projeto, mas a obra foi executada em desacordo',
-        'Falta nota fiscal ou falta o SMOP',
-        'Obra abandonada pelo responsável técnico anterior',
-      ],
-    },
   },
 
   'gestao-de-obras': {
@@ -107,7 +90,7 @@ export const serviceContent = {
     // de serviço eram as únicas do site sem imagem nenhuma.
     foto: {
       src: '/servicos/gestao-de-obras.jpg',
-      alt: 'Obra em execução, com acompanhamento técnico semanal.',
+      alt: 'Ambiente em execução no Apartamento Mercês, durante o acompanhamento técnico.',
       obra: { slug: 'apartamento-merces', nome: 'Apartamento Mercês', tipo: 'Reforma residencial' },
     },
     title: 'Gestão de obras',
@@ -117,14 +100,5 @@ export const serviceContent = {
       'O andamento é reportado semanalmente através de um relatório estruturado: cronograma físico atualizado, mão de obra detalhada por função em campo, atividades realizadas e previstas, e o indicador que realmente importa, avanço físico previsto versus realizado. Quando a obra está adiantada, o cliente sabe. Quando algo precisa de atenção, o cliente também sabe, antes que vire problema.',
       'Esse serviço pode ser contratado de forma independente, coordenando fornecedores e mão de obra terceirizada em uma obra que o cliente já tem em andamento, ou de forma integrada às demais frentes da Avanthe. Em ambos os casos, o princípio é o mesmo: transparência de processo transformada em confiança mensurável.',
     ],
-    aside: {
-      title: 'O que entra no relatório semanal',
-      items: [
-        'Cronograma físico atualizado',
-        'Mão de obra detalhada por função em campo',
-        'Atividades realizadas e previstas',
-        'Avanço físico previsto versus realizado',
-      ],
-    },
   },
 };

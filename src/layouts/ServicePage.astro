@@ -22,12 +22,18 @@ const others = services.filter((s) => s.slug !== slug);
       </div>
 
       <aside class="service__aside">
-        <div class="service__aside-bloco">
-          <h2 class="service__aside-title">{content.aside.title}</h2>
-          <ul class="service__list">
-            {content.aside.items.map((item) => <li>{item}</li>)}
-          </ul>
-        </div>
+        {
+          content.aside && (
+            <div class="service__aside-bloco">
+              <h2 class="service__aside-title">{content.aside.title}</h2>
+              <ul class="service__list">
+                {content.aside.items.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
 
         {
           content.foto && (
@@ -36,8 +42,8 @@ const others = services.filter((s) => s.slug !== slug);
                 class="obra-prova__foto"
                 src={content.foto.src}
                 alt={content.foto.alt}
-                width="900"
-                height="1200"
+                width="1600"
+                height="800"
                 loading="lazy"
                 decoding="async"
               />
@@ -100,16 +106,30 @@ const others = services.filter((s) => s.slug !== slug);
 </Base>
 
 <style>
+  /*
+   * Coluna única.
+   *
+   * Em duas colunas, a direita ficava com um retrato 3:4 estreito e alto ao
+   * lado de um texto de altura completamente diferente: o texto acabava antes,
+   * a foto continuava, e sobrava um vazio grande embaixo à esquerda. Não era
+   * desalinhamento, era a estrutura.
+   *
+   * Empilhado, cada coisa ocupa a largura que merece: o texto na medida de
+   * leitura, a foto como faixa cheia. Nada fica ragged porque nada disputa
+   * altura com nada.
+   */
   .service {
     display: grid;
-    grid-template-columns: 1.6fr 1fr;
     gap: var(--space-2xl);
-    align-items: start;
+  }
+
+  .service__body {
+    max-width: var(--measure);
   }
 
   .service__aside {
     display: grid;
-    gap: var(--space-l);
+    gap: var(--space-xl);
   }
 
   /*
@@ -130,7 +150,10 @@ const others = services.filter((s) => s.slug !== slug);
     display: block;
     width: 100%;
     height: auto;
-    aspect-ratio: 3 / 4;
+    /* 2:1, que é a proporção em que os arquivos foram recortados: assim o
+       cover não descarta nada. Em retrato, nesta largura, a foto viraria um
+       painel de dois metros de altura. */
+    aspect-ratio: 2 / 1;
     object-fit: cover;
   }
 
@@ -181,6 +204,7 @@ const others = services.filter((s) => s.slug !== slug);
   }
 
   .service__aside-bloco {
+    max-width: var(--measure);
     padding-top: var(--space-s);
     border-top: 2px solid var(--navy);
   }
@@ -250,7 +274,11 @@ const others = services.filter((s) => s.slug !== slug);
        a lista para fora da tela. Deitada, a foto vira faixa e a legenda
        encosta no texto que ela comprova. */
     .obra-prova__foto {
-      aspect-ratio: 4 / 3;
+      aspect-ratio: 3 / 2;
+    }
+
+    .service__body {
+      max-width: none;
     }
   }
 </style>
