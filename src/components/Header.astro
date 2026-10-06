@@ -1,4 +1,5 @@
 ---
+import { whatsapp, alvoDeConversao } from '../data/site.js';
 import Logo from './Logo.astro';
 import { nav } from '../data/site.js';
 
@@ -74,7 +75,7 @@ const isSection = (item) =>
             </ul>
           </nav>
 
-          <a class="btn site-header__cta" href="/contato">Solicitar orçamento</a>
+          <a class="btn site-header__cta" href={whatsapp('Olá! Vim pelo site da Avanthe e quero um orçamento para a minha obra.')} target="_blank" rel="noopener" data-conversao={alvoDeConversao} data-origem="cabecalho">Falar no WhatsApp</a>
 
           <button
             type="button"
@@ -117,7 +118,7 @@ const isSection = (item) =>
               </li>
             ))}
           </ul>
-          <a class="btn menu-mobile__cta" href="/contato">Solicitar orçamento</a>
+          <a class="btn menu-mobile__cta" href={whatsapp('Olá! Vim pelo site da Avanthe e quero um orçamento para a minha obra.')} target="_blank" rel="noopener" data-conversao={alvoDeConversao} data-origem="menu">Falar no WhatsApp</a>
         </div>
       </div>
     )

@@ -5,8 +5,12 @@ import Steps from '../components/Steps.astro';
 import Cronograma from '../components/Cronograma.astro';
 import { serviceContent } from '../data/services-content.js';
 import MediaPlaceholder from '../components/MediaPlaceholder.astro';
-import QuoteForm from '../components/form/QuoteForm.astro';
-import FormRuntime from '../components/form/FormRuntime.astro';
+import { whatsapp, alvoDeConversao, site } from '../data/site.js';
+
+/* Mensagem própria da landing: quem chega aqui veio de anúncio de reforma
+   comercial, então a conversa já começa no assunto certo. */
+const MENSAGEM =
+  'Olá! Vim pelo anúncio da Avanthe e quero um orçamento de reforma comercial.';
 
 /**
  * Landing de campanha — Reforma e Retrofit Comercial.
@@ -51,18 +55,37 @@ const steps = [
           Diagnóstico técnico antes de qualquer obra, contrato com RT e seguro emitidos desde o
           início, e um histórico de <strong>100% de obras entregues no prazo combinado</strong>.
         </p>
-        <a class="btn lp-hero__cta" href="#orcamento">Solicitar orçamento</a>
+        <a
+          class="btn lp-hero__cta"
+          href={whatsapp(MENSAGEM)}
+          target="_blank"
+          rel="noopener"
+          data-conversao={alvoDeConversao}
+          data-origem="lp-topo"
+        >
+          Falar no WhatsApp
+        </a>
       </div>
 
       <div class="lp-hero__form" id="orcamento-topo">
-        <h2 class="lp-form__title">Solicitar orçamento</h2>
-        <p class="lp-form__note">Um engenheiro responde em até um dia útil.</p>
-        <QuoteForm
-          id="form-orcamento-topo"
-          successId="sucesso-lp-topo"
-          idPrefix="lp-topo"
-          allowExitLinks={false}
-        />
+        <h2 class="lp-form__title">Fale com o engenheiro</h2>
+        <p class="lp-form__note">
+          Sem formulário e sem atendente. Você manda a mensagem e quem responde é quem vai
+          conduzir a obra, em até um dia útil.
+        </p>
+        <a
+          class="btn lp-form__btn"
+          href={whatsapp(MENSAGEM)}
+          target="_blank"
+          rel="noopener"
+          data-conversao={alvoDeConversao}
+          data-origem="lp-caixa"
+        >
+          Falar no WhatsApp
+        </a>
+        <p class="lp-form__tel">
+          ou ligue <a href={`tel:+${site.whatsapp.number}`}>{site.whatsapp.display}</a>
+        </p>
       </div>
     </div>
   </section>
@@ -136,25 +159,49 @@ const steps = [
       <div class="lp-final__text">
         <h2 class="headline">Sua obra comercial, pronta na data combinada.</h2>
         <p class="lede lp-final__lede">
-          Preencha o formulário e receba um diagnóstico técnico para o seu projeto de reforma ou
+          Chame no WhatsApp e receba um diagnóstico técnico para o seu projeto de reforma ou
           retrofit.
         </p>
       </div>
       <div class="lp-final__form">
-        <QuoteForm
-          id="form-orcamento-final"
-          successId="sucesso-lp-final"
-          idPrefix="lp-final"
-          allowExitLinks={false}
-        />
+        <a
+          class="btn lp-form__btn"
+          href={whatsapp(MENSAGEM)}
+          target="_blank"
+          rel="noopener"
+          data-conversao={alvoDeConversao}
+          data-origem="lp-final"
+        >
+          Falar no WhatsApp
+        </a>
+        <p class="lp-form__tel">
+          ou ligue <a href={`tel:+${site.whatsapp.number}`}>{site.whatsapp.display}</a>
+        </p>
       </div>
     </div>
   </section>
 
-  <FormRuntime />
 </Base>
 
 <style>
+  .lp-form__btn {
+    width: 100%;
+    justify-content: center;
+    font-size: var(--step-1);
+    padding: var(--space-s) var(--space-l);
+  }
+
+  .lp-form__tel {
+    margin: var(--space-s) 0 0;
+    font-size: var(--step-0);
+    color: var(--navy-80);
+  }
+
+  .lp-form__tel a {
+    color: var(--navy);
+    font-weight: 600;
+  }
+
   .lp-hero {
     padding-block: clamp(2.5rem, 7vw, 5rem) clamp(3rem, 8vw, 5.5rem);
   }

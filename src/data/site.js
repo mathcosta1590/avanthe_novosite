@@ -36,6 +36,25 @@ export const site = {
   ga4: 'G-XXXXXXXXXX',
 };
 
+
+/**
+ * Link do WhatsApp com a mensagem já escrita.
+ *
+ * O cliente abre o aplicativo com o primeiro parágrafo pronto, então não
+ * precisa decidir como começar — que é onde a maioria desiste. O texto também
+ * diz de onde ele veio, o que serve de contexto para quem atende.
+ */
+export function whatsapp(texto) {
+  const base = `https://wa.me/${site.whatsapp.number}`;
+  return texto ? `${base}?text=${encodeURIComponent(texto)}` : base;
+}
+
+/** Alvo da conversão do Ads, ou string vazia enquanto os IDs não forem reais. */
+export const alvoDeConversao =
+  site.ads.conversionId.includes('XXX') || site.ads.conversionLabel.includes('XXX')
+    ? ''
+    : `${site.ads.conversionId}/${site.ads.conversionLabel}`;
+
 /*
  * Sem contagem de obras entregues. Volume é o único eixo em que uma empresa
  * nova perde para qualquer construtora, e o portfólio logo abaixo deixa o

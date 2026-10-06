@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import Stats from '../components/Stats.astro';
 import ServiceGrid from '../components/ServiceGrid.astro';
 import CtaSection from '../components/CtaSection.astro';
+import { whatsapp, alvoDeConversao } from '../data/site.js';
 
 ---
 
@@ -78,7 +79,16 @@ import CtaSection from '../components/CtaSection.astro';
         compromisso e pessoas.
       </p>
       <div class="hero__actions" data-reveal-item>
-        <a class="btn" href="/contato">Solicitar orçamento</a>
+        <a
+          class="btn"
+          href={whatsapp('Olá! Vim pelo site da Avanthe e quero um orçamento para a minha obra.')}
+          target="_blank"
+          rel="noopener"
+          data-conversao={alvoDeConversao}
+          data-origem="home"
+        >
+          Falar no WhatsApp
+        </a>
         <a class="link" href="/portfolio">
           Ver obras entregues
           <span class="link__arrow" aria-hidden="true">→</span>
@@ -131,7 +141,7 @@ import CtaSection from '../components/CtaSection.astro';
 
   <CtaSection
     title="Você deixa a chave e volta na data combinada."
-    text="Preencha o formulário e receba um diagnóstico técnico para o seu projeto. Respondemos em até um dia útil."
+    text="Chame no WhatsApp e receba um diagnóstico técnico para o seu projeto. Respondemos em até um dia útil."
     tone="navy"
   />
 </Base>
